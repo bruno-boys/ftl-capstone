@@ -6,7 +6,7 @@ SITE Course Year: **2022**
 
 Cohort: **CodePath x Salesforce Futureforce Tech LaunchPad**
 
-Team Member Names:**Aloye Oshotse, Yaw Kessey, Abdul Rauf**
+Team Member Names: **Aloye Oshotse, Yaw Kessey, Abdul Rauf**
 
 Mentors Names: **Insert Professional Mentor Names**
 
