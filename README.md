@@ -2,11 +2,11 @@
 
 # SITE Capstone Project
 
-SITE Course Year: **20__**
+SITE Course Year: **2022**
 
-Cohort: **Add Company Sponsor Name**
+Cohort: **CodePath x Salesforce Futureforce Tech LaunchPad**
 
-Team Member Names:**Insert Team Member Names**
+Team Member Names:**Aloye Oshotse, Yaw Kessey, Abdul Rauf**
 
 Mentors Names: **Insert Professional Mentor Names**
 
