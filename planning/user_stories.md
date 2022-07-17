@@ -1,6 +1,6 @@
 # Project Proposal
 
-Pod Members: **Add Pod Members Names**
+Pod Members: **Abdul Rauf Abdul Karim, Aloye Oshotse, Yaw Kessey**
 
 ## Problem Statement
 
