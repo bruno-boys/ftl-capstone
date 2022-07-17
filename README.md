@@ -8,7 +8,7 @@ Cohort: **CodePath x Salesforce Futureforce Tech LaunchPad**
 
 Team Member Names: **Aloye Oshotse, Yaw Kessey, Abdul Rauf**
 
-Mentors Names: **Insert Professional Mentor Names**
+Mentors Names: **Seth Holloway, Mitch Mikusek, Jonathan Mar **
 
 Project Code Repository Links
 
