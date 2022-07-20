@@ -9,12 +9,12 @@ function getDatabaseURI() {
     const dbPass = process.env.DATABASE_PASS ? encodeURI(process.env.DATABASE_PASS) : 'postgres'
     const dbHost = process.env.DATABASE_HOST || 'localhost'
     const dbPort = process.env.DATABASE_PORT || 5432
-    const dbName = process.env.DATABASE_NAME || 'life_tracker'
+    const dbName = process.env.DATABASE_NAME || 'habit_tracker'
 
     return process.env.DATABASE_URL || `postgresql://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`
 }
 
-console.log("LifeTracker Config:".red)
+console.log("Habit Tracker Config:".red)
 console.log("PORT:".blue, PORT)
 console.log("SECRET_KEY:".blue, SECRET_KEY)
 console.log("Database URI:".blue, getDatabaseURI())
