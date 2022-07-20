@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const { NotFoundError } = require('./utils/error')
 const PORT = 3001;
 
 const app = express();
@@ -12,6 +13,20 @@ app.use(express.json());
 app.get('/', (req,res) => {
     res.status(200).json("main habit tracker route works!")
 })
+
+//error handling
+app.use((req,res,next) => {
+    return (new NotFoundError)
+})
+
+app.use((err,req,res,next) => {
+    const status = err.status || 500
+    const message = err.message
+  
+    return res.status(status).json({
+      error: {message,status}
+    })
+  })
 
 app.listen(PORT, () => {
     console.log(`🚀 Server listening at http://localhost:${PORT}`)
