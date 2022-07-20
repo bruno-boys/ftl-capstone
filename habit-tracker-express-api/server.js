@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const { NotFoundError } = require('./utils/error')
-const PORT = 3001;
+const { NotFoundError } = require('./utils/error');
+const { PORT } = require('./config')
 
 const app = express();
 
