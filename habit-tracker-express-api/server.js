@@ -3,12 +3,14 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { NotFoundError } = require('./utils/error');
 const { PORT } = require('./config')
+const authRoutes = require('./routes/auth')
 
 const app = express();
 
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
+app.use('/auth',authRoutes)
 
 app.get('/', (req,res) => {
     res.status(200).json("main habit tracker route works!")
