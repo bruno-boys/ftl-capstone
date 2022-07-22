@@ -8,6 +8,7 @@ Many people desire to form healthy and persistent habits and stop their bad habi
 
 The main purpose of our project is to provide an efficient and innovative way to help users stay consistent with their desired habits, stop their less desirable habits, and track their progress along the way. Our project will provide key features: preset habits and options to add/modify your own, reminders for each of their habits based on user settings, and a user page for achievements and progress tracking. We believe that our target audience will use our site in a periodic cycle (depending on how they set their habits, i.e., daily, weekly, monthly). In this cycle, they will check off the habits they complete and receive reminders (via notification, SMS, or email) to complete the habit if they have not done so already.
 
+
 ## User Roles and Personas
 
 user —> has the basic features in the app
@@ -54,14 +55,34 @@ user —> has the basic features in the app
 
 ## Pages/Screens
 
-List all the pages and screens in the app. Include wireframes for at least 3 of them.
+https://www.figma.com/file/HYFxKJDL4sryMDqsLx1xp7/Habit-Tracker?node-id=0%3A1
+
+**List of Pages:**
+
+- Landing Page
+- Register Page
+- Login Page
+- Activity Page
+- Habits Page
+- User Page
+- Habit Detail Page
+- Habit Form Page
 
 ## Data Model
 
-Describe your app's data model using diagrams or tables
+**users table**
+
+<img width="530" alt="Screen Shot 2022-07-22 at 2 23 06 PM" src="https://user-images.githubusercontent.com/96442350/180570491-3eebd7a8-1ddf-405e-b7ba-17aadd1eb089.png">
+
+**habits table**
+
+<img width="628" alt="Screen Shot 2022-07-22 at 2 25 24 PM" src="https://user-images.githubusercontent.com/96442350/180570731-9b01a8f1-74fd-40a5-8e0c-5473816d2ef3.png">
+
+**tracked_habits table**
+
+<img width="798" alt="Screen Shot 2022-07-22 at 2 27 14 PM" src="https://user-images.githubusercontent.com/96442350/180570899-8fe7c422-1e65-4d34-9f3c-912402dae54b.png">
 
 ## Endpoints
 
-List the API endpoints you will need to implement.
+<img width="807" alt="Screen Shot 2022-07-22 at 2 19 24 PM" src="https://user-images.githubusercontent.com/96442350/180570071-9b31a62f-8ffa-46da-951c-b222de78d34b.png">
 
-***Don't forget to set up your Issues, Milestones, and Project Board!***
