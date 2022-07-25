@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
+  const [user, setUser] = useState({});
   return (
     <div className="App">
       <BrowserRouter>
@@ -15,10 +16,11 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={<Login user={user} setUser={setUser} />}
+            />
             <Route path="/register" element={<Register />} />
-
-
           </Routes>
         </main>
       </BrowserRouter>
