@@ -1,7 +1,7 @@
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../../services/apiClient";
 
 
 export default function Login({ user, setUser }) {
@@ -14,8 +14,6 @@ export default function Login({ user, setUser }) {
   });
 
   useEffect(() => {
-    // if user is already logged in,
-    // redirect them to the home page
     if (user?.userName) {
       navigate("/activity");
     }
@@ -25,29 +23,15 @@ export default function Login({ user, setUser }) {
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
-  const handleOnSubmit = async () => {
-    setIsProcessing(true);
-    setErrors((e) => ({ ...e, form: null }));
-
-    try {
-      const res = await axios.post("http://localhost:3001/auth/login", form);
-      if (res?.data?.user) {
-        setUser(res.data.user);
-      } else {
-        setErrors((e) => ({
-          ...e,
-          form: "Invalid username/password combination",
-        }));
-      }
-    } catch (err) {
-      console.log(err);
-      setErrors((e) => ({
-        ...e,
-        form: "Invalid username/password combination",
-      }));
-    } finally {
-      setIsProcessing(false);
-    }
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
+    const {data, error} = await apiClient.loginUser(form)
+    if (error) { setErrors(error) }
+    if (data?.user) {
+      setForm(null);
+      apiClient.setToken(data.token)
+      navigate('/activity')
+    };
   };
 
   return (

@@ -1,13 +1,15 @@
 import "./Register.css";
-
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from '../../services/apiClient'
+import { useEffect } from "react";
 
 export default function Register({user, setUser}) {
   const [newUser, setNewUser] = useState(null);
+  const [error, setError] = useState('')
   const navigate = useNavigate()
+
 
   const handleOnFormChange = (e) => {
     setNewUser({
@@ -15,17 +17,20 @@ export default function Register({user, setUser}) {
       [e.target.name]: e.target.value,
     });
   };
-  const handleOnSubmit = (event) => {
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
-    axios.post("http://localhost:3001/auth/register", newUser)
-      .then((res) => {
-        setUser(res.data.user);
-        navigate('/activity')
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  };
+    const {data, error} = await apiClient.registerUser(newUser)
+    if (error) { setError(error) }
+    if (data?.user) {
+      setNewUser(null);
+      apiClient.setToken(data.token)
+      navigate('/activity')
+    };
+  }
+
+  useEffect(() => {
+    console.log('user = ', newUser)
+  }, [newUser])
 
 
   return (
