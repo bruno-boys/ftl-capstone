@@ -16,8 +16,8 @@ router.get('/', async(req,res, next) => {
 
 router.post('/register', async(req,res, next) => {
     try{
-        /*take user first name, last name, email, username, and password and
-            creates a new user in database */
+        /*take user first name, last name, email, username, phone number, 
+        and password and creates a new user in database */
         const user = await User.register(req.body);
         // const token = createUserJwt(user);
         return res.status(201).json({ user });

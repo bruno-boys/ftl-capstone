@@ -46,11 +46,15 @@ class User {
         return user
     }
 
+    static async fetchUserByPhoneNumber(phoneNumber) {
+        //TODO: make a function for fetching user by phone number
+    }
+
 
     static async register(credentials) {
-        /* user should submit their first name, last name, email, username, and password
+        /* user should submit their first name, last name, email, phone number, username, and password
            if any of these fields are missing, throw an error */
-        const requiredFields = ['firstName', 'lastName', 'email', 'userName', 'password']
+        const requiredFields = ['firstName', 'lastName', 'email', 'userName', 'phoneNumber', 'password']
         requiredFields.forEach(field => {
             if (!credentials.hasOwnProperty(field)) {
                 throw new BadRequestError(`Missing ${field} in request body.`);
@@ -81,11 +85,12 @@ class User {
             last_name,
             email,
             username,
+            phone_number,
             password
         )
-        VALUES ($1, $2, $3, $4, $5)
+        VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id, first_name, last_name, email, username, password, created_at, updated_at;
-        `, [credentials.firstName, credentials.lastName, lowercasedEmail, credentials.userName, hashedPassword])
+        `, [credentials.firstName, credentials.lastName, lowercasedEmail, credentials.userName, credentials.phoneNumber, hashedPassword])
 
         const user = result.rows[0]
 
