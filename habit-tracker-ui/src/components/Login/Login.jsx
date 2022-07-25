@@ -60,6 +60,10 @@ export default function Login({ user, setUser }) {
     <div className="Login">
       <div className="card">
         <h2> Login </h2>
+
+        {errors.form && <span className="error">{errors.form}</span>}
+
+        <br />
         <div className="form">
           <div className="input-field">
             <label htmlFor="email">Username</label>
@@ -94,7 +98,7 @@ export default function Login({ user, setUser }) {
         </div>
 
         <div className="footer">
-          <p>Don't have an account? Sign up</p>
+          <p>Don't have an account? Sign up <Link to="/register">here</Link></p>
         </div>
       </div>
     </div>
