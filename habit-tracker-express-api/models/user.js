@@ -89,7 +89,7 @@ class User {
             password
         )
         VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id, first_name, last_name, email, username, password, created_at, phoneNumber, updated_at;
+        RETURNING id, first_name, last_name, email, username, password, created_at, phone_number, updated_at;
         `, [credentials.firstName, credentials.lastName, lowercasedEmail, credentials.userName, credentials.phoneNumber, hashedPassword])
 
         const user = result.rows[0]
