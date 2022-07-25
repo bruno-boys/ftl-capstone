@@ -2,6 +2,8 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
+
 export default function Login({ user, setUser }) {
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -48,10 +50,6 @@ export default function Login({ user, setUser }) {
     }
   };
 
-  useEffect(() => {
-    console.log("user", user)
-  }, [user])
-
   return (
     <div className="Login">
       <div className="card">
@@ -66,7 +64,7 @@ export default function Login({ user, setUser }) {
             <input
               type="text"
               name="userName"
-              placeholder="userName"
+              placeholder="Username"
               value={form.userName}
               onChange={handleOnInputChange}
             />
