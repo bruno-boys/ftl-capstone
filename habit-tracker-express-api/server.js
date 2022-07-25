@@ -4,12 +4,17 @@ const morgan = require('morgan');
 const { NotFoundError } = require('./utils/error');
 const { PORT } = require('./config')
 const authRoutes = require('./routes/auth')
+const { extractUserFromJwt } = require('./middleware/security')
 
 const app = express();
 
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
+
+app.use(extractUserFromJwt)
+
+
 app.use('/auth',authRoutes)
 
 app.get('/', (req,res) => {
