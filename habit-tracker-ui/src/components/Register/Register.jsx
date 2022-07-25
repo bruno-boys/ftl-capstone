@@ -2,11 +2,12 @@ import "./Register.css";
 
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function Register() {
+export default function Register({user, setUser}) {
   const [newUser, setNewUser] = useState(null);
+  const navigate = useNavigate()
 
   const handleOnFormChange = (e) => {
     setNewUser({
@@ -18,17 +19,14 @@ export default function Register() {
     event.preventDefault();
     axios.post("http://localhost:3001/auth/register", newUser)
       .then((res) => {
-        console.log(res);
+        setUser(res.data.user);
+        navigate('/activity')
       })
       .catch((err) => {
         console.log(err);
       })
-    console.log(newUser);
   };
 
-  useEffect(() => {
-    console.log("New User: ", newUser);
-  });
 
   return (
     <div className="register">
@@ -69,8 +67,8 @@ export default function Register() {
           Confirm Password:
           <input  type="password" name="confirmPassword" />
         </label>
+        <input type="submit" value="Register" onClick={handleOnSubmit} />
       </form>
-      <input type="submit" value="Register" onClick={handleOnSubmit} />
     </div>
   );
 }
