@@ -7,27 +7,19 @@ export default function Login({ user, setUser }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
-    email: "",
+    userName: "",
     password: "",
   });
 
   useEffect(() => {
     // if user is already logged in,
     // redirect them to the home page
-    if (user?.email) {
-      navigate("/");
+    if (user?.userName) {
+      navigate("/activity");
     }
   }, [user, navigate]);
 
   const handleOnInputChange = (event) => {
-    if (event.target.name === "email") {
-      if (event.target.value.indexOf("@") === -1) {
-        setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
-      } else {
-        setErrors((e) => ({ ...e, email: null }));
-      }
-    }
-
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
@@ -56,6 +48,10 @@ export default function Login({ user, setUser }) {
     }
   };
 
+  useEffect(() => {
+    console.log("user", user)
+  }, [user])
+
   return (
     <div className="Login">
       <div className="card">
@@ -66,15 +62,17 @@ export default function Login({ user, setUser }) {
         <br />
         <div className="form">
           <div className="input-field">
-            <label htmlFor="email">Username</label>
+            <label htmlFor="userName">Username</label>
             <input
-              type="email"
-              name="email"
-              placeholder="email"
-              value={form.email}
+              type="text"
+              name="userName"
+              placeholder="userName"
+              value={form.userName}
               onChange={handleOnInputChange}
             />
-            {errors.email && <span className="error">{errors.email}</span>}
+            {errors.userName && (
+              <span className="error">{errors.userName}</span>
+            )}
           </div>
 
           <div className="input-field">
@@ -98,7 +96,9 @@ export default function Login({ user, setUser }) {
         </div>
 
         <div className="footer">
-          <p>Don't have an account? Sign up <Link to="/register">here</Link></p>
+          <p>
+            Don't have an account? Sign up <Link to="/register">here</Link>
+          </p>
         </div>
       </div>
     </div>

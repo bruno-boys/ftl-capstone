@@ -6,6 +6,7 @@ import LandingPage from "../LandingPage/LandingPage";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Activity from "../Activity/Activity";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -21,6 +22,7 @@ export default function App() {
               element={<Login user={user} setUser={setUser} />}
             />
             <Route path="/register" element={<Register />} />
+            <Route path="/activity" element = {<Activity />} />
           </Routes>
         </main>
       </BrowserRouter>
