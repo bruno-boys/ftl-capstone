@@ -5,6 +5,7 @@ const { NotFoundError } = require('./utils/error');
 const { PORT } = require('./config')
 const authRoutes = require('./routes/auth')
 const { extractUserFromJwt } = require('./middleware/security')
+const habitRoute = require('./routes/habits')
 
 const app = express();
 
@@ -14,8 +15,9 @@ app.use(express.json());
 
 app.use(extractUserFromJwt)
 
-
 app.use('/auth',authRoutes)
+app.use('/habits', habitRoute)
+
 
 app.get('/', (req,res) => {
     res.status(200).json("main habit tracker route works!")

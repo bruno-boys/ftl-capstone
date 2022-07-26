@@ -48,6 +48,18 @@ class ApiClient {
         return await this.request({ endpoint: `auth/register`, method: `POST`, data: credentials })
     }
 
+    async createHabit(credentials){
+        return await this.request({endpoint : `habits/create`, method: `POST`, data: credentials })
+    }
+
+    async fetchHabitList() {
+        return await this.request({ endpoint: `habits/`, method: `GET` })
+    }
+
+    async fetchHabitById(habitId) {
+        return await this.request({ endpoint: `habits/${habitId}`, method: `GET` })
+    }
+
 }
 
 export default new ApiClient('http://localhost:3001')

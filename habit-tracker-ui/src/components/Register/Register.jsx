@@ -23,14 +23,14 @@ export default function Register({user, setUser}) {
     if (error) { setError(error) }
     if (data?.user) {
       setNewUser(null);
+      localStorage.setItem("firstname", data.user.firstName);
+      localStorage.setItem("lastname", data.user.lastName);
+      localStorage.setItem("email", data.user.email);
       apiClient.setToken(data.token)
       navigate('/activity')
     };
   }
 
-  useEffect(() => {
-    console.log('user = ', newUser)
-  }, [newUser])
 
 
   return (

@@ -9,8 +9,10 @@ export default function Navbar() {
   const handleLogout = async (event) => {
     event.preventDefault();
     localStorage.removeItem("habit_tracker_token");
+    localStorage.removeItem("firstname");
+    localStorage.removeItem("lastname");
+    localStorage.removeItem("email");
     navigate('/');
-    
   }
 
 
@@ -18,7 +20,12 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="content">
         <div className="logo">
-          <Link to="/">Logo</Link>
+          {
+            !localStorage.getItem("habit_tracker_token") ? 
+            <Link to="/">Logo</Link>
+            :
+            <Link to="/activity">Logo</Link>
+          }
         </div>
         <ul className="links">
         {
@@ -32,9 +39,21 @@ export default function Navbar() {
             </li>
           </>
           :
-          <li>
-            <a onClick={handleLogout}>Sign Out</a>
+          <>
+            <li>
+              <Link to="/activity">Activity</Link>
+            </li>
+            <li>
+              <Link to="/habit">Habits</Link>
+            </li>
+             <li>
+            <Link to='/user-profile'>User Profile</Link>
           </li>
+            <li>
+            
+              <a onClick={handleLogout}>Sign Out</a>
+            </li>
+          </>
         }
         </ul>
       </div>
