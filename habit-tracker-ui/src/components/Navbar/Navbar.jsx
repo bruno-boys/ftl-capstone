@@ -36,14 +36,18 @@ export default function Navbar() {
           </>
           :
           <>
-           <li>
-            <a onClick={handleLogout}>Sign Out</a>
-          </li>
-          <li>
+            <li>
+              {/* delete this when we place link for habit page */}
+              <Link to="/habit-form">Habit Form</Link>
+            </li>
+             <li>
             <Link to='/user-profile'>User Profile</Link>
           </li>
+            <li>
+            
+              <a onClick={handleLogout}>Sign Out</a>
+            </li>
           </>
-         
         }
         </ul>
       </div>

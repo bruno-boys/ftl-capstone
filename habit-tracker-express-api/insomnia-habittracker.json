@@ -1,9 +1,45 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-07-22T18:27:17.459Z",
+	"__export_date": "2022-07-26T17:25:47.886Z",
 	"__export_source": "insomnia.desktop.app:v2022.4.2",
 	"resources": [{
+		"_id": "req_5ee3b4158b384f2b9ad963408fea87b2",
+		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
+		"modified": 1658856284113,
+		"created": 1658856203326,
+		"url": "http://localhost:3001/habits",
+		"name": "Habit Page",
+		"description": "",
+		"method": "GET",
+		"body": {},
+		"parameters": [],
+		"headers": [{
+			"id": "pair_f7a75011400442cfa7727f71f44b5e15",
+			"name": "Authorization",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsb3llLm9zaG90c2VAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1ODg1NjI1MywiZXhwIjoxNjU4OTQyNjUzfQ.KE31-Qn9UB4feWiB3kp7kcQLKPSK3N6JHgFJGDkkwV4",
+			"description": ""
+		}],
+		"authentication": {},
+		"metaSortKey": -1658856203327,
+		"isPrivate": false,
+		"settingStoreCookies": true,
+		"settingSendCookies": true,
+		"settingDisableRenderRequestBody": false,
+		"settingEncodeUrl": true,
+		"settingRebuildPath": true,
+		"settingFollowRedirects": "global",
+		"_type": "request"
+	}, {
+		"_id": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
+		"parentId": null,
+		"modified": 1658471554558,
+		"created": 1658471554558,
+		"name": "Habit Tracker",
+		"description": "",
+		"scope": "collection",
+		"_type": "workspace"
+	}, {
 		"_id": "req_f930e527146b45caa03b0b43e5464e9f",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
 		"modified": 1658471721677,
@@ -26,18 +62,9 @@
 		"settingFollowRedirects": "global",
 		"_type": "request"
 	}, {
-		"_id": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"parentId": null,
-		"modified": 1658471554558,
-		"created": 1658471554558,
-		"name": "Habit Tracker",
-		"description": "",
-		"scope": "collection",
-		"_type": "workspace"
-	}, {
 		"_id": "req_b6fdb4ed963647db8cd81b0e43bb6a1a",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"modified": 1658514390218,
+		"modified": 1658774100095,
 		"created": 1658471625780,
 		"url": "http://localhost:3001/auth/register",
 		"name": "Register",
@@ -45,7 +72,7 @@
 		"method": "POST",
 		"body": {
 			"mimeType": "application/json",
-			"text": "{\n\t\"firstName\": \"Test2\",\n\t\"lastName\": \"Test2\",\n\t\"email\": \"test2@gmail.com\",\n\t\"userName\": \"test1234\",\n\t\"password\": \"test\"\n}"
+			"text": "{\n\t\"firstName\": \"Test2\",\n\t\"lastName\": \"Test2\",\n\t\"email\": \"test25@gmail.com\",\n\t\"userName\": \"test12345\",\n\t\"phoneNumber\": \"123-456-7890\",\n\t\"password\": \"test\"\n}"
 		},
 		"parameters": [],
 		"headers": [{
@@ -66,7 +93,7 @@
 	}, {
 		"_id": "req_e50868ea95734842bd487b14557f1ac9",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"modified": 1658514388136,
+		"modified": 1658856250621,
 		"created": 1658471620462,
 		"url": "http://localhost:3001/auth/login",
 		"name": "Login",
@@ -74,7 +101,7 @@
 		"method": "POST",
 		"body": {
 			"mimeType": "application/json",
-			"text": "{\n\t\"userName\": \"test123\",\n\t\"password\": \"test\"\n}"
+			"text": "{\n\t\"userName\": \"aoshotse\",\n\t\"password\": \"test\"\n}"
 		},
 		"parameters": [],
 		"headers": [{
@@ -95,7 +122,7 @@
 	}, {
 		"_id": "req_7716bce32c204bea9a7682ddf9b90620",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"modified": 1658473468968,
+		"modified": 1658774144429,
 		"created": 1658473444862,
 		"url": "http://localhost:3001/auth/me",
 		"name": "Me",
@@ -103,7 +130,12 @@
 		"method": "GET",
 		"body": {},
 		"parameters": [],
-		"headers": [],
+		"headers": [{
+			"id": "pair_eb86e61b7cc64cdda46929a12a67a1a4",
+			"name": "Authorization",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyNUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU4Nzc0MTEyLCJleHAiOjE2NTg4NjA1MTJ9.DZLIPQ16O3jqtHHAvT33hCdiDszmIFdS4p5wx1uRrBU",
+			"description": ""
+		}],
 		"authentication": {},
 		"metaSortKey": -1658471620412,
 		"isPrivate": false,
