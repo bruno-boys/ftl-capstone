@@ -25,8 +25,9 @@ export default function HabitPage() {
   return (
     <div className="gridSection">
       <div className="gridContent">
-        <h1>Habits</h1>
+        <h1 id='habit-header'>Habits</h1>
       </div>
+      <Link id='form-btn'to={'/habit-form'}>Add Habit</Link>
       <HabitGrid habits={habits} />
     </div>
   );
