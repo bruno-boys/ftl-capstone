@@ -13,7 +13,6 @@ export default function Navbar() {
     localStorage.removeItem("lastname");
     localStorage.removeItem("email");
     navigate('/');
-    
   }
 
 
@@ -21,7 +20,12 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="content">
         <div className="logo">
-          <Link to="/">Logo</Link>
+          {
+            !localStorage.getItem("habit_tracker_token") ? 
+            <Link to="/">Logo</Link>
+            :
+            <Link to="/activity">Logo</Link>
+          }
         </div>
         <ul className="links">
         {
