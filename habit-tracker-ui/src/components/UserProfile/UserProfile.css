@@ -1,0 +1,111 @@
+.user-profile {
+  position: relative;
+  background: #ffffff;
+}
+
+.img {
+  position: absolute;
+  width: 345px;
+  height: 411px;
+  left: 65px;
+  top: 50px;
+}
+
+.linked-accounts {
+  position: absolute;
+  width: 307px;
+  height: 133px;
+  left: 84px;
+  top: 678px;
+}
+
+.social-media-handles {
+  position: absolute;
+  width: 307px;
+  height: 52px;
+  left: 5px;
+  top: 450px;
+}
+
+.twitter {
+  position: absolute;
+  width: 72px;
+  height: 52px;
+  left: 84px;
+  top: 12px;
+
+  background: #d9d9d9;
+}
+
+.facebook {
+  position: absolute;
+  width: 64px;
+  height: 52px;
+  left: 209px;
+  top: 12px;
+
+  background: #d9d9d9;
+}
+
+.instagram {
+  position: absolute;
+  width: 67px;
+  height: 52px;
+  left: 324px;
+  top: 12px;
+
+  background: #d9d9d9;
+}
+
+.email {
+  position: absolute;
+  width: 307px;
+  height: 55px;
+  left: 84px;
+  top: 550px;
+
+  background: #d9d9d9;
+}
+
+.userName {
+  position: absolute;
+  width: 550px;
+  height: 135px;
+  left: 460px;
+  top: 100px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 58px;
+
+  color: #000000;
+}
+
+.edit-profile {
+  position: absolute;
+  width: 130px;
+  height: 47px;
+  left: 1200px;
+  top: 100px;
+  background-color: brown;
+}
+
+.big-container {
+  position: absolute;
+  width: 866px;
+  height: 758px;
+  left: 464px;
+  top: 160px;
+
+  background: #d9d9d9;
+}
+
+/* .communication {
+  position: absolute;
+  width: 380px;
+  height: 56px;
+  left: 742px;
+  top: 534px;
+} */

@@ -9,6 +9,9 @@ export default function Navbar() {
   const handleLogout = async (event) => {
     event.preventDefault();
     localStorage.removeItem("habit_tracker_token");
+    localStorage.removeItem("firstname");
+    localStorage.removeItem("lastname");
+    localStorage.removeItem("email");
     navigate('/');
     
   }
@@ -37,11 +40,14 @@ export default function Navbar() {
               {/* delete this when we place link for habit page */}
               <Link to="/habit-form">Habit Form</Link>
             </li>
+             <li>
+            <Link to='/user-profile'>User Profile</Link>
+          </li>
             <li>
+            
               <a onClick={handleLogout}>Sign Out</a>
             </li>
           </>
-      
         }
         </ul>
       </div>
