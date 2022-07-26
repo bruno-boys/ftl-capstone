@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Activity from "../Activity/Activity";
 import HabitPage from "../HabitPage/HabitPage";
 import axios from "axios";
+import HabitForm from "../HabitForm/HabitForm";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -31,6 +32,9 @@ export default function App() {
             />
             <Route path="/activity" element={<Activity />} />
             <Route path="/habit" element={<HabitPage user={user} />} />
+            <Route path="/register" element={<Register user={user} setUser={setUser}/>} />
+            <Route path="/activity" element = {<Activity />} />
+            <Route path="/habit-form" element = { < HabitForm/>} />
           </Routes>
         </main>
       </BrowserRouter>
