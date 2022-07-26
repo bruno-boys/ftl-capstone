@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/bruno-boys/ftl-capstone#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
