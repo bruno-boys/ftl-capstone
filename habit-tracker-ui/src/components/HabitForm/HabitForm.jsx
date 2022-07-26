@@ -12,7 +12,7 @@ export default function HabitForm() {
     { key: 3, label: "monthly", value: "monthly" },
     { key: 4, label: "annually", value: "annually" },
   ];
-  const navigate = useNavigate();
+
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
     habitName: "",
@@ -22,21 +22,16 @@ export default function HabitForm() {
     period: "daily",
   });
 
+  const navigate = useNavigate();
+
+
   const handleOnInputChange = (event) => {
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await apiClient.createHabit(form);
-
-      // apiClient.setToken(data.token)
-      console.log("we made it to line 38");
-      navigate("/habit");
-      console.log("we made it to line 40");
-    } catch (error) {
-      setErrors(error);
-    }
+    const {data, error} = await apiClient.createHabit(form)
+    navigate('/habit')
   };
 
   return (

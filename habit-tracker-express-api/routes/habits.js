@@ -32,7 +32,7 @@ router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
     await Habits.createHabit(user, req.body);
-    res.json("habit created!")
+    res.status(200).json({status: "Success!"})
   } catch (error) {
     next(error);
   }
