@@ -15,9 +15,10 @@ app.use(express.json());
 
 app.use(extractUserFromJwt)
 
-
 app.use('/auth',authRoutes)
 app.use('/habits', habitRoute)
+
+
 app.get('/', (req,res) => {
     res.status(200).json("main habit tracker route works!")
 })
