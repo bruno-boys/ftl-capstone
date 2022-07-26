@@ -32,9 +32,15 @@ export default function Navbar() {
             </li>
           </>
           :
-          <li>
+          <>
+           <li>
             <a onClick={handleLogout}>Sign Out</a>
           </li>
+          <li>
+            <Link to='/user-profile'>User Profile</Link>
+          </li>
+          </>
+         
         }
         </ul>
       </div>
