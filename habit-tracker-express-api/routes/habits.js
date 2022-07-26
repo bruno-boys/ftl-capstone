@@ -19,9 +19,7 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
 router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
-    console.log("body of request", req.body)
-    const something = await Habits.createHabit(user, req.body);
-    return res.status(201).json({ me: something });
+    await Habits.createHabit(user, req.body);
   } catch (error) {
     next(error);
   }
