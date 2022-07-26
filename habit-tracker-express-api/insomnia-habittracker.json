@@ -1,45 +1,9 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-07-26T17:25:47.886Z",
+	"__export_date": "2022-07-26T20:22:59.576Z",
 	"__export_source": "insomnia.desktop.app:v2022.4.2",
 	"resources": [{
-		"_id": "req_5ee3b4158b384f2b9ad963408fea87b2",
-		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"modified": 1658856284113,
-		"created": 1658856203326,
-		"url": "http://localhost:3001/habits",
-		"name": "Habit Page",
-		"description": "",
-		"method": "GET",
-		"body": {},
-		"parameters": [],
-		"headers": [{
-			"id": "pair_f7a75011400442cfa7727f71f44b5e15",
-			"name": "Authorization",
-			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsb3llLm9zaG90c2VAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY1ODg1NjI1MywiZXhwIjoxNjU4OTQyNjUzfQ.KE31-Qn9UB4feWiB3kp7kcQLKPSK3N6JHgFJGDkkwV4",
-			"description": ""
-		}],
-		"authentication": {},
-		"metaSortKey": -1658856203327,
-		"isPrivate": false,
-		"settingStoreCookies": true,
-		"settingSendCookies": true,
-		"settingDisableRenderRequestBody": false,
-		"settingEncodeUrl": true,
-		"settingRebuildPath": true,
-		"settingFollowRedirects": "global",
-		"_type": "request"
-	}, {
-		"_id": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"parentId": null,
-		"modified": 1658471554558,
-		"created": 1658471554558,
-		"name": "Habit Tracker",
-		"description": "",
-		"scope": "collection",
-		"_type": "workspace"
-	}, {
 		"_id": "req_f930e527146b45caa03b0b43e5464e9f",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
 		"modified": 1658471721677,
@@ -62,9 +26,18 @@
 		"settingFollowRedirects": "global",
 		"_type": "request"
 	}, {
+		"_id": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
+		"parentId": null,
+		"modified": 1658471554558,
+		"created": 1658471554558,
+		"name": "Habit Tracker",
+		"description": "",
+		"scope": "collection",
+		"_type": "workspace"
+	}, {
 		"_id": "req_b6fdb4ed963647db8cd81b0e43bb6a1a",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"modified": 1658774100095,
+		"modified": 1658860827120,
 		"created": 1658471625780,
 		"url": "http://localhost:3001/auth/register",
 		"name": "Register",
@@ -72,7 +45,7 @@
 		"method": "POST",
 		"body": {
 			"mimeType": "application/json",
-			"text": "{\n\t\"firstName\": \"Test2\",\n\t\"lastName\": \"Test2\",\n\t\"email\": \"test25@gmail.com\",\n\t\"userName\": \"test12345\",\n\t\"phoneNumber\": \"123-456-7890\",\n\t\"password\": \"test\"\n}"
+			"text": "{\n\t\"firstName\": \"Test\",\n\t\"lastName\": \"Test2\",\n\t\"email\": \"test25@gmail.com\",\n\t\"userName\": \"test123\",\n\t\"phoneNumber\": \"123-456-7890\",\n\t\"password\": \"test\"\n}"
 		},
 		"parameters": [],
 		"headers": [{
@@ -93,7 +66,7 @@
 	}, {
 		"_id": "req_e50868ea95734842bd487b14557f1ac9",
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
-		"modified": 1658856250621,
+		"modified": 1658860835268,
 		"created": 1658471620462,
 		"url": "http://localhost:3001/auth/login",
 		"name": "Login",
@@ -101,7 +74,7 @@
 		"method": "POST",
 		"body": {
 			"mimeType": "application/json",
-			"text": "{\n\t\"userName\": \"aoshotse\",\n\t\"password\": \"test\"\n}"
+			"text": "{\n\t\"userName\": \"test123\",\n\t\"password\": \"test\"\n}"
 		},
 		"parameters": [],
 		"headers": [{
@@ -138,6 +111,94 @@
 		}],
 		"authentication": {},
 		"metaSortKey": -1658471620412,
+		"isPrivate": false,
+		"settingStoreCookies": true,
+		"settingSendCookies": true,
+		"settingDisableRenderRequestBody": false,
+		"settingEncodeUrl": true,
+		"settingRebuildPath": true,
+		"settingFollowRedirects": "global",
+		"_type": "request"
+	}, {
+		"_id": "req_e9ee32511db740368dcadf87b672b9ae",
+		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
+		"modified": 1658861376781,
+		"created": 1658860672184,
+		"url": "http://localhost:3001/habits/create",
+		"name": "Create Habit",
+		"description": "",
+		"method": "POST",
+		"body": {
+			"mimeType": "application/json",
+			"text": "{\n\t\"habitName\": \"drink water\",\n\t\"frequency\": 3,\n\t\"period\": \"daily\",\n\t\"startDate\": \"2022-07-25\",\n\t\"endDate\": \"2022-07-29\"\n}"
+		},
+		"parameters": [],
+		"headers": [{
+			"id": "pair_da7c1335430b43618859316d683fd8e1",
+			"name": "Authorization",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyNUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU4ODYwODMxLCJleHAiOjE2NTg5NDcyMzF9._oqU0PTRFgNf8Z4YyaZq_60DTrOYGAKxMyDiUdAYoYU",
+			"description": ""
+		}, {
+			"name": "Content-Type",
+			"value": "application/json",
+			"id": "pair_2ad4d64cb4214d1088441ecbc9edcf76"
+		}],
+		"authentication": {},
+		"metaSortKey": -1658471620387,
+		"isPrivate": false,
+		"settingStoreCookies": true,
+		"settingSendCookies": true,
+		"settingDisableRenderRequestBody": false,
+		"settingEncodeUrl": true,
+		"settingRebuildPath": true,
+		"settingFollowRedirects": "global",
+		"_type": "request"
+	}, {
+		"_id": "req_5ee3b4158b384f2b9ad963408fea87b2",
+		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
+		"modified": 1658861416703,
+		"created": 1658856203326,
+		"url": "http://localhost:3001/habits",
+		"name": "Habit Page",
+		"description": "",
+		"method": "GET",
+		"body": {},
+		"parameters": [],
+		"headers": [{
+			"id": "pair_f7a75011400442cfa7727f71f44b5e15",
+			"name": "Authorization",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyNUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU4ODYwODMxLCJleHAiOjE2NTg5NDcyMzF9._oqU0PTRFgNf8Z4YyaZq_60DTrOYGAKxMyDiUdAYoYU",
+			"description": ""
+		}],
+		"authentication": {},
+		"metaSortKey": -1658471620362,
+		"isPrivate": false,
+		"settingStoreCookies": true,
+		"settingSendCookies": true,
+		"settingDisableRenderRequestBody": false,
+		"settingEncodeUrl": true,
+		"settingRebuildPath": true,
+		"settingFollowRedirects": "global",
+		"_type": "request"
+	}, {
+		"_id": "req_da2620b141024f28af0b073560a21d34",
+		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
+		"modified": 1658861419739,
+		"created": 1658859275070,
+		"url": "http://localhost:3001/habits/2",
+		"name": "Habit Details",
+		"description": "",
+		"method": "GET",
+		"body": {},
+		"parameters": [],
+		"headers": [{
+			"id": "pair_5a450cb72de246d1abaf0273e6364a83",
+			"name": "Authorization",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyNUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjU4ODYwODMxLCJleHAiOjE2NTg5NDcyMzF9._oqU0PTRFgNf8Z4YyaZq_60DTrOYGAKxMyDiUdAYoYU",
+			"description": ""
+		}],
+		"authentication": {},
+		"metaSortKey": -1658471620262,
 		"isPrivate": false,
 		"settingStoreCookies": true,
 		"settingSendCookies": true,

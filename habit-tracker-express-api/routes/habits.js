@@ -16,10 +16,23 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
+router.get('/:id', requireAuthenticatedUser, async (req,res,next) => {
+  try{
+    const user = res.locals.user
+    const habitId = parseInt(req.params.id)
+    const habit = await Habits.fetchHabitById(user, habitId)
+    res.status(200).json(habit)
+  }
+  catch(error) {
+    next(error);
+  }
+})
+
 router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
     await Habits.createHabit(user, req.body);
+    res.json("habit created!")
   } catch (error) {
     next(error);
   }

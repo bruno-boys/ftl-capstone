@@ -31,9 +31,6 @@ export default function Register({user, setUser}) {
     };
   }
 
-  useEffect(() => {
-    console.log('user = ', newUser)
-  }, [newUser])
 
 
   return (

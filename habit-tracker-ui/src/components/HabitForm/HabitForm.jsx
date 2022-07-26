@@ -23,14 +23,8 @@ export default function HabitForm() {
   });
 
   const handleOnInputChange = (event) => {
-    if (event.target.name == "period") {
-      console.log("period = ", event.target.value);
-    }
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
-
-  console.log("Form", form);
-
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     try {
