@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import apiClient from "../../services/apiClient";
+import { Link } from "react-router-dom";
 
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
@@ -43,13 +44,16 @@ function HabitGrid({ habits }) {
 function HabitCard({ habit }) {
   return (
     <div className="habitCard">
-      <div>
-        <div>{habit.habit_name}</div>
-        <div>{habit.frequency}</div>
-        <div>{habit.period}</div>
-        <div>{habit.start_date}</div>
-        <div>{habit.end_date}</div>
-      </div>
+      <Link to={`habit/${habit.id}`}>
+        <div>
+          <div>{habit.habit_name}</div>
+          <div>{habit.frequency}</div>
+          <div>{habit.period}</div>
+          <div>{habit.start_date}</div>
+          <div>{habit.end_date}</div>
+        </div>
+      </Link>
     </div>
+
   );
 }

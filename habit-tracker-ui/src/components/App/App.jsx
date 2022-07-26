@@ -8,7 +8,7 @@ import Login from "../Login/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Activity from "../Activity/Activity";
 import HabitPage from "../HabitPage/HabitPage";
-import axios from "axios";
+import HabitDetailPage from "../HabitDetailPage/HabitDetailPage";
 import HabitForm from "../HabitForm/HabitForm";
 import UserProfile from "../UserProfile/UserProfile";
 
@@ -23,18 +23,11 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/login"
-              element={<Login user={user} setUser={setUser} />}
-            />
-            <Route
-              path="/register"
-              element={<Register user={user} setUser={setUser} />}
-            />
+            <Route path="/login" element={<Login user={user} setUser={setUser} />} />
+            <Route path="/register" element={<Register user={user} setUser={setUser} />} />
             <Route path="/activity" element={<Activity />} />
             <Route path="/habit" element={<HabitPage user={user} />} />
-            <Route path="/register" element={<Register user={user} setUser={setUser}/>} />
-            <Route path="/activity" element = {<Activity />} />
+            <Route path="habit/:id" element={<HabitDetailPage />} />
             <Route path="/habit-form" element = { < HabitForm/>} />
             <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
           </Routes>
