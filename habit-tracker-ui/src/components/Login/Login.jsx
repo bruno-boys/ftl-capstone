@@ -33,6 +33,9 @@ export default function Login({ user, setUser }) {
       setForm(null);
       apiClient.setToken(data.token)
       setUser(data.user)
+      localStorage.setItem("firstname", data.user.firstName);
+      localStorage.setItem("lastname", data.user.lastName);
+      localStorage.setItem("email", data.user.email);
       navigate('/activity')
     };
   };
