@@ -37,8 +37,10 @@ export default function Navbar() {
           :
           <>
             <li>
-              {/* delete this when we place link for habit page */}
-              <Link to="/habit-form">Habit Form</Link>
+              <Link to="/activity">Activity</Link>
+            </li>
+            <li>
+              <Link to="/habit">Habits</Link>
             </li>
              <li>
             <Link to='/user-profile'>User Profile</Link>
