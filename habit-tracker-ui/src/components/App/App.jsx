@@ -27,7 +27,7 @@ export default function App() {
             <Route path="/register" element={<Register user={user} setUser={setUser} />} />
             <Route path="/activity" element={<Activity />} />
             <Route path="/habit" element={<HabitPage user={user} />} />
-            <Route path="habit/:id" element={<HabitDetailPage />} />
+            <Route path="/habit/:habitId" element={<HabitDetailPage />} />
             <Route path="/habit-form" element = { < HabitForm/>} />
             <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
           </Routes>

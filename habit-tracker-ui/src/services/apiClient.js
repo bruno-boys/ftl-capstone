@@ -49,15 +49,15 @@ class ApiClient {
     }
 
     async createHabit(credentials){
-        return await this.request({endpoint : `habits/create`, method: `POST`, data : credentials })
+        return await this.request({endpoint : `habits/create`, method: `POST`, data: credentials })
     }
 
     async fetchHabitList() {
         return await this.request({ endpoint: `habits/`, method: `GET` })
     }
 
-    async fetchHabitById() {
-        return await this.request({ endpoint: `habits/:id`, method: `GET` })
+    async fetchHabitById(habitId) {
+        return await this.request({ endpoint: `habits/${habitId}`, method: `GET` })
     }
 
 }

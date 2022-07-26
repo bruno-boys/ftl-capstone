@@ -31,29 +31,32 @@ export default function HabitPage() {
     </div>
   );
 }
+
+
 function HabitGrid({ habits }) {
   return (
     <div className="gridContent">
-      {habits.map((habit) => {
-        return <HabitCard habit={habit} />;
+      {habits.map((habit, idx) => {
+        return <HabitCard key={idx} habit={habit} /> 
       })}
     </div>
   );
 }
 
 function HabitCard({ habit }) {
+
   return (
-    <div className="habitCard">
-      <Link to={`habit/${habit.id}`}>
-        <div>
-          <div>{habit.habit_name}</div>
-          <div>{habit.frequency}</div>
-          <div>{habit.period}</div>
-          <div>{habit.start_date}</div>
-          <div>{habit.end_date}</div>
-        </div>
-      </Link>
-    </div>
+      <div className="habitCard">
+          <Link to={"/habit/" + habit.id}>
+            <div>
+              <div>{habit.habit_name}</div>
+              <div>{habit.frequency}</div>
+              <div>{habit.period}</div>
+              <div>{habit.start_date}</div>
+              <div>{habit.end_date}</div>
+            </div>
+          </Link>
+      </div>
 
   );
 }
