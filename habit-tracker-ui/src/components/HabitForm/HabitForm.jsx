@@ -3,10 +3,10 @@ import { useState } from "react";
 import apiClient from "../../services/apiClient";
 export default function HabitForm() {
   const PeriodOptions = [
-    { key: 1, label: "Daily", value: "daily" },
-    { key: 2, label: "Weekly", value: "weekly" },
-    { key: 3, label: "Monthly", value: "monthly" },
-    { key: 4, label: "Annually", value: "annually" },
+    { key: 1, label: "daily", value: "daily" },
+    { key: 2, label: "weekly", value: "weekly" },
+    { key: 3, label: "monthly", value: "monthly" },
+    { key: 4, label: "annually", value: "annually" },
   ];
 
   const [errors, setErrors] = useState({});
@@ -15,11 +15,12 @@ export default function HabitForm() {
     startDate: "",
     endDate : "",
     frequency : "",
-    period : ""
+    period : "daily"
   });
 
 
   const handleOnInputChange = (event) => {
+    if (event.target.name == 'period') { console.log("period = ", event.target.value) }
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
