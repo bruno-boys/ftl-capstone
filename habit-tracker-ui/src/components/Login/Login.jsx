@@ -26,14 +26,21 @@ export default function Login({ user, setUser }) {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const {data, error} = await apiClient.loginUser(form)
+    console.log("data", data)
     if (error) { setErrors(error) }
     if (data?.user) {
+      console.log("Data.user", data.user)
       setForm(null);
       apiClient.setToken(data.token)
+      setUser(data.user)
+      localStorage.setItem("firstname", data.user.firstName);
+      localStorage.setItem("lastname", data.user.lastName);
+      localStorage.setItem("email", data.user.email);
       navigate('/activity')
     };
   };
 
+  console.log("User in login", user)
   return (
     <div className="Login">
       <div className="card">
