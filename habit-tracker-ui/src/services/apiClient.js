@@ -55,6 +55,8 @@ class ApiClient {
         return await this.request({ endpoint: `habits/`, method: `GET` })
     }
 
+        
+
 }
 
 export default new ApiClient('http://localhost:3001')
