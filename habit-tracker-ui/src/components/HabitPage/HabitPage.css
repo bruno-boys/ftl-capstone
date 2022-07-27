@@ -1,3 +1,54 @@
+
+.habitCard {
+  display: flex;
+  background: lightgray;
+  border: 1px solid black;
+  /* height: 100px; */
+}
+
+.gridContent {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.habitName {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.habitFrequency {
+  margin: 50px 0px 0px 0px;
+}
+
+.grid-label {
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+}
+
+.create-habit {
+  margin-left: 1570px;
+  height: 40px;
+  margin-top: 40px;
+}
+.text-label {
+  margin-top: 40px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  height: 30px;
+  gap: 10px;
+  margin-left: 1570px;
+
 #form-btn {
     height: min-content;
     width: max-content;
@@ -15,4 +66,5 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+
 }

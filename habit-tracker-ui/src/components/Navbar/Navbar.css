@@ -92,6 +92,13 @@
       display: list-item;
       text-align: -webkit-match-parent;
   }
+
+  #logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 0px !important;
+    margin-left: auto !important;
+  }
   
   .btn, button {
       background: transparent;
