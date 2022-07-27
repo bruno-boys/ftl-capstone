@@ -14,11 +14,15 @@ export default function Navbar() {
     navigate("/");
   };
 
+
   return (
     <nav className="navbar">
       <div className="content">
         <div className="logo">
-          <Link to="/">
+
+          {
+            !localStorage.getItem("habit_tracker_token") ? 
+             <Link to="/">
             <img
               id="logo"
               src="https://is5-ssl.mzstatic.com/image/thumb/Purple115/v4/e6/4d/3d/e64d3d18-9740-8690-7e6f-fa8dd156240d/source/256x256bb.jpg"
@@ -26,6 +30,17 @@ export default function Navbar() {
               className="landing-page-logo"
             />
           </Link>
+            :
+             <Link to="/activity">
+            <img
+              id="logo"
+              src="https://is5-ssl.mzstatic.com/image/thumb/Purple115/v4/e6/4d/3d/e64d3d18-9740-8690-7e6f-fa8dd156240d/source/256x256bb.jpg"
+              alt="habit-tracker-logo"
+              className="landing-page-logo"
+            />
+          </Link>
+          }
+          
         </div>
         <ul className="links">
           {!localStorage.getItem("habit_tracker_token") ? (

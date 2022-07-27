@@ -1,3 +1,4 @@
+
 .habitCard {
   display: flex;
   background: lightgray;
@@ -47,4 +48,23 @@
   height: 30px;
   gap: 10px;
   margin-left: 1570px;
+
+#form-btn {
+    height: min-content;
+    width: max-content;
+}
+
+#habit-header {
+    width: min-content;
+}
+
+.gridContent {
+    width: 80%;
+}
+
+.gridSection {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
 }
