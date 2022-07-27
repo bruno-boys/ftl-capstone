@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
-
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ export default function HabitPage() {
   return (
     <div className="gridSection">
       <div className="gridContent">
-
         <div className="grid-label">
           <h1 className="text-label">Habits</h1>
           <button className="create-habit" onClick={createHabit}>
@@ -41,31 +39,26 @@ export default function HabitPage() {
             Add Habit
           </button>
         </div>
-
       </div>
-      <Link id='form-btn'to={'/habit-form'}>Add Habit</Link>
       <HabitGrid habits={habits} />
     </div>
   );
 }
 
-
 function HabitGrid({ habits }) {
   return (
     <div className="gridContent">
       {habits.map((habit, idx) => {
-        return <HabitCard key={idx} habit={habit} /> 
+        return <HabitCard key={idx} habit={habit} />;
       })}
     </div>
   );
 }
 
 function HabitCard({ habit }) {
-
   return (
     <div className="habitCard">
-    <Link to={"/habit/" + habit.id}>
-      <div>
+      <Link to={"/habit/" + habit.id}>
         <div className="top">
           <div className="habitName">{habit.habit_name}</div>
           <div className="completion">0/{habit.frequency}</div>
@@ -78,10 +71,8 @@ function HabitCard({ habit }) {
             <button className="edit">Edit</button>
             <button className="log">Log</button>
           </div>
-          </Link>
         </div>
-
-      </div>
-
+      </Link>
+    </div>
   );
 }
