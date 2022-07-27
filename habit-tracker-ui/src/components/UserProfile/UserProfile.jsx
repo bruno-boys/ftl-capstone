@@ -2,7 +2,6 @@ import "../UserProfile/UserProfile.css";
 
 export default function UserProfile({user}) {
 
-    console.log("User", user)
   return (
     <div className="user-profile">
       <div>
