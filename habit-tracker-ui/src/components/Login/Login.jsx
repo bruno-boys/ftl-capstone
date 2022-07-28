@@ -37,13 +37,12 @@ export default function Login({ user, setUser }) {
       navigate('/activity')
     };
   };
-
   return (
     <div className="Login">
       <div className="card">
         <h2> Login </h2>
 
-        {errors.form && <span className="error">{errors.form}</span>}
+        {<span className="error">{errors?.data?.error?.message}</span>}
 
         <br />
         <div className="form">
