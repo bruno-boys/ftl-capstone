@@ -3,13 +3,28 @@
     justify-content: center;
 }
 
-.buttons {
-    margin-left: 61vw;
+
+/* .edit-habit {
+    margin-left: 67vw;
     height: 40px;
     margin-top: 40px;
 }
 
-.buttons .delete-habit {
+.delete-habit {
+    margin-left: 61vw;
+    height: 40px;
+    margin-top: 50px;
+    background-color: red;
+}  */
+
+.detail-buttons {
+    background-color: yellow;
+    margin-left: 100vh;
+    height: 40px;
+    margin-top: 40px;
+}
+
+.detail-buttons .delete-habit {
     background-color: red;
 }
 
@@ -23,4 +38,3 @@
 .habit-name {
     font-size: 40px;
 }
-

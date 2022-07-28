@@ -41,11 +41,11 @@
 }
 
 
-.buttons {
+.bottom .buttons {
   display: flex;
   flex-direction: row;
   margin-top: 20px;
-  height: 30px;
+  height: 40px;
   gap: 10px;
   margin-left: 70vw;
 } 

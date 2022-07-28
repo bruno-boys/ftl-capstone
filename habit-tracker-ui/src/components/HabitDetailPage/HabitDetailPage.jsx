@@ -37,7 +37,7 @@ export default function HabitDetailPage() {
 
     return (
         <> 
-            <span className='buttons'>
+            <span className='detail-buttons'>
                 <button className="edit-habit">
                     Edit
                 </button>
