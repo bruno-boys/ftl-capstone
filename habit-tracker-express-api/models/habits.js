@@ -45,6 +45,7 @@ class Habits {
     );
   }
 
+
   static async deleteHabit(user, habitId) {
     //allows user to delete habits
     await db.query(
@@ -56,6 +57,27 @@ class Habits {
       [user.email, habitId]
     );
   }
+
+    static async getCompletedCount(habitInfo){
+        console.log("id", habitInfo.id)
+        const results = await db.query(`select completed_count from tracked_habits where habit_id = $1`, [habitInfo.id])
+
+        const completedCount = results.rows[0]
+
+        console.log("completed count", completedCount)
+
+        const output = Boolean(completedCount)
+
+        if (output){
+            return completedCount
+        }
+        else{
+            return 0
+        }
+    }
+
+
+
 }
 
 module.exports = Habits;
