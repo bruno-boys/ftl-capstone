@@ -16,6 +16,7 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
+
 router.get("/tracked", requireAuthenticatedUser, async (req, res, next) => {
   const habitInfo = req.body;
 
@@ -24,12 +25,24 @@ router.get("/tracked", requireAuthenticatedUser, async (req, res, next) => {
   res.status(200).json({ completedCount: completedCount });
 });
 
+
 router.get("/:id", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
     const habitId = parseInt(req.params.id);
     const habit = await Habits.fetchHabitById(user, habitId);
     res.status(200).json(habit);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    const user = res.locals.user;
+    const habitId = parseInt(req.params.id);
+    await Habits.deleteHabit(user, habitId);
+    res.status(200).json({ message: "Habit deleted" });
   } catch (error) {
     next(error);
   }
