@@ -73,6 +73,11 @@ export default function EditForm() {
     navigate("/activity");
   }
 
+  const cancel = async (event) => {
+    event.preventDefault();
+    navigate('/activity')
+  }
+
   return (
     <div className="habit-form">
       <div className="card">
@@ -140,8 +145,8 @@ export default function EditForm() {
           </div>
 
           <div className="btn">
-
-            <button onClick={handleOnSubmit}> Edit Habit</button>
+            <button id="cancel-btn" onClick={cancel}>Cancel</button>
+            <button onClick={handleOnSubmit}> Update Habit</button>
           </div>
         </div>
       </div>

@@ -77,7 +77,6 @@ function HabitCard({ habit }) {
           <div className="habitName">{habit.habit_name}</div>
           <div className="completion">0/{habit.frequency}</div>
         </div>
-      </Link>
       <div className="bottom">
         <div className="habitFrequency">
           {habit.frequency}/{habit.period}
@@ -89,6 +88,7 @@ function HabitCard({ habit }) {
           <button className="log" onClick={updateLog}>Log</button>
         </div>
       </div>
+      </Link>
     </div>
   );
 }

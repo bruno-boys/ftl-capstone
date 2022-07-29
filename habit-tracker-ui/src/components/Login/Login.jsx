@@ -51,7 +51,7 @@ export default function Login({ user, setUser }) {
             <input
               type="text"
               name="userName"
-              placeholder="Username"
+              placeholder="your_username"
               value={form.userName}
               onChange={handleOnInputChange}
             />
@@ -65,7 +65,7 @@ export default function Login({ user, setUser }) {
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="password"
               value={form.password}
               onChange={handleOnInputChange}
             />

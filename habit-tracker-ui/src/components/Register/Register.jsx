@@ -41,6 +41,13 @@ export default function Register({ user, setUser }) {
         setError((e) => ({ ...e, email: null }));
       }
     }
+    if (event.target.name === "phoneNumber") {
+      if (event.target.value.length != 10) {
+        setError((e) => ({ ...e, phoneNumber: "Please enter a valid phone number." }));
+      } else {
+        setError((e) => ({ ...e, phoneNumber: null }));
+      }
+    }
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
     setNewUser({
       ...newUser,
@@ -63,57 +70,106 @@ export default function Register({ user, setUser }) {
     }
   };
 
-  console.log("Error new", error);
   return (
     <div className="register">
-      <h1>Register</h1>
-      {error.form && <span className="error">{error.form}</span>}
-      <form className="registerForm" onChange={handleOnFormChange}>
-        <label>
-          First Name:
-          <input type="text" name="firstName" />
-        </label>
-        <label>
-          Last Name:
-          <input type="text" name="lastName" />
-        </label>
-        <label>
-          Email:
-          <input
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-        </label>
-        {error.email && <span className="error">{error.email}</span>}
-        <label>
-          Phone Number:
-          <input type="tel" name="phoneNumber" />
-        </label>
-        <label>
-          Username:
-          <input type="text" name="userName" />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" />
-        </label>
-        {error.password && <span className="error">{error.password}</span>}
-        <label>
-          Confirm Password:
-          <input type="password" name="passwordConfirm" />
-        </label>
-        {error.passwordConfirm && (
-          <span className="error">{error.passwordConfirm}</span>
-        )}
-        <input type="submit" value="Register" onClick={handleOnSubmit} />
-      </form>
-      <div className="footer">
+      <div className="card">
+        <h2>Register</h2>
+
+        {<span className="error">{error?.data?.error?.message}</span>}
+
+        <br />
+        <div className="register-form">
+
+          <div className="input-field">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter a valid email"
+              value={form.email}
+              onChange={handleOnFormChange}
+            />
+            {error.email? <span className="error">{error.email}</span> : <></>}
+          </div>
+
+          <div className="input-field">
+              <label htmlFor="phoneNumber">Phone Number</label>
+              <input
+                type="text"
+                name="phoneNumber"
+                placeholder="Enter a valid phone number (digits only)"
+                value={form.phoneNumber}
+                onChange={handleOnFormChange}
+              />
+          {error.phoneNumber?
+                <div className="error">{error.phoneNumber}</div> : <></>
+          }
+          </div>
+
+          <div className="input-field">
+              <label htmlFor="userName">Username</label>
+              <input
+                type="text"
+                name="userName"
+                placeholder="your_username"
+                value={form.userName}
+                onChange={handleOnFormChange}
+              />
+          </div>
+
+          <div className="input-field" id="name-field">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={form.firstName}
+              onChange={handleOnFormChange}
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={form.lastName}
+              onChange={handleOnFormChange}
+            />
+          </div>
+
+          <div className="input-field">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter a secure Password"
+                value={form.password}
+                onChange={handleOnFormChange}
+              />
+              {error.password && <span className="error">{error.password}</span>}
+          </div>
+
+          <div className="input-field">
+              <label htmlFor="confirm-assword">Confirm Password</label>
+              <input
+                type="password"
+                name="passwordConfirm"
+                placeholder="Confirm your password"
+                value={form.passwordConfirm}
+                onChange={handleOnFormChange}
+              />
+              {error.passwordConfirm && (
+                <span className="error">{error.passwordConfirm}</span>
+              )}
+          </div>
+
+          <button className="btn" onClick={handleOnSubmit}>
+            {" "}
+            Sign Up{" "}
+          </button>
+        </div>
+        <div className="footer">
         <p>
           Alreay have an account? Log in <Link to="/login">here</Link>
         </p>
+      </div>
       </div>
     </div>
   );
