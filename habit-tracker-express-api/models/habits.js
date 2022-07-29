@@ -16,6 +16,15 @@ class Habits {
   }
 
 
+  static async logHabit(habitId) {
+      await db.query(
+        `
+        INSERT INTO tracked_habits (habit_id)
+        VALUES ($1);
+        `, [habitId]
+    )
+  }
+
   static async fetchLoggedHabitCount(habitId, startTime, endTime) {
     //
     const results = await db.query(
@@ -94,7 +103,10 @@ class Habits {
         }
     }
 
-
+   static async editHabit(form){
+    console.log("form", form)
+    await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5 where id = $6`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.id])
+  }
 
 }
 

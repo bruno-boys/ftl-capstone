@@ -58,4 +58,26 @@ router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
+router.put("/edit", requireAuthenticatedUser, async (req, res, next) => {
+try{
+  const form = req.body;
+  await Habits.editHabit(form);
+  res.status(200).json({ status: "Success!" });
+
+}
+catch(error){
+  next(error)
+}
+})
+
+router.post("/log", requireAuthenticatedUser, async (req, res, next) => {
+  try {
+    console.log("id = ", req.body.habitId)
+    await Habits.logHabit(req.body.habitId);
+    res.status(200).json({ status: "Habit Logged!" });
+  } catch (error) {
+    next(error);
+  }
+})
+
 module.exports = router;

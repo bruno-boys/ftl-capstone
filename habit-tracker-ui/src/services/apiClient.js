@@ -64,6 +64,14 @@ class ApiClient {
         return await this.request({ endpoint: `habits/${habitId}`, method: `DELETE` })
     }
 
+    async editHabit(form){
+        return await this.request({endpoint : `habits/edit`, method: `PUT`, data: form})
+    }
+
+    async logHabit(habitId) {
+        return await this.request({ endpoint: `habits/log`, method: `POST`, data: habitId })
+    }
+
 }
 
 export default new ApiClient('http://localhost:3001')
