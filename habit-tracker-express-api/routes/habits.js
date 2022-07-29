@@ -16,7 +16,6 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
-
 router.get("/tracked", requireAuthenticatedUser, async (req, res, next) => {
   const habitInfo = req.body;
 
@@ -25,6 +24,16 @@ router.get("/tracked", requireAuthenticatedUser, async (req, res, next) => {
   res.status(200).json({ completedCount: completedCount });
 });
 
+router.get("/log", requireAuthenticatedUser, async (req,res,next) => {
+  try {
+    const {habitId, startTime, endTime} = req.query
+    const logCount = await Habits.fetchLoggedHabitCount(habitId, startTime, endTime);
+    res.status(200).json({logCount});
+  }
+  catch(error) {
+    next(error);
+  }
+})
 
 router.get("/:id", requireAuthenticatedUser, async (req, res, next) => {
   try {
@@ -52,7 +61,7 @@ router.post("/create", requireAuthenticatedUser, async (req, res, next) => {
   try {
     const user = res.locals.user;
     await Habits.createHabit(user, req.body);
-    res.status(200).json({ status: "Success!" });
+    res.status(201).json({ status: "Success!" });
   } catch (error) {
     next(error);
   }
@@ -72,9 +81,8 @@ catch(error){
 
 router.post("/log", requireAuthenticatedUser, async (req, res, next) => {
   try {
-    console.log("id = ", req.body.habitId)
     await Habits.logHabit(req.body.habitId);
-    res.status(200).json({ status: "Habit Logged!" });
+    res.status(201).json({ status: "Habit Logged!" });
   } catch (error) {
     next(error);
   }

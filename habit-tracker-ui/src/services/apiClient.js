@@ -71,7 +71,11 @@ class ApiClient {
     async logHabit(habitId) {
         return await this.request({ endpoint: `habits/log`, method: `POST`, data: habitId })
     }
-
+    
+    async fetchLoggedHabitCount(logData) {
+        //logData = {habitId, startTime, endTime}
+        return await this.request({ endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`, method: `GET` })
+    }
 }
 
 export default new ApiClient('http://localhost:3001')

@@ -15,7 +15,6 @@ class Habits {
     return results.rows;
   }
 
-
   static async logHabit(habitId) {
       await db.query(
         `
@@ -26,7 +25,6 @@ class Habits {
   }
 
   static async fetchLoggedHabitCount(habitId, startTime, endTime) {
-    //
     const results = await db.query(
       `
       SELECT COUNT(*) FROM tracked_habits
@@ -35,9 +33,7 @@ class Habits {
       AND logged_time <= $3;
       `, [habitId, startTime, endTime]
     )
-    //might be a between function for the dates
-    //gives us the count of all logged habits
-    return results.rows;
+    return results.rows[0];
   }
 
 
@@ -86,12 +82,9 @@ class Habits {
   }
 
     static async getCompletedCount(habitInfo){
-        console.log("id", habitInfo.id)
         const results = await db.query(`select completed_count from tracked_habits where habit_id = $1`, [habitInfo.id])
 
         const completedCount = results.rows[0]
-
-        console.log("completed count", completedCount)
 
         const output = Boolean(completedCount)
 

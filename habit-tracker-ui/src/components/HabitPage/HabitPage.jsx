@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 
 function HabitPage() {
   const [habits, setHabits] = useState([]);
+  const [errors, setErrors] = useState("")
   const navigate = useNavigate();
   useEffect(() => {
     const getHabits = async () => {
@@ -58,6 +59,8 @@ export default function HabitGrid({ habits }) {
 
 function HabitCard({ habit }) {
 
+  const [logCount, setLogCount] = useState(0);
+
   const updateLog = async (event) => {
     event.preventDefault();
     const { data, error } = await apiClient.logHabit({habitId: habit.id});
@@ -65,17 +68,32 @@ function HabitCard({ habit }) {
       setErrors(error);
     }
     if (data?.habit) {
-      console.log(data.habit.id);
     }
+    fetchLogCount()
   }
 
+
+    const fetchLogCount = async () => {
+      const logObj = {
+        habitId: habit.id,
+        startTime: habit.start_date,
+        endTime: habit.end_date
+      }
+      const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
+      if (error) {
+        setErrors(error);
+      }
+      if (data?.logCount) {
+        await setLogCount(data.logCount.count);
+      }
+    }
 
   return (
     <div className="habitCard">
       <Link to={"/habit/" + habit.id}>
         <div className="top">
           <div className="habitName">{habit.habit_name}</div>
-          <div className="completion">0/{habit.frequency}</div>
+          <div className="completion">{logCount}/{habit.frequency}</div>
         </div>
       <div className="bottom">
         <div className="habitFrequency">
