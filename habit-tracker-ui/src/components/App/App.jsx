@@ -11,6 +11,7 @@ import HabitPage from "../HabitPage/HabitPage";
 import HabitDetailPage from "../HabitDetailPage/HabitDetailPage";
 import HabitForm from "../HabitForm/HabitForm";
 import UserProfile from "../UserProfile/UserProfile";
+import EditForm from "../EditForm/EditForm";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/habit/:habitId" element={<HabitDetailPage />} />
             <Route path="/habit-form" element = { < HabitForm/>} />
             <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
+            <Route path = "habit/edit/:habitId" element = {<EditForm />} />
           </Routes>
         </main>
       </BrowserRouter>
