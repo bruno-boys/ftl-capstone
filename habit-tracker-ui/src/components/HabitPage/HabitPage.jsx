@@ -57,6 +57,19 @@ export default function HabitGrid({ habits }) {
 }
 
 function HabitCard({ habit }) {
+
+  const updateLog = async (event) => {
+    event.preventDefault();
+    const { data, error } = await apiClient.logHabit({habitId: habit.id});
+    if (error) {
+      setErrors(error);
+    }
+    if (data?.habit) {
+      console.log(data.habit.id);
+    }
+  }
+
+
   return (
     <div className="habitCard">
       <Link to={"/habit/" + habit.id}>
@@ -73,7 +86,7 @@ function HabitCard({ habit }) {
           <Link to={"/habit/edit/" + habit.id}>
             <button className="edit">Edit</button>
           </Link>
-          <button className="log">Log</button>
+          <button className="log" onClick={updateLog}>Log</button>
         </div>
       </div>
     </div>

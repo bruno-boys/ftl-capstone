@@ -70,7 +70,7 @@ export default function EditForm() {
 
     event.preventDefault();
     const { data, error } = await apiClient.editHabit(form)
-    navigate("/habit");
+    navigate("/activity");
   }
 
   return (
