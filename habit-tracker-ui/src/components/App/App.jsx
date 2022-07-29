@@ -23,14 +23,32 @@ export default function App() {
         <Navbar />
         <main>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login user={user} setUser={setUser} />} />
-            <Route path="/register" element={<Register user={user} setUser={setUser} />} />
-            <Route path="/activity" element={<Activity />} />
-            <Route path="/habit/:habitId" element={<HabitDetailPage />} />
-            <Route path="/habit-form" element = { < HabitForm/>} />
-            <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
-            <Route path = "habit/edit/:habitId" element = {<EditForm />} />
+          {!localStorage.getItem("habit_tracker_token") ?
+
+            <>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login user={user} setUser={setUser} />} />
+              <Route path="/register" element={<Register user={user} setUser={setUser} />} /> 
+              <Route path="/activity" element={<Login user={user} setUser={setUser} />} />
+              <Route path="/habit/:habitId" element={<Login user={user} setUser={setUser} />} />
+              <Route path="/habit-form" element = { <Login user={user} setUser={setUser} />} />
+              <Route path = "/user-profile" element = {<Login user={user} setUser={setUser} />} />
+              <Route path = "habit/edit/:habitId" element = {<Login user={user} setUser={setUser} />} />
+            </>
+           
+           :
+
+            <>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login user={user} setUser={setUser} />} />
+              <Route path="/register" element={<Register user={user} setUser={setUser} />} />
+              <Route path="/activity" element={<Activity />} />
+              <Route path="/habit/:habitId" element={<HabitDetailPage />} />
+              <Route path="/habit-form" element = { < HabitForm/>} />
+              <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
+              <Route path = "habit/edit/:habitId" element = {<EditForm />} />
+            </>
+        }
           </Routes>
         </main>
       </BrowserRouter>
