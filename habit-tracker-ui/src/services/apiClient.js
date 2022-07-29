@@ -60,6 +60,10 @@ class ApiClient {
         return await this.request({ endpoint: `habits/${habitId}`, method: `GET` })
     }
 
+    async deleteHabit(habitId) {
+        return await this.request({ endpoint: `habits/${habitId}`, method: `DELETE` })
+    }
+
 }
 
 export default new ApiClient('http://localhost:3001')
