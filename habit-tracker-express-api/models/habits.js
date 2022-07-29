@@ -16,6 +16,15 @@ class Habits {
   }
 
 
+  static async logHabit(habitId) {
+      await db.query(
+        `
+        INSERT INTO tracked_habits (habit_id)
+        VALUES ($1);
+        `, [habitId]
+    )
+  }
+
   static async fetchLoggedHabitCount(habitId, startTime, endTime) {
     //
     const results = await db.query(
