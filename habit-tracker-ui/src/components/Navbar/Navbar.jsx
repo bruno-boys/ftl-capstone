@@ -58,9 +58,6 @@ export default function Navbar() {
                 <Link to="/activity">Activity</Link>
               </li>
               <li>
-                <Link to="/habit">Habits</Link>
-              </li>
-              <li>
                 <Link to="/user-profile">User Profile</Link>
               </li>
               <li>

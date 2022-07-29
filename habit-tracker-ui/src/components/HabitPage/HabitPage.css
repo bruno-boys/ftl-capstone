@@ -1,8 +1,10 @@
 
 .habitCard {
   background: lightgray;
-  min-width: 85vw;
+  width: 100%;
   border: 1px solid black;
+  border-radius: 10px;
+  padding: 0.5rem;
 }
 
 .gridContent {
@@ -27,9 +29,7 @@
 }
 
 .create-habit {
-  margin-left: 70vw;
-  height: 40px;
-  margin-top: 40px;
+  margin-bottom: 10px;
 }
 .text-label {
   margin-top: 40px;
@@ -38,16 +38,18 @@
 .bottom {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 
 .bottom .buttons {
   display: flex;
-  flex-direction: row;
   margin-top: 20px;
+  margin-right: 5px;
   height: 40px;
+  width: 100%;
   gap: 10px;
-  margin-left: 70vw;
+  justify-content: flex-end;
 } 
 #form-btn {
     height: min-content;
@@ -56,10 +58,6 @@
 
 #habit-header {
     width: min-content;
-}
-
-.gridContent {
-    width: 80%;
 }
 
 .gridSection {

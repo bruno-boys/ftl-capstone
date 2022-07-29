@@ -28,7 +28,7 @@ export default function HabitDetailPage() {
         const {data, err} = await apiClient.deleteHabit(habitId);
         if (err) {setError(err)}
         if (data) {
-            navigate('/habit')
+            navigate('/activity')
             console.log(data)
         }
 
