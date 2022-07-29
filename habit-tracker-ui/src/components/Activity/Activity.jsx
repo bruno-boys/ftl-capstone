@@ -1,6 +1,11 @@
 import './Activity.css'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import apiClient from "../../services/apiClient";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import HabitGrid from '../HabitPage/HabitPage';
 
 export default function Activity(){
 
@@ -8,9 +13,30 @@ export default function Activity(){
         console.log("day = ",event)
     }
 
+    const [habits, setHabits] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+      const getHabits = async () => {
+        const { data, error } = await apiClient.fetchHabitList();
+        if (error) {
+          setErrors(error);
+        }
+        if (data?.habits) {
+          setHabits(data.habits);
+        }
+      };
+      getHabits();
+    }, []);
+  
+    const createHabit = (event) => {
+      event.preventDefault();
+      navigate("/habit-form");
+    };
+  
+
     return (
         <>
-         <h1 className='title'>Activity Page</h1>
+         <h1 className='title'>Dashboard</h1>
          <div className="activity-page">
             <div className='left'>
                 <Calendar onClickDay={getPrint}/>
@@ -19,8 +45,9 @@ export default function Activity(){
                 </div>
             </div>
             <div className='right'>
-                <div className="statistics">
-                    stats
+                <button className="create-habit" onClick={createHabit}>Add Habit</button>
+                <div className="activity-habits">
+                    <HabitGrid habits={habits} />
                 </div>
             </div>
         </div>

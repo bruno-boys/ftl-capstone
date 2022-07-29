@@ -29,9 +29,8 @@ export default function HabitForm() {
   };
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    const { data, error } = await apiClient.createHabit(form);
-    console.log(form);
-    navigate("/habit");
+    const {data, error} = await apiClient.createHabit(form)
+    navigate('/activity')
   };
 
   return (
