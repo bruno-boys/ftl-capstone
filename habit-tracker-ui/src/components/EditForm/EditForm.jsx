@@ -25,7 +25,6 @@ export default function EditForm() {
         setError(err);
       }
       if (data) {
-        console.log
         setHabit(data);
 
       }

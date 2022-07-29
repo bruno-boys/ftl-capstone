@@ -29,7 +29,6 @@ export default function HabitDetailPage() {
         if (err) {setError(err)}
         if (data) {
             navigate('/activity')
-            console.log(data)
         }
 
     }
