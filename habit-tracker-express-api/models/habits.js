@@ -1,6 +1,7 @@
 const db = require("../db");
 
 class Habits {
+
   static async fetchHabitList(user) {
     // retrieves all user habits using the user's email to filter the tables
     const results = await db.query(
@@ -14,6 +15,23 @@ class Habits {
     return results.rows;
   }
 
+
+  static async fetchLoggedHabitCount(habitId, startTime, endTime) {
+    //
+    const results = await db.query(
+      `
+      SELECT COUNT(*) FROM tracked_habits
+      WHERE (habit_id = $1)
+      AND logged_time >= $2 
+      AND logged_time <= $3;
+      `, [habitId, startTime, endTime]
+    )
+    //might be a between function for the dates
+    //gives us the count of all logged habits
+    return results.rows;
+  }
+
+
   static async fetchHabitById(user, habitId) {
     //allows for user to fetch a single habit by its id
     const results = await db.query(
@@ -22,7 +40,7 @@ class Habits {
             WHERE (users_id = (SELECT id FROM users WHERE email = $1))
                 AND (id = (SELECT id FROM habits WHERE id = $2));
             `,
-      [user.email, habitId]
+            [user.email, habitId]
     );
     return results.rows[0];
   }
