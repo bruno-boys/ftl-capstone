@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
-export default function HabitPage() {
+function HabitPage() {
   const [habits, setHabits] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function HabitPage() {
   );
 }
 
-function HabitGrid({ habits }) {
+export default function HabitGrid({ habits }) {
   return (
     <div className="gridContent">
       {habits.map((habit, idx) => {
