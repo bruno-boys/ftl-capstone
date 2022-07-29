@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import apiClient from "../../services/apiClient";
+import EditForm from "../EditForm/EditForm.jsx";
 
 import { useNavigate } from "react-router-dom";
 
@@ -63,16 +64,18 @@ function HabitCard({ habit }) {
           <div className="habitName">{habit.habit_name}</div>
           <div className="completion">0/{habit.frequency}</div>
         </div>
-        <div className="bottom">
-          <div className="habitFrequency">
-            {habit.frequency}/{habit.period}
-          </div>
-          <div className="buttons">
-            <button className="edit">Edit</button>
-            <button className="log">Log</button>
-          </div>
-        </div>
       </Link>
+      <div className="bottom">
+        <div className="habitFrequency">
+          {habit.frequency}/{habit.period}
+        </div>
+        <div className="buttons">
+          <Link to={"/habit/edit/" + habit.id}>
+            <button className="edit">Edit</button>
+          </Link>
+          <button className="log">Log</button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,16 @@
-import React from "react";
-
-import "../HabitForm/HabitForm.css";
-import { useState } from "react";
+import "./EditForm.css";
 import apiClient from "../../services/apiClient";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function HabitForm() {
+export default function EditForm() {
+  const { habitId } = useParams();
+  const [habit, setHabit] = useState({});
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({})
+  const navigate = useNavigate();
   const PeriodOptions = [
     { key: 1, label: "daily", value: "daily" },
     { key: 2, label: "weekly", value: "weekly" },
@@ -13,25 +18,60 @@ export default function HabitForm() {
     { key: 4, label: "annually", value: "annually" },
   ];
 
-  const [errors, setErrors] = useState({});
-  const [form, setForm] = useState({
-    habitName: "",
-    startDate: "",
-    endDate: "",
-    frequency: "",
-    period: "daily",
-  });
+  useEffect(() => {
+    const getHabitById = async () => {
+      const { data, err } = await apiClient.fetchHabitById(habitId);
+      if (err) {
+        setError(err);
+      }
+      if (data) {
+        console.log
+        setHabit(data);
 
-  const navigate = useNavigate();
+      }
+    };
+    getHabitById()
+  }, []);
+
+ 
+    
+
+  const formatDate = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
+
+  useEffect(() => {
+  setForm({
+    id : habitId,
+    habitName: habit.habit_name,
+    startDate: formatDate(habit.start_date),
+    endDate : formatDate(habit.end_date),
+    frequency: habit.frequency,
+    period: habit.period
+  })
+}, [habit])
 
   const handleOnInputChange = (event) => {
+
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
-  };
+  }
+
+  console.log("form", form);
+
   const handleOnSubmit = async (event) => {
+
     event.preventDefault();
-    const {data, error} = await apiClient.createHabit(form)
-    navigate('/activity')
-  };
+    const { data, error } = await apiClient.editHabit(form)
+    navigate("/habit");
+  }
 
   return (
     <div className="habit-form">
@@ -46,7 +86,7 @@ export default function HabitForm() {
               name="habitName"
               placeholder="Habit Name"
               value={form.habitName}
-              onChange={handleOnInputChange}
+                onChange={handleOnInputChange}
             />
           </div>
 
@@ -57,7 +97,7 @@ export default function HabitForm() {
                 type="date"
                 name="startDate"
                 placeholder="Start Date"
-                value={form.startDate}
+                value={formatDate(form.startDate)}
                 onChange={handleOnInputChange}
               />
             </div>
@@ -67,7 +107,7 @@ export default function HabitForm() {
                 type="date"
                 name="endDate"
                 placeholder="End Date"
-                value={form.endDate}
+                value={formatDate(form.endDate)}
                 onChange={handleOnInputChange}
               />
             </div>
@@ -80,7 +120,7 @@ export default function HabitForm() {
               name="frequency"
               placeholder="Frequency"
               value={form.frequency}
-              onChange={handleOnInputChange}
+                onChange={handleOnInputChange}
             />
           </div>
 
@@ -89,7 +129,7 @@ export default function HabitForm() {
             <select
               name="period"
               value={form.period}
-              onChange={handleOnInputChange}
+                onChange={handleOnInputChange}
             >
               {PeriodOptions.map((period) => (
                 <option key={period.key} value={period.label}>
@@ -100,7 +140,8 @@ export default function HabitForm() {
           </div>
 
           <div className="btn">
-            <button onClick={handleOnSubmit}> Add Habit</button>
+
+            <button onClick={handleOnSubmit}> Edit Habit</button>
           </div>
         </div>
       </div>
