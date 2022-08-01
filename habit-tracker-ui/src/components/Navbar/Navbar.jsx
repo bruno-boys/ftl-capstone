@@ -7,10 +7,7 @@ export default function Navbar() {
 
   const handleLogout = async (event) => {
     event.preventDefault();
-    localStorage.removeItem("habit_tracker_token");
-    localStorage.removeItem("firstname");
-    localStorage.removeItem("lastname");
-    localStorage.removeItem("email");
+    localStorage.clear();
     navigate("/");
   };
 
