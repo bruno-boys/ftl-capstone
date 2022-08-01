@@ -25,9 +25,3 @@ CREATE TABLE tracked_habits (
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
     logged_time     TIMESTAMP NOT NULL DEFAULT NOW()
 );
-
-CREATE TABLE habit_progess (
-    id              SERIAL PRIMARY KEY,
-    habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
-    completed_count INTEGER NOT NULL DEFAULT 0 
-)

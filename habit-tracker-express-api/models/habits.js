@@ -81,22 +81,7 @@ class Habits {
     );
   }
 
-    static async getCompletedCount(habitInfo){
-        const results = await db.query(`select completed_count from tracked_habits where habit_id = $1`, [habitInfo.id])
-
-        const completedCount = results.rows[0]
-
-        const output = Boolean(completedCount)
-
-        if (output){
-            return completedCount
-        }
-        else{
-            return 0
-        }
-    }
-
-   static async editHabit(form){
+  static async editHabit(form){
     console.log("form", form)
     await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5 where id = $6`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.id])
   }
