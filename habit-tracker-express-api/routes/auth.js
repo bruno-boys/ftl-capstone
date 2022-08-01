@@ -1,7 +1,8 @@
 const express = require("express");
 const User = require("../models/user");
-const { createUserJwt } = require("../utils/tokens");
+const { createUserJwt, generatePasswordResetToken } = require("../utils/tokens");
 const { requireAuthenticatedUser } = require("../middleware/security");
+const { emailService } = require("../services");
 
 const router = express.Router();
 
@@ -48,5 +49,42 @@ router.get("/me", async (req, res, next) => {
     next(error);
   }
 });
+
+router.post("/recover", async (req, res, next) => {
+  try {
+    const {email} = req.body;
+    const token = generatePasswordResetToken()
+    const user = await user.savePasswordResetToken(email, token);
+
+    if (user) {
+      await emailService.sendPasswordResetEmail(user, token);
+      return res.status(200).json({ message: "Email sent" });
+    }
+  }
+  catch (error) {
+    next(error);
+  }
+})
+
+router.post("/pasword-reset", async (req, res, next) => {
+  try {
+    const { token } = req.query
+    const { newPassword } = req.body;
+   
+    const user = await user.resetPassword( token, newPassword);
+
+    if (user) {
+      await emailService.sendPasswordResetConfirmationEmail(user);
+    }
+
+    return res.status(200).json({ message: "Password Successfuly reset" });
+
+  }
+  catch (error) {
+    next(error);
+  }
+})
+
+
 
 module.exports = router;

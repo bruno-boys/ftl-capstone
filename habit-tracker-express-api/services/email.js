@@ -40,6 +40,16 @@ class EmailService {
         return { status: 400, email, error: errors || error};
     }
   }
+
+  async sendPasswordResetEmail(user, token) {
+    const email = {
+    }
+  }
+
+  async sendPasswordResetConfirmationEmail(user, token) {
+    const email = {
+    }
+  }
 }
 
 module.exports = EmailService;
