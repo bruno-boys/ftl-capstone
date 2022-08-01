@@ -137,7 +137,15 @@ function HabitCard({ habit }) {
       <Link to={"/habit/" + habit.id}>
         <div className="top">
           <div className="habitName">{habit.habit_name}</div>
-          <div className="completion">{logCount}/{habit.frequency}</div>
+
+          { logCount >= habit.frequency ? 
+
+              <div className="completion" style={{color: "green"}}>{logCount}/{habit.frequency}</div>
+              :
+              <div className="completion">{logCount}/{habit.frequency}</div>
+
+          }
+          
         </div>
       <div className="bottom">
         <div className="habitFrequency">
