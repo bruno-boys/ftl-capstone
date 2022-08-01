@@ -48,6 +48,44 @@ function HabitPage() {
 }
 
 export default function HabitGrid({ habits }) {
+
+  // const [logCount, setLogCount] = useState(0);
+
+  // const updateLog = async (event) => {
+  //   event.preventDefault();
+  //   const { data, error } = await apiClient.logHabit({habitId: habit.id});
+  //   if (error) {
+  //     setErrors(error);
+  //   }
+  //   if (data?.habit) {
+  //     localStorage.setItem(`log_count_${habit.id}`, logCount)
+  //   }
+  //   fetchLogCount()
+  // }
+
+
+  // const fetchLogCount = async () => {
+  //   setLogCount(localStorage.getItem(`log_count_${habit.id}`))
+  // }
+
+
+    // const fetchLogCount = async () => {
+    //   const logObj = {
+    //     habitId: habit.id,
+    //     startTime: habit.start_date,
+    //     endTime: habit.end_date
+    //   }
+    //   const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
+    //   if (error) {
+    //     setErrors(error);
+    //   }
+    //   if (data?.logCount) {
+    //     await localStorage.getItem(`log_count_${habit.id}`)
+    //     await setLogCount(data.logCount.count);
+    //   }
+    // }
+
+
   return (
     <div className="gridContent">
       {habits.map((habit, idx) => {
@@ -56,6 +94,8 @@ export default function HabitGrid({ habits }) {
     </div>
   );
 }
+
+
 
 function HabitCard({ habit }) {
 
@@ -67,26 +107,30 @@ function HabitCard({ habit }) {
     if (error) {
       setErrors(error);
     }
-    if (data?.habit) {
-    }
     fetchLogCount()
   }
 
 
-    const fetchLogCount = async () => {
-      const logObj = {
-        habitId: habit.id,
-        startTime: habit.start_date,
-        endTime: habit.end_date
-      }
-      const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
-      if (error) {
-        setErrors(error);
-      }
-      if (data?.logCount) {
-        await setLogCount(data.logCount.count);
-      }
+  const fetchLogCount = async () => {
+    const logObj = {
+      habitId: habit.id,
+      startTime: habit.start_date,
+      endTime: habit.end_date
     }
+    const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
+    if (error) {
+      setErrors(error);
+    }
+    if (data?.logCount) {
+      localStorage.setItem(`log_count_${habit.id}`, data.logCount.count)
+      await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
+    }
+  }
+
+  useEffect(() => {
+    fetchLogCount()
+  }, [])
+
 
   return (
     <div className="habitCard">
