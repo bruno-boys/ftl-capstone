@@ -49,42 +49,6 @@ function HabitPage() {
 
 export default function HabitGrid({ habits }) {
 
-  // const [logCount, setLogCount] = useState(0);
-
-  // const updateLog = async (event) => {
-  //   event.preventDefault();
-  //   const { data, error } = await apiClient.logHabit({habitId: habit.id});
-  //   if (error) {
-  //     setErrors(error);
-  //   }
-  //   if (data?.habit) {
-  //     localStorage.setItem(`log_count_${habit.id}`, logCount)
-  //   }
-  //   fetchLogCount()
-  // }
-
-
-  // const fetchLogCount = async () => {
-  //   setLogCount(localStorage.getItem(`log_count_${habit.id}`))
-  // }
-
-
-    // const fetchLogCount = async () => {
-    //   const logObj = {
-    //     habitId: habit.id,
-    //     startTime: habit.start_date,
-    //     endTime: habit.end_date
-    //   }
-    //   const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
-    //   if (error) {
-    //     setErrors(error);
-    //   }
-    //   if (data?.logCount) {
-    //     await localStorage.getItem(`log_count_${habit.id}`)
-    //     await setLogCount(data.logCount.count);
-    //   }
-    // }
-
 
   return (
     <div className="gridContent">
@@ -143,7 +107,6 @@ function HabitCard({ habit }) {
               <div className="completion" style={{color: "green"}}>{logCount}/{habit.frequency}</div>
               :
               <div className="completion">{logCount}/{habit.frequency}</div>
-
           }
           
         </div>
