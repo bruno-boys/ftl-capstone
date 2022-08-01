@@ -122,6 +122,18 @@ class User {
         throw new UnauthorizedError('Invalid username/password combo')
     }
 
+    static async savePasswordResetToken(email, resetToken) {
+        const result = await db.query(`
+        UPDATE users
+        SET pw_reset_token = $1, pw_reset_token = $2
+        WHERE email = $3
+        RETURNING id, email, username, created_at, updated_at;
+        `, [resetToken.token, resetToken.expiresAt, email])
+        const user = result.rows[0]
+
+        if (user) return User.makePublicUser(user)
+    }
+
 }
 
 module.exports = User;
