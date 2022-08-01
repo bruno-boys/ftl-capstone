@@ -16,6 +16,7 @@ class EmailService {
   }
 
   async sendEmail(email) {
+    // Make a case when not active
     if (this.isActive) {
         if(!email.to) return { status: 400, email, error: [{ field: `to`, message: "Missing to field." }] };
 

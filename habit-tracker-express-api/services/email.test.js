@@ -13,6 +13,7 @@ describe("Test EmailService", () => {
   });
 
   test("Is inactive when testing", () => {
+    //Should be toBeFalsy
     expect(emailService.isActive).toBeTruthy();
     expect(emailService.transport).toBeTruthy();
   });
