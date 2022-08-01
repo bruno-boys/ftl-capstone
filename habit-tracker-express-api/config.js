@@ -6,6 +6,7 @@ const PORT =  process.env.PORT ? Number(process.env.PORT) : 3001
 const SECRET_KEY = process.env.SECRET_KEY || 'secret_dev'
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+// Should be a terinary operator to see if we are testing or not
 const EMAIL_SERVICE_ACTIVE = process.env.EMAIL_SERVICE_STATUS === 'active' || false
 
 function getDatabaseURI() {
