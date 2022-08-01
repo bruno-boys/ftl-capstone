@@ -24,7 +24,7 @@ console.log("HabitTracker Config:".red)
 console.log("PORT:".blue, PORT)
 console.log("SECRET_KEY:".blue, SECRET_KEY)
 console.log("Database URI:".blue, getDatabaseURI())
-console.log("SENDGRID_API_key:".blue, SENDGRID_API_key)
+console.log("SENDGRID_API_key:".blue, SENDGRID_API_KEY)
 console.log("EMAIL_SERVICE_ACTIVE:".blue, EMAIL_SERVICE_ACTIVE)
 console.log('---')
 
