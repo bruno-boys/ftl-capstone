@@ -14,7 +14,7 @@ import Home from './components/Home';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import ResetPassword from './components/ResetPassword';
-import Dashboard from './components/Dashboard';
+import Dashboard from '../src/components/Dashboard/Dashboard';
 
 function App() {
 

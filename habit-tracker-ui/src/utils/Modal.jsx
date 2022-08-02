@@ -17,6 +17,7 @@ function Modal({
     const clickHandler = ({ target }) => {
       if (!show || modalContent.current.contains(target)) return;
       handleClose();
+      
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
