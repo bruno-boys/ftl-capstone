@@ -1,14 +1,10 @@
 .activity-page {
     display: flex;
+    gap: 1rem;
 }
-
 
 .react-calendar {
  width: 400px;
- margin-top: 40px;
- max-width: 100%;
- background-color: #fff;
- color: #222;
  border-radius: 8px;
  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
  font-family: Arial, Helvetica, sans-serif;
@@ -96,20 +92,6 @@ abbr[title] {
  color: white;
 }
 
-.left {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    height: min-content;
-    padding: 3rem;
-}
-
-.right {
-    flex-direction: row;
-    flex-grow: 1;
-    padding: 3rem;
-}
-
 .title {
     height: min-content;
 }
@@ -120,6 +102,28 @@ abbr[title] {
     width: 350px;
     height: 200px;
     border-radius: 5px;
+}
+
+#create-habit-modal {
+    min-height: 30rem;
+    max-width: 60rem;
+    border-radius: 10px;
+    padding: 1rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.activity-page .modal-align {
+    display: flex;
+    justify-content: center;
+}
+
+.activity-page .max-w-6xl {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
 }
 
 .activity-habits {
