@@ -10,8 +10,7 @@ export default function Register({ user, setUser }) {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     phoneNumber: "",
     userName: "",

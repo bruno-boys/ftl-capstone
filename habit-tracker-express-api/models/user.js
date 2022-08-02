@@ -9,10 +9,8 @@ class User {
             upon registering or logging in */
         return {
             id: user.id,
-            firstName: user.first_name,
-            lastName: user.last_name,
+            name: user.name,
             email: user.email,
-            userName: user.username,
             createdAt: user.created_at,
             updatedAt: user.updated_at
         }
@@ -32,29 +30,12 @@ class User {
         return user
     }
 
-    static async fetchUserByUsername(username) {
-        if (!username) {
-            throw new BadRequestError('No username provided.')
-        }
-
-        const query = `SELECT * FROM users WHERE username = $1`
-
-        const result = await db.query(query, [username])
-
-        const user = result.rows[0]
-
-        return user
-    }
-
-    static async fetchUserByPhoneNumber(phoneNumber) {
-        //TODO: make a function for fetching user by phone number
-    }
 
 
     static async register(credentials) {
-        /* user should submit their first name, last name, email, phone number, username, and password
+        /* user should submit their full name, email, and password
            if any of these fields are missing, throw an error */
-        const requiredFields = ['firstName', 'lastName', 'email', 'userName', 'phoneNumber', 'password']
+        const requiredFields = ['name', 'email', 'password']
         requiredFields.forEach(field => {
             if (!credentials.hasOwnProperty(field)) {
                 throw new BadRequestError(`Missing ${field} in request body.`);
@@ -81,16 +62,13 @@ class User {
             info provided info, and then returns the user */
         const result = await db.query(`
         INSERT INTO users (
-            first_name,
-            last_name,
+            name,
             email,
-            username,
-            phone_number,
             password
         )
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id, first_name, last_name, email, username, password, created_at, phone_number, updated_at;
-        `, [credentials.firstName, credentials.lastName, lowercasedEmail, credentials.userName, credentials.phoneNumber, hashedPassword])
+        VALUES ($1, $2, $3)
+        RETURNING id, name, email, password, created_at, updated_at;
+        `, [credentials.name, lowercasedEmail, hashedPassword])
 
         const user = result.rows[0]
 
@@ -99,16 +77,16 @@ class User {
 
 
     static async login(credentials) {
-        /* user should submit their username and password
+        /* user should submit their email and password
             if any of these fields are missing, throw an error */ 
-        const requiredFields = ['userName', 'password'];
+        const requiredFields = ['email', 'password'];
         requiredFields.forEach(field => {
             if (!credentials.hasOwnProperty(field)) {
                 throw new BadRequestError(`Missing ${field} in request body.`);
             }
         })
         // lookup the user in the db by email
-        const user = await User.fetchUserByUsername(credentials.userName)
+        const user = await User.fetchUserByEmail(credentials.email)
 
         /* if a user is found, compare the submitted password
             with the password in the db. if there is a match, return the user */
@@ -119,7 +97,7 @@ class User {
             }
         }
         // if any of this goes wrong, throw an error
-        throw new UnauthorizedError('Invalid username/password combo')
+        throw new UnauthorizedError('Invalid email/password combo')
     }
 
 }

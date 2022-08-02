@@ -4,20 +4,14 @@ import { useState, useEffect } from "react";
 import apiClient from "../../services/apiClient";
 
 
-export default function Login({ user, setUser }) {
+export default function Login() {
   const navigate = useNavigate();
-  const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
     userName: "",
     password: "",
   });
 
-  useEffect(() => {
-    if (user?.userName) {
-      navigate("/activity");
-    }
-  }, [user, navigate]);
 
   const handleOnInputChange = (event) => {
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
@@ -30,7 +24,6 @@ export default function Login({ user, setUser }) {
     if (data?.user) {
       setForm(null);
       apiClient.setToken(data.token)
-      setUser(data.user)
       localStorage.setItem("firstname", data.user.firstName);
       localStorage.setItem("lastname", data.user.lastName);
       localStorage.setItem("email", data.user.email);
