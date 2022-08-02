@@ -7,33 +7,36 @@ import apiClient from "../services/apiClient";
 function SignIn() {
 
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
-  const [form, setForm] = useState({
-    userName: "",
-    password: "",
-  });
+  const [error, setError] = useState({});
+  const [newUser, setNewUser] = useState(null);
 
-  const handleOnInputChange = (event) => {
-    setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
+  const handleOnFormChange = (event) => {
+    if (event.target.name === "email") {
+      if (event.target.value.indexOf("@") === -1) {
+        setError((e) => ({ ...e, email: "Please enter a valid email." }));
+      } else {
+        setError((e) => ({ ...e, email: null }));
+      }
+    }
+    setNewUser((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    const {data, error} = await apiClient.loginUser(form)
-    if (error) { setErrors(error) }
+    const {data, error} = await apiClient.loginUser(newUser)
+    if (error) { setError(error) }
     if (data?.user) {
-      setForm(null);
+      setNewUser(null);
       apiClient.setToken(data.token)
-      localStorage.setItem("firstname", data.user.firstName);
-      localStorage.setItem("lastname", data.user.lastName);
+      localStorage.setItem("name", data.user.name);
       localStorage.setItem("email", data.user.email);
       navigate('/activity')
     };
   };
 
   useEffect(() => {
-    console.log("form =",form)
-  })
+    console.log("user =",newUser)
+  }, [newUser])
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
@@ -55,11 +58,11 @@ function SignIn() {
 
               {/* Form */}
               <div className="max-w-sm mx-auto">
-                <form>
+                <form onSubmit={handleOnSubmit}>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="email">Email</label>
-                      <input id="email" type="email" className="form-input w-full text-gray-800" placeholder="Enter your email address" required />
+                      <input name="email" type="email" className="form-input w-full text-gray-800" placeholder="Enter your email address" onChange={handleOnFormChange} required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
@@ -68,7 +71,7 @@ function SignIn() {
                         <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Password</label>
                         <Link to="/reset-password" className="text-sm font-medium text-blue-600 hover:underline">Having trouble signing in?</Link>
                       </div>
-                      <input id="password" type="password" className="form-input w-full text-gray-800" placeholder="Enter your password" required />
+                      <input name="password" type="password" className="form-input w-full text-gray-800" placeholder="Enter your password" onChange={handleOnFormChange} required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
@@ -83,7 +86,7 @@ function SignIn() {
                   </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                      <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">Sign in</button>
+                      <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={handleOnSubmit}>Sign in</button>
                     </div>
                   </div>
                 </form>
