@@ -12,10 +12,31 @@ import HabitDetailPage from "../HabitDetailPage/HabitDetailPage";
 import HabitForm from "../HabitForm/HabitForm";
 import UserProfile from "../UserProfile/UserProfile";
 import EditForm from "../EditForm/EditForm";
+import apiClient from "../../services/apiClient";
 
 export default function App() {
   const [user, setUser] = useState({});
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState()
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const { data, err } = await apiClient.fetchUserFromToken();
+      if (err) {
+        setError(err);
+      }
+      if (data.user) {
+        setUser(data.user);
+
+      }
+    };
+    getUserInfo()
+  }, []);
+
+
+  const isAuthenticated = Boolean(user?.id)
+
+  
 
   return (
     <div className="App">
@@ -23,32 +44,15 @@ export default function App() {
         <Navbar />
         <main>
           <Routes>
-          {!localStorage.getItem("habit_tracker_token") ?
-
-            <>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<Login user={user} setUser={setUser} />} />
-              <Route path="/register" element={<Register user={user} setUser={setUser} />} /> 
-              <Route path="/activity" element={<Login user={user} setUser={setUser} />} />
-              <Route path="/habit/:habitId" element={<Login user={user} setUser={setUser} />} />
-              <Route path="/habit-form" element = { <Login user={user} setUser={setUser} />} />
-              <Route path = "/user-profile" element = {<Login user={user} setUser={setUser} />} />
-              <Route path = "habit/edit/:habitId" element = {<Login user={user} setUser={setUser} />} />
-            </>
-           
-           :
-
-            <>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login user={user} setUser={setUser} />} />
               <Route path="/register" element={<Register user={user} setUser={setUser} />} />
-              <Route path="/activity" element={<Activity />} />
-              <Route path="/habit/:habitId" element={<HabitDetailPage />} />
-              <Route path="/habit-form" element = { < HabitForm/>} />
-              <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
-              <Route path = "habit/edit/:habitId" element = {<EditForm />} />
-            </>
-        }
+              <Route path="/activity" element={<Activity isAuthenticated = {isAuthenticated} />} />
+              <Route path="/habit/:habitId" element={<HabitDetailPage isAuthenticated = {isAuthenticated} />} />
+              <Route path="/habit-form" element = { < HabitForm isAuthenticated = {isAuthenticated}/>} />
+              <Route path = "/user-profile" element = {<UserProfile user = {user} isAuthenticated = {isAuthenticated}/>} />
+              <Route path = "habit/edit/:habitId" element = {<EditForm isAuthenticated = {isAuthenticated}/>} />
+        
           </Routes>
         </main>
       </BrowserRouter>

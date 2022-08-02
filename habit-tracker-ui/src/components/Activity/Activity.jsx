@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HabitGrid from '../HabitPage/HabitPage';
+import Register from '../Register/Register';
 
-export default function Activity(){
+export default function Activity({isAuthenticated}){
 
     function getPrint(event) {
         console.log("day = ",event)
@@ -32,10 +33,10 @@ export default function Activity(){
       event.preventDefault();
       navigate("/habit-form");
     };
-  
 
-    return (
-        <>
+    const activity = isAuthenticated ?
+    <>
+    <div>
          <h1 className='title'>Dashboard</h1>
          <div className="activity-page">
             <div className='left'>
@@ -51,6 +52,19 @@ export default function Activity(){
                 </div>
             </div>
         </div>
-        </>
+        </div>
+    </>
+    :
+    <>
+    <div>
+     <Register />
+    </div>
+    </>
+  
+
+    return (
+
+      activity
+        
     )
 }

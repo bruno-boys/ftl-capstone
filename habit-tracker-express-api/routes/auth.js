@@ -31,6 +31,7 @@ router.post("/login", async (req, res, next) => {
     //take username and passwords and attempt to authenticate
     const user = await User.login(req.body);
     const token = createUserJwt(user);
+    console.log("res.locals", res.locals.user)
     return res.status(200).json({ user, token });
   } catch (err) {
     next(err);
@@ -39,6 +40,7 @@ router.post("/login", async (req, res, next) => {
 
 router.get("/me", async (req, res, next) => {
   try {
+    console.log("Res.locals", res.locals)
     const { email } = res.locals.user;
     const user = await User.fetchUserByEmail(email);
     //function to list activity stuff
