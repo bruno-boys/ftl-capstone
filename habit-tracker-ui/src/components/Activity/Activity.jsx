@@ -34,37 +34,27 @@ export default function Activity({isAuthenticated}){
       navigate("/habit-form");
     };
 
-    const activity = isAuthenticated ?
-    <>
-    <div>
-         <h1 className='title'>Dashboard</h1>
-         <div className="activity-page">
-            <div className='left'>
-                <Calendar onClickDay={getPrint}/>
-                <div className="daily-habits">
-                    habits for today
-                </div>
-            </div>
-            <div className='right'>
-                <button className="create-habit" onClick={createHabit}>Add Habit</button>
-                <div className="activity-habits">
-                    <HabitGrid habits={habits} />
-                </div>
-            </div>
-        </div>
-        </div>
-    </>
-    :
-    <>
-    <div>
-     <Register />
-    </div>
-    </>
-  
-
     return (
 
-      activity
+      <>
+      <div>
+           <h1 className='title'>Dashboard</h1>
+           <div className="activity-page">
+              <div className='left'>
+                  <Calendar onClickDay={getPrint}/>
+                  <div className="daily-habits">
+                      habits for today
+                  </div>
+              </div>
+              <div className='right'>
+                  <button className="create-habit" onClick={createHabit}>Add Habit</button>
+                  <div className="activity-habits">
+                      <HabitGrid habits={habits} />
+                  </div>
+              </div>
+          </div>
+          </div>
+      </>
         
     )
 }

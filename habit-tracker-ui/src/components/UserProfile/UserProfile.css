@@ -39,6 +39,7 @@
     min-height: 600px;
     background-size: cover;
     background-position: center top;
+  
   }
   
   *
@@ -1267,7 +1268,7 @@
   @media (min-width: 768px) {
   
     .mt-md-5 {
-      margin-top: -5rem !important;
+      margin-top: -4rem !important;
     }
   
     .pt-md-4 {

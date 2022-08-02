@@ -38,7 +38,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/me", async (req, res, next) => {
+router.get("/me", requireAuthenticatedUser, async (req, res, next) => {
   try {
     console.log("Res.locals", res.locals)
     const { email } = res.locals.user;
@@ -50,5 +50,37 @@ router.get("/me", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/editUser", requireAuthenticatedUser, async (req, res, next) => {
+  try{
+
+    const userInformation = req.body
+    console.log("user information", req.body)
+    
+    const finalResults = await User.editUser(userInformation)
+
+     res.status(200).json({status : finalResults})
+
+
+  }
+  catch(error){
+    next(error)
+  }
+})
+
+router.put("/editPhoto", requireAuthenticatedUser, async(req, res, next) => {
+  try {
+    const userPhoto = req.body
+    console.log("user photo", userPhoto)
+    const profilePhoto = await User.editPhoto(userPhoto)
+
+    res.status(200).json({profilePhoto : profilePhoto})
+
+    
+  } catch (error) {
+    next (error)
+    
+  }
+})
 
 module.exports = router;
