@@ -146,7 +146,7 @@ class User {
         WHERE email = $3
         RETURNING id, email, username, created_at, updated_at;
         `,
-      [resetToken.token, resetToken.expiresAt, email.toLowerCase()]
+      [resetToken.token, resetToken.expires, email.toLowerCase()]
     );
     const user = result.rows[0];
 
