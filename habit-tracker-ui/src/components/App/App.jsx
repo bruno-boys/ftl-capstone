@@ -36,6 +36,8 @@ export default function App() {
               <Route path="/habit-form" element = { <Login user={user} setUser={setUser} />} />
               <Route path = "/user-profile" element = {<Login user={user} setUser={setUser} />} />
               <Route path = "habit/edit/:habitId" element = {<Login user={user} setUser={setUser} />} />
+              <Route path="/recover" element={<Recover />} />
+              <Route path="/reset-password" element={<PasswordReset />} />
             </>
            
            :
@@ -45,8 +47,7 @@ export default function App() {
               <Route path="/login" element={<Login user={user} setUser={setUser} />} />
               <Route path="/register" element={<Register user={user} setUser={setUser} />} />
               <Route path="/activity" element={<Activity />} />
-              <Route path="/recover" element={<Recover />} />
-              <Route path="/reset-password" element={<PasswordReset />} />
+             
 
 
               <Route path="/habit/:habitId" element={<HabitDetailPage />} />
