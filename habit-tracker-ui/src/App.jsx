@@ -14,6 +14,7 @@ import Home from './components/Home';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import ResetPassword from './components/ResetPassword';
+import Dashboard from './components/Dashboard';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/activity" element={<Dashboard />} />
       </Routes>
     </>
   );
