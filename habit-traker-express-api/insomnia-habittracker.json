@@ -30,7 +30,7 @@
 		"parentId": null,
 		"modified": 1658471554558,
 		"created": 1658471554558,
-		"name": "Habit Tracker",
+		"name": "HabitTraker",
 		"description": "",
 		"scope": "collection",
 		"_type": "workspace"
@@ -232,7 +232,7 @@
 		"parentId": "wrk_09ec73f17c1d4975acaba894eeb85d7e",
 		"modified": 1658471554564,
 		"created": 1658471554564,
-		"fileName": "Habit Tracker",
+		"fileName": "HabitTraker",
 		"contents": "",
 		"contentType": "yaml",
 		"_type": "api_spec"

@@ -4,8 +4,8 @@ class ApiClient {
 
     constructor(remoteHostUrl) {
         this.remoteHostUrl = remoteHostUrl
-        this.token = localStorage.getItem("habit_tracker_token") || null
-        this.tokenName = "habit_tracker_token"
+        this.token = localStorage.getItem("habit_traker_token") || null
+        this.tokenName = "habit_traker_token"
     }
 
     setToken(token) {

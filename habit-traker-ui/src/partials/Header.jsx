@@ -30,7 +30,7 @@ function Header() {
           <div className="flex-shrink-0 mr-4">
             {/* Logo */}
             {
-              !localStorage.getItem("habit_tracker_token") ? 
+              !localStorage.getItem("habit_traker_token") ? 
 
               <Link to="/" className="block" aria-label="Cruip">
                 <svg className="w-8 h-8" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +65,7 @@ function Header() {
 
           {/* Site navigation */}
           {
-            !localStorage.getItem("habit_tracker_token") ? 
+            !localStorage.getItem("habit_traker_token") ? 
              
             <nav className="flex flex-grow">
               <ul className="flex flex-grow justify-end flex-wrap items-center">

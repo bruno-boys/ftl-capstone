@@ -23,7 +23,7 @@ export default function App() {
         <Navbar />
         <main>
           <Routes>
-          {!localStorage.getItem("habit_tracker_token") ?
+          {!localStorage.getItem("habit_traker_token") ?
 
             <>
               <Route path="/" element={<LandingPage />} />

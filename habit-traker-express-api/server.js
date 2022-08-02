@@ -20,7 +20,7 @@ app.use('/habits', habitRoute)
 
 
 app.get('/', (req,res) => {
-    res.status(200).json("main habit tracker route works!")
+    res.status(200).json("main habit traker route works!")
 })
 
 //error handling
