@@ -30,6 +30,9 @@ function getDatabaseURI() {
   );
 }
 
+const BCRYPT_WORK_FACTOR = 13
+
+
 console.log(`${APPLICATION_NAME} Config:`.red);
 console.log("PORT:".blue, PORT);
 console.log("SECRET_KEY:".blue, SECRET_KEY);
@@ -38,6 +41,7 @@ console.log("SENDGRID_API_key:".blue, SENDGRID_API_KEY);
 console.log("EMAIL_SERVICE_ACTIVE:".blue, EMAIL_SERVICE_ACTIVE);
 console.log("CLIENT_URL:".blue, CLIENT_URL);
 console.log("IS_TESTING:".blue, IS_TESTING);
+console.log("BCRYPT_WORK_FACTOR:".blue, BCRYPT_WORK_FACTOR);
 console.log("EMAIL_FROM_ADDRESS:".blue, EMAIL_FROM_ADDRESS);
 console.log("---");
 
@@ -50,6 +54,7 @@ module.exports = {
   IS_TESTING,
   EMAIL_FROM_ADDRESS,
   CLIENT_URL,
-  APPLICATION_NAME
+  APPLICATION_NAME, 
+  BCRYPT_WORK_FACTOR
 
 };

@@ -13,6 +13,7 @@ import HabitForm from "../HabitForm/HabitForm";
 import UserProfile from "../UserProfile/UserProfile";
 import EditForm from "../EditForm/EditForm";
 import Recover from "../Recover/Recover";
+import PasswordReset from "../PasswordReset/PasswordReset";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -45,6 +46,8 @@ export default function App() {
               <Route path="/register" element={<Register user={user} setUser={setUser} />} />
               <Route path="/activity" element={<Activity />} />
               <Route path="/recover" element={<Recover />} />
+              <Route path="/reset-password" element={<PasswordReset />} />
+
 
               <Route path="/habit/:habitId" element={<HabitDetailPage />} />
               <Route path="/habit-form" element = { < HabitForm/>} />

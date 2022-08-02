@@ -81,6 +81,14 @@ class ApiClient {
         return await this.request({ endpoint: `auth/recover`, method: `POST`, data: {email} })
     }
 
+    async resetPassword({ token, newPassword }) {
+        return await this.request({
+          endpoint: `auth/password-reset?token=${token}`,
+          method: `POST`,
+          data: { newPassword },
+        })
+      }
+
 }
 
 export default new ApiClient('http://localhost:3001')
