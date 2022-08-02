@@ -76,6 +76,11 @@ class ApiClient {
         //logData = {habitId, startTime, endTime}
         return await this.request({ endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`, method: `GET` })
     }
+
+    async recoverAccount(email) {
+        return await this.request({ endpoint: `auth/recover`, method: `POST`, data: {email} })
+    }
+
 }
 
 export default new ApiClient('http://localhost:3001')

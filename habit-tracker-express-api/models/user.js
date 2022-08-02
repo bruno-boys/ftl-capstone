@@ -142,7 +142,7 @@ class User {
     const result = await db.query(
       `
         UPDATE users
-        SET pw_reset_token = $1, pw_reset_token = $2
+        SET pw_reset_token = $1, pw_reset_token_exp = $2
         WHERE email = $3
         RETURNING id, email, username, created_at, updated_at;
         `,

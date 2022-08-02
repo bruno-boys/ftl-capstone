@@ -53,20 +53,21 @@ router.get("/me", async (req, res, next) => {
 router.post("/recover", async (req, res, next) => {
   try {
     const {email} = req.body;
-    const token = generatePasswordResetToken()
-    const user = await user.savePasswordResetToken(email, token);
+    const resetToken = generatePasswordResetToken()
+    const user = await User.savePasswordResetToken(email, resetToken);
 
     if (user) {
-      await emailService.sendPasswordResetEmail(user, token);
-      return res.status(200).json({ message: "Email sent" });
+      await emailService.sendPasswordResetEmail(user, resetToken);
     }
+    return res.status(200).json({ message: "If your account exists in our system, you should receive an email shortly." });
+
   }
   catch (error) {
     next(error);
   }
 })
 
-router.post("/pasword-reset", async (req, res, next) => {
+router.post("/password-reset", async (req, res, next) => {
   try {
     const { token } = req.query
     const { newPassword } = req.body;

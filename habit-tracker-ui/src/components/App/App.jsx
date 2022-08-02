@@ -12,6 +12,7 @@ import HabitDetailPage from "../HabitDetailPage/HabitDetailPage";
 import HabitForm from "../HabitForm/HabitForm";
 import UserProfile from "../UserProfile/UserProfile";
 import EditForm from "../EditForm/EditForm";
+import Recover from "../Recover/Recover";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -43,6 +44,8 @@ export default function App() {
               <Route path="/login" element={<Login user={user} setUser={setUser} />} />
               <Route path="/register" element={<Register user={user} setUser={setUser} />} />
               <Route path="/activity" element={<Activity />} />
+              <Route path="/recover" element={<Recover />} />
+
               <Route path="/habit/:habitId" element={<HabitDetailPage />} />
               <Route path="/habit-form" element = { < HabitForm/>} />
               <Route path = "/user-profile" element = {<UserProfile user = {user}/>} />
