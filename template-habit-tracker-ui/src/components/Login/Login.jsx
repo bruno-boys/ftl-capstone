@@ -43,7 +43,7 @@ export default function Login() {
             <label htmlFor="userName">Username</label>
             <input
               type="text"
-              name="userName"
+              name="email"
               placeholder="your_username"
               value={form.userName}
               onChange={handleOnInputChange}
