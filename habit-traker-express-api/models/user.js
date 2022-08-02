@@ -9,7 +9,8 @@ class User {
             upon registering or logging in */
         return {
             id: user.id,
-            name: user.name,
+            first_name: user.firstName,
+            last_name: user.lastName,
             email: user.email,
             createdAt: user.created_at,
             updatedAt: user.updated_at
@@ -35,7 +36,7 @@ class User {
     static async register(credentials) {
         /* user should submit their full name, email, and password
            if any of these fields are missing, throw an error */
-        const requiredFields = ['name', 'email', 'password']
+        const requiredFields = ['firstName', 'lastName', 'email', 'password']
         requiredFields.forEach(field => {
             if (!credentials.hasOwnProperty(field)) {
                 throw new BadRequestError(`Missing ${field} in request body.`);
@@ -62,13 +63,14 @@ class User {
             info provided info, and then returns the user */
         const result = await db.query(`
         INSERT INTO users (
-            name,
+            first_name,
+            last_name,
             email,
             password
         )
-        VALUES ($1, $2, $3)
-        RETURNING id, name, email, password, created_at, updated_at;
-        `, [credentials.name, lowercasedEmail, hashedPassword])
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, first_name, last_name, email, password, created_at, updated_at;
+        `, [credentials.firstName, credentials.lastName, lowercasedEmail, hashedPassword])
 
         const user = result.rows[0]
 

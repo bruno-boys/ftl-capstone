@@ -50,7 +50,7 @@ function Testimonials() {
                   <img className="relative rounded-full" src={TestimonialImage} width="96" height="96" alt="Testimonial 01" />
                 </div>
                 <blockquote className="text-xl font-medium mb-4">
-                  “ I love HabitTraker and would recommend it to anyone. Could be not easier to use, and has many amazing features that keep my consistent with my goals. I feel as if I finally have control over my life. “
+                  “ I love HabitTraker and would recommend it to anyone. Could not be easier to use, and has many amazing features that keep my consistent with my goals. I feel as if I finally have control over my life. “
                 </blockquote>
                 <cite className="block font-bold text-lg not-italic mb-1">Darya Finger</cite>
                 <div className="text-gray-600">
