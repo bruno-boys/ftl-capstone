@@ -31,11 +31,10 @@ export default function ({ user, isAuthenticated }) {
 
         setForm({
             id : userInfo.id,
-            firstName : userInfo.first_name,
-            lastName : userInfo.last_name,
+            firstName : userInfo.firstName,
+            lastName : userInfo.lastName,
             email : userInfo.email,
-            createdAt : userInfo.createdAt,
-            userName : userInfo.user_name,
+            createdAt : userInfo.createdAt
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
 
@@ -186,7 +185,7 @@ return (
             <div className="row">
               <div className="col-lg-7 col-md-10">
                 <h1 className="display-2 text-white">
-                  Hello {userInfo.first_name}
+                  Hello {userInfo.firstName}
                 </h1>
                 <p className="text-white mt-0 mb-5">
                   This is your profile page. You can see the progress you've
@@ -253,8 +252,8 @@ return (
                   </div>
                   <div className="text-center">
                     <h3>
-                      {userInfo.first_name}{" "}
-                      {userInfo.last_name}
+                      {userInfo.firstName}{" "}
+                      {userInfo.lastName}
                       <span className="font-weight-light">, 27</span>
                     </h3>
                     <div className="h5 font-weight-300">
