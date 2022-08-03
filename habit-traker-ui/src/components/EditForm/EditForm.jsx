@@ -53,7 +53,8 @@ export default function EditForm({ habitId, handleClose }) {
 
     const handleOnSubmit = async (event) => {
         event.preventDefault();
-        const {data, error} = await apiClient.createHabit(form)
+        const {data, error} = await apiClient.editHabit(form)
+        window.location.reload();
     };
 
     return (
