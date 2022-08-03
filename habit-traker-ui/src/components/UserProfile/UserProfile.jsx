@@ -36,7 +36,6 @@ export default function ({ user, isAuthenticated }) {
             lastName : userInfo.lastName,
             email : userInfo.email,
             createdAt : userInfo.createdAt,
-            userName : userInfo.userName,
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
 
