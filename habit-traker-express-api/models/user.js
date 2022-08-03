@@ -10,8 +10,8 @@ class User {
             upon registering or logging in */
         return {
             id: user.id,
-            first_name: user.firstName,
-            last_name: user.lastName,
+            firstName: user.first_name,
+            lastName: user.last_name,
             email: user.email,
             createdAt: user.created_at,
             updatedAt: user.updated_at,
@@ -38,6 +38,7 @@ class User {
   static async register(credentials) {
       /* user should submit their full name, email, and password
           if any of these fields are missing, throw an error */
+      console.log(credentials)
       const requiredFields = ['firstName', 'lastName', 'email', 'password']
       requiredFields.forEach(field => {
           if (!credentials.hasOwnProperty(field)) {
@@ -73,8 +74,8 @@ class User {
               email,
               password
           )
-        VALUES ($1, $2, $3, $4)
-        RETURNING id, first_name, last_name, email, password, created_at, updated_at;
+          VALUES ($1, $2, $3, $4)
+          RETURNING id, first_name, last_name, email, password, created_at, updated_at;
         `, [credentials.firstName, credentials.lastName, lowercasedEmail, hashedPassword])
 
         const user = result.rows[0]
