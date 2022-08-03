@@ -8,6 +8,7 @@ class User {
   static async makePublicUser(user) {
     /*details out the information which the API will return to the user 
             upon registering or logging in */
+            console.log("user in make public user", user)
         return {
             id: user.id,
             firstName: user.first_name,
@@ -151,7 +152,7 @@ class User {
 
   static async editUser(form){
       console.log("form", form)
-      await db.query(`update users set first_name = $1, last_name = $2, email = $3, where id = $5`, [form.firstName, form.lastName, form.email, form.id])
+      await db.query(`update users set first_name = $1, last_name = $2, email = $3 where id = $4`, [form.firstName, form.lastName, form.email, form.id])
       return "Success"
     }
 
