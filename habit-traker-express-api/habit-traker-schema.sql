@@ -1,13 +1,16 @@
 CREATE TABLE users (
-    id              SERIAL PRIMARY KEY,
-    first_name      TEXT NOT NULL,
-    last_name       TEXT NOT NULL,
-    email           TEXT NOT NULL UNIQUE CHECK (POSITION('@' IN EMAIL) > 1),
-    phone_number    TEXT UNIQUE,
-    password        TEXT NOT NULL,
-    created_at      TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at      TIMESTAMP NOT NULL DEFAULT NOW(),
-    profile_photo   TEXT
+    id                  SERIAL PRIMARY KEY,
+    first_name          TEXT NOT NULL,
+    last_name           TEXT NOT NULL,
+    email               TEXT NOT NULL UNIQUE CHECK (POSITION('@' IN EMAIL) > 1),
+    phone_number        TEXT NOT NULL UNIQUE,
+    password            TEXT NOT NULL,
+    created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMP NOT NULL DEFAULT NOW(), 
+    pw_reset_token      TEXT,
+    pw_reset_token_exp  TIMESTAMP,
+    profile_photo       TEXT
+
 );
 
 CREATE TABLE habits (
