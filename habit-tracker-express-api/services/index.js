@@ -4,7 +4,7 @@ const EmailService = require("./email");
 const emailService = new EmailService({
   isActive: EMAIL_SERVICE_ACTIVE,
   apiKey: SENDGRID_API_KEY,
-  emalFromAddress: EMAIL_FROM_ADDRESS,
+  emailFromAddress: EMAIL_FROM_ADDRESS,
   clientUrl: CLIENT_URL,
   applicationName: APPLICATION_NAME
 });

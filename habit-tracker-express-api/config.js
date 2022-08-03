@@ -2,18 +2,19 @@ require("dotenv").config();
 require("colors");
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001;
-
-const APPLICATION_NAME = "Habit Tracker";
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
-
 const SECRET_KEY = process.env.SECRET_KEY || "secret_dev";
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-// Should be a terinary operator to see if we are testing or not
-const EMAIL_SERVICE_ACTIVE =
-  process.env.EMAIL_SERVICE_STATUS === "active" || false;
 const IS_TESTING = process.env.NODE_ENV === "test";
+
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const EMAIL_SERVICE_ACTIVE = IS_TESTING
+  ? false
+  : process.env.EMAIL_SERVICE_STATUS === "active";
 const EMAIL_FROM_ADDRESS = process.env.EMAIL_FROM_ADDRESS;
+
+const APPLICATION_NAME = "Habit Tracker";
 
 function getDatabaseURI() {
   const dbUser = process.env.DATABASE_USER || "postgres";
@@ -30,8 +31,7 @@ function getDatabaseURI() {
   );
 }
 
-const BCRYPT_WORK_FACTOR = 13
-
+const BCRYPT_WORK_FACTOR = IS_TESTING ? 1 : 13;
 
 console.log(`${APPLICATION_NAME} Config:`.red);
 console.log("PORT:".blue, PORT);
@@ -54,7 +54,6 @@ module.exports = {
   IS_TESTING,
   EMAIL_FROM_ADDRESS,
   CLIENT_URL,
-  APPLICATION_NAME, 
-  BCRYPT_WORK_FACTOR
-
+  APPLICATION_NAME,
+  BCRYPT_WORK_FACTOR,
 };
