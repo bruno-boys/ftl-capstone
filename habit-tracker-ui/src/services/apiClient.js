@@ -89,6 +89,15 @@ class ApiClient {
         })
       }
 
+    async editUser(form){
+        console.log("form in edit user", form)
+        return await this.request({endpoint : `auth/editUser`, method : `PUT`, data : form})
+    }
+
+    async editPhoto(form){
+        console.log("form in edit photo", form)
+        return await this.request({endpoint : `auth/editPhoto`, method : `PUT`, data : form})
+    }
 }
 
 export default new ApiClient('http://localhost:3001')

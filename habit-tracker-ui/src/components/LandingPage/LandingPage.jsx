@@ -1,5 +1,7 @@
 import "./LandingPage.css";
 import React from 'react'
+import Trial from "../UserProfile/UserProfile";
+
 
 export default function LandingPage() {
   return (

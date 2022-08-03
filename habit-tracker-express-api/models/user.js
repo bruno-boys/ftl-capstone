@@ -7,21 +7,17 @@ class User {
   static async makePublicUser(user) {
     /*details out the information which the API will return to the user 
             upon registering or logging in */
-    return {
-      id: user.id,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      email: user.email,
-      userName: user.username,
-      createdAt: user.created_at,
-      updatedAt: user.updated_at,
-    };
-  }
-
-  static async fetchUserByEmail(email) {
-    if (!email) {
-      throw new BadRequestError("No email provided.");
-    }
+        return {
+            id: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+            userName: user.username,
+            createdAt: user.created_at,
+            updatedAt: user.updated_at,
+            profilePhoto : user.profile_photo
+        }
+    
 
     const query = `SELECT * FROM users WHERE email = $1`;
 
@@ -176,6 +172,20 @@ class User {
 
     throw new BadRequestError("That token is either expired or invalid.");
   }
+
+    static async editUser(form){
+        console.log("form", form)
+        await db.query(`update users set first_name = $1, last_name = $2, email = $3, username = $4 where id = $5`, [form.firstName, form.lastName, form.email, form.userName, form.id])
+        return "Success"
+      }
+
+      static async editPhoto(form){
+        console.log("form inside edit photo", form)
+        await db.query(`update users set profile_photo = $1 where id = $2`, [form.profilePhoto, form.id])
+        console.log("form from inside model edit photo",form.profilePhoto)
+        return form.profilePhoto
+      }
+
 }
 
 module.exports = User;

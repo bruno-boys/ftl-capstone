@@ -4,8 +4,9 @@ import "../HabitForm/HabitForm.css";
 import { useState } from "react";
 import apiClient from "../../services/apiClient";
 import { useNavigate } from "react-router-dom";
+import Register from "../Register/Register";
 
-export default function HabitForm() {
+export default function HabitForm({isAuthenticated}) {
   const PeriodOptions = [
     { key: 1, label: "daily", value: "daily" },
     { key: 2, label: "weekly", value: "weekly" },
@@ -35,7 +36,11 @@ export default function HabitForm() {
 
   return (
     <div className="habit-form">
-      <div className="card">
+      {
+        isAuthenticated ?
+
+        <>
+        <div className="card">
         <h2> Add A Habit </h2>
 
         <div className="form">
@@ -104,6 +109,14 @@ export default function HabitForm() {
           </div>
         </div>
       </div>
+        </>
+
+        :
+        <>
+        <Register/>
+        </>
+
+      }
     </div>
   );
 }

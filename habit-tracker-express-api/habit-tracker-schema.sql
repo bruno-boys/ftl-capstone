@@ -9,7 +9,9 @@ CREATE TABLE users (
     created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at          TIMESTAMP NOT NULL DEFAULT NOW(), 
     pw_reset_token      TEXT,
-    pw_reset_token_exp  TIMESTAMP
+    pw_reset_token_exp  TIMESTAMP,
+    profile_photo   TEXT
+
 );
 
 CREATE TABLE habits (
