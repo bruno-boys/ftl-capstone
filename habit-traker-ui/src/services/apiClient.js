@@ -77,6 +77,18 @@ class ApiClient {
         return await this.request({ endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`, method: `GET` })
     }
 
+    async recoverAccount(email) {
+        return await this.request({ endpoint: `auth/recover`, method: `POST`, data: email })
+    }
+
+    async resetPassword({ token, newPassword }) {
+        return await this.request({
+          endpoint: `auth/password-reset?token=${token}`,
+          method: `POST`,
+          data: { newPassword },
+        })
+      }
+
     async editUser(form){
         console.log("form in edit user", form)
         return await this.request({endpoint : `auth/editUser`, method : `PUT`, data : form})
