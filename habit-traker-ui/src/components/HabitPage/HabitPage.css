@@ -3,11 +3,28 @@
   height: 10px;
 } 
 
+
 .activity-page .habit-card .max-w-6xl {
   padding: 1rem;
   display: flex;
-  position: relative;
-  top: -95px;
+  /* position: relative;
+  top: -95px; */
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+#delete {
+background-color: red;
+}
+
+.gridContent {
+  display: flex;
+  gap: 7rem;
+  flex-direction: column;
 }
 
 .habit-card .pt-12 {
@@ -35,6 +52,15 @@
   justify-content: flex-end;
 } 
 
+.top .buttons {
+  display: flex;
+  margin-top: 20px;
+  margin-right: 5px;
+  height: 40px;
+  width: 100%;
+  gap: 10px;
+  justify-content: flex-end;
+} 
 
 
 /* 

@@ -2,58 +2,26 @@ import "./HabitPage.css";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import apiClient from "../../services/apiClient";
-// import EditForm from "../EditForm/EditForm.jsx";
+import EditForm from "../EditForm/EditForm";
 import Modal from "../../utils/Modal";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import HabitDetails from "../HabitDetails/HabitDetails";
 
 
-function HabitPage() {
-
-  const [habits, setHabits] = useState([]);
-  const [errors, setErrors] = useState("")
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-  const getHabits = async () => {
-    const { data, error } = await apiClient.fetchHabitList();
-    if (error) {
-      setErrors(error);
-    }
-    if (data?.habits) {
-      setHabits(data.habits);
-    }
-  };
-  getHabits();
-}, []);
-
-
-  return (
-    <div className="gridSection">
-      <div className="gridContent">
-      </div>
-      <HabitGrid habits={habits} />
-    </div>
-  );
-}
-
-export default function HabitGrid({ habits }) {
-
+export default function HabitGrid({ habits, formModalOpen, setFormModalOpen, handleClose }) {
 
   return (
     <div className="gridContent">
       {habits.map((habit, idx) => {
-        return <HabitCard key={idx} habit={habit} />;
+        return <HabitCard key={idx} habit={habit}  formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={handleClose} />;
       })}
     </div>
   );
 }
 
 
-
-function HabitCard({ habit }) {
+function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   const [logCount, setLogCount] = useState(0);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -90,10 +58,25 @@ function HabitCard({ habit }) {
     }
   }
 
+  const closeModal = async () => {
+    window.location.reload();
+    await setFormModalOpen(false);
+    await setFormModalOpen(false)
+  }
+
+  const deleteHabit = async () => {
+    const {data, err} = await apiClient.deleteHabit(habit.id);
+    if (err) {setError(err)}
+    if (data) {
+        window.location.reload()
+    }
+  }
+
   useEffect(() => {
-    console.log(habit)
+    // console.log(habit)
+    console.log('form = ',formModalOpen)
     fetchLogCount()
-  }, [])
+  }, [formModalOpen])
 
 
   return (
@@ -103,7 +86,6 @@ function HabitCard({ habit }) {
       <section className="relative">
         {/* Section background (needs .relative class on parent and next sibling elements) */}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="pt-12 md:pt-20">
 
             {/* Content */}
             <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
@@ -115,9 +97,14 @@ function HabitCard({ habit }) {
                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                   >
                     <div className="card" style={{width:"100%"}}>
-                      <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">
-                        <div className="font-bold leading-snug tracking-tight mb-1">{habit.habit_name}</div>
-                      </span>
+                      <div className="top">
+                        <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">
+                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
+                        </span>
+                        <div className="buttons">
+                          <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                        </div>
+                      </div>
                       <div className="bottom">
                         <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">
                         { 
@@ -129,7 +116,7 @@ function HabitCard({ habit }) {
                         }
                         </span>
                         <div className="buttons">
-                          <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3">Edit</button>
+                          <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
                           <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
                         </div>
                       </div>
@@ -137,16 +124,28 @@ function HabitCard({ habit }) {
                   </a>
                 </div>
                {/* Modal */}
-               <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => {setVideoModalOpen(false);}}>
+               <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
+                {
+                  formModalOpen ?
+
+                  <div className="relative pb-9/16">
+                    <div className="create-habit">
+                      <EditForm habitId={habit.id} />
+                    </div>
+                  </div>
+
+                :
+
                   <div className="relative pb-9/16">
                     <div className="hab-detail">
                       <HabitDetails habitId={habit.id} />
                     </div>
                   </div>
-                </Modal>
+
+                }
+              </Modal>
             </div>
           </div >
-        </div >
       </section >
     </div>
   )
