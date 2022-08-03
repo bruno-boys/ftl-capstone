@@ -26,7 +26,6 @@ export default function ({ user, isAuthenticated }) {
         };
         getUserInfo()
       }, []);
-      console.log("user info", userInfo)
 
       useEffect(() => {
 
@@ -41,24 +40,18 @@ export default function ({ user, isAuthenticated }) {
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
 
       }, [userInfo])
-      console.log("form", form)
-      console.log("profile info ", profilePhotoInfo)
 
       const handleOnInputChange = (event) => {
-
-        console.log("event name", event.target.name)
         setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
       }
 
 
       const handleOnSubmit = async (event) => {
 
+        console.log("this is clicked")
+
         event.preventDefault();
-        console.log("form in handle on submit", form)
         const { data, error } = await apiClient.editUser(form)
-        localStorage.setItem('firstname', form.firstName)
-        localStorage.setItem('lastname', form.lastName)
-        localStorage.setItem('email', form.email)
         location.reload()
       }
 
@@ -95,11 +88,6 @@ export default function ({ user, isAuthenticated }) {
         
     }
 
-
-
-console.log("form again", form)
-console.log("profile photo info", profilePhotoInfo)
-console.log("final user info", userInfo)
   
 return (
   <div className="user-profile-wrapper">
@@ -317,14 +305,14 @@ return (
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Username
+                              Phone Number
                             </label>
                             <input
                               type="text"
                               id="username"
                               className="form-control"
                               name="userName"
-                              placeholder="Username"
+                              placeholder="(xxx)-xxx-xxxx"
                               value = {form.userName}
                               onChange = {handleOnInputChange}
                             />
