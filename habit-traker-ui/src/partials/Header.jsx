@@ -88,6 +88,9 @@ function Header() {
             <nav className="flex flex-grow">
               <ul className="flex flex-grow justify-end flex-wrap items-center">
                 <li>
+                  <Link to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Dashboard</Link>
+                </li>
+                <li>
                   <Link to="/user-profile" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">User Profile</Link>
                 </li>
                 <li>
