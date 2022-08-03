@@ -60,7 +60,30 @@ export default function HabitForm({ form, setForm, handleClose }) {
             </div>    
                     
           </div>  
+          <div className="habit-goals">
+      
+      <div className="flex flex-wrap -mx-3 mb-4">
+        <div className="w-full px-3">
+          <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="name">Reminder Me<span className="text-red-600">*</span></label>
+          <input name="frequency" type="number" value={form.frequency} className="form-input w-full text-gray-800" onChange={handleOnInputChange} required />
+        </div>
+      </div>
 
+      <div className="flex flex-wrap -mx-3 mb-4">
+        <div className="w-full px-3">
+          <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="name">Period<span className="text-red-600">*</span></label>
+          <select name="period" type="text" value={form.period} className="form-input w-full text-gray-800" placeholder="Enter your first name" onChange={handleOnInputChange} required>
+            {
+              PeriodOptions.map((period) => (
+              <option key={period.key} value={period.label}>
+                {period.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>    
+              
+    </div>  
             <div className="flex flex-wrap -mx-3 mb-4">
               <div className="w-full px-3">
                 <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="name">Start Date<span className="text-red-600">*</span></label>

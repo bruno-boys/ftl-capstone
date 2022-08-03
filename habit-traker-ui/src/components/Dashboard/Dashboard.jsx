@@ -12,6 +12,7 @@ import './Dashboard.css'
 function Dashboard() {
 
     const [habits, setHabits] = useState([]);
+    const [errors, setErrors] = useState("")
     const [videoModalOpen, setVideoModalOpen] = useState(false);
     const [form, setForm] = useState({
       habitName: "",

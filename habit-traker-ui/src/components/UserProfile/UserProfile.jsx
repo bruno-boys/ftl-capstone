@@ -32,11 +32,11 @@ export default function ({ user, isAuthenticated }) {
 
         setForm({
             id : userInfo.id,
-            firstName : userInfo.firstName,
-            lastName : userInfo.lastName,
+            firstName : userInfo.first_name,
+            lastName : userInfo.last_name,
             email : userInfo.email,
             createdAt : userInfo.createdAt,
-            userName : userInfo.userName,
+            userName : userInfo.user_name,
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
 
@@ -99,6 +99,7 @@ export default function ({ user, isAuthenticated }) {
 
 console.log("form again", form)
 console.log("profile photo info", profilePhotoInfo)
+console.log("final user info", userInfo)
   
 return (
   <div className="user-profile-wrapper">
@@ -196,7 +197,7 @@ return (
             <div className="row">
               <div className="col-lg-7 col-md-10">
                 <h1 className="display-2 text-white">
-                  Hello {userInfo.firstName}
+                  Hello {userInfo.first_name}
                 </h1>
                 <p className="text-white mt-0 mb-5">
                   This is your profile page. You can see the progress you've
@@ -263,8 +264,8 @@ return (
                   </div>
                   <div className="text-center">
                     <h3>
-                      {localStorage.getItem("firstname")}{" "}
-                      {localStorage.getItem("lastname")}
+                      {userInfo.first_name}{" "}
+                      {userInfo.last_name}
                       <span className="font-weight-light">, 27</span>
                     </h3>
                     <div className="h5 font-weight-300">
@@ -322,6 +323,7 @@ return (
                               type="text"
                               id="username"
                               className="form-control"
+                              name="userName"
                               placeholder="Username"
                               value = {form.userName}
                               onChange = {handleOnInputChange}

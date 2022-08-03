@@ -64,6 +64,7 @@ function HabitCard({ habit }) {
     event.preventDefault();
     const { data, error } = await apiClient.logHabit({habitId: habit.id});
     console.log("data = ", habit.id)
+    console.log("data returned after logging habit", data)
     if (error) {
       setErrors(error);
     }
@@ -83,6 +84,7 @@ function HabitCard({ habit }) {
       setErrors(error);
     }
     if (data?.logCount) {
+      console.log("data.logcount", data.logCount)
       localStorage.setItem(`log_count_${habit.id}`, data.logCount.count)
       await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
     }

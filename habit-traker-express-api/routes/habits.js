@@ -27,6 +27,7 @@ router.get("/tracked", requireAuthenticatedUser, async (req, res, next) => {
 router.get("/log", requireAuthenticatedUser, async (req,res,next) => {
   try {
     const {habitId, startTime, endTime} = req.query
+    console.log("habitId in route", habitId)
     const logCount = await Habits.fetchLoggedHabitCount(habitId, startTime, endTime);
     res.status(200).json({logCount});
   }

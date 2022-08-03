@@ -9,8 +9,8 @@ class User {
             upon registering or logging in */
         return {
             id: user.id,
-            first_name: user.firstName,
-            last_name: user.lastName,
+            first_name: user.first_name,
+            last_name: user.last_name,
             email: user.email,
             createdAt: user.created_at,
             updatedAt: user.updated_at,
