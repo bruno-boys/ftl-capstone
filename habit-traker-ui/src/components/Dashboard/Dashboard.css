@@ -97,7 +97,6 @@ abbr[title] {
 }
 
 .daily-habits {
-    background-color: gray;
     margin-top: 20px;
     width: 350px;
     height: 200px;
@@ -115,10 +114,6 @@ abbr[title] {
     transform: translate(-50%, -50%);
 }
 
-.activity-page .modal-align {
-    display: flex;
-    justify-content: center;
-}
 
 .activity-page .max-w-6xl {
     padding: 1rem;
@@ -126,9 +121,13 @@ abbr[title] {
     justify-content: center;
 }
 
-.activity-habits {
-    background-color: gray;
-    height: 600px;
-    width: 700px;
-    border-radius: 5px;
+.right {
+    width: 100%;
+    height: fit-content;
 }
+
+.activity-habits {
+    overflow-y: scroll;
+}
+
+

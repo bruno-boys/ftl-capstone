@@ -51,6 +51,7 @@
   gap: 10px;
   justify-content: flex-end;
 } 
+
 #form-btn {
     height: min-content;
     width: max-content;

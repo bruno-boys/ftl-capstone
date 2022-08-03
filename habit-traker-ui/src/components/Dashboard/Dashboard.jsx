@@ -16,6 +16,7 @@ function Dashboard() {
     const [form, setForm] = useState({
       habitName: "",
       startDate: "",
+      endDate: "",
       frequency: "",
       period: "Per Day",
     });
@@ -68,9 +69,9 @@ function Dashboard() {
                           <div className="activity-page">
 
                               <div className='left'>
-                                  <Calendar onClickDay={getPrint}/>
+                                  {/* <Calendar onClickDay={getPrint}/> */}
                                   <div className="daily-habits">
-                                      habits for today
+                                  
                                   </div>
                               </div>
 
