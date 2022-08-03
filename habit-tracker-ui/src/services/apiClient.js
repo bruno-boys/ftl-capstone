@@ -76,6 +76,16 @@ class ApiClient {
         //logData = {habitId, startTime, endTime}
         return await this.request({ endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`, method: `GET` })
     }
+
+    async editUser(form){
+        console.log("form in edit user", form)
+        return await this.request({endpoint : `auth/editUser`, method : `PUT`, data : form})
+    }
+
+    async editPhoto(form){
+        console.log("form in edit photo", form)
+        return await this.request({endpoint : `auth/editPhoto`, method : `PUT`, data : form})
+    }
 }
 
 export default new ApiClient('http://localhost:3001')

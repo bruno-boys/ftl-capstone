@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../../services/apiClient';
 import './HabitDetailPage.css'
+import Register from '../Register/Register';
 
 
-export default function HabitDetailPage() {
+export default function HabitDetailPage({isAuthenticated}) {
     //gets the habitId from the URL
     const { habitId } = useParams()
     const [habit, setHabit] = useState({})
@@ -36,7 +37,10 @@ export default function HabitDetailPage() {
 
     return (
         <> 
-            <span className='detail-buttons'>
+        {
+            isAuthenticated ?
+            <div>
+                <span className='detail-buttons'>
                 <button className="edit-habit">
                     Edit
                 </button>
@@ -47,6 +51,14 @@ export default function HabitDetailPage() {
             <div className="habit-detail-page">
                 <HabitDetailContainer habit={habit} />
             </div>
+
+            </div>
+            :
+            <div>
+                <Register />
+            </div>
+        }
+            
         </>
     )
 }

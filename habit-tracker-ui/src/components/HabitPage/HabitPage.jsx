@@ -8,6 +8,7 @@ import EditForm from "../EditForm/EditForm.jsx";
 import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
+import Register from "../Register/Register";
 
 function HabitPage() {
   const [habits, setHabits] = useState([]);
@@ -33,7 +34,10 @@ function HabitPage() {
 
   return (
     <div className="gridSection">
-      <div className="gridContent">
+      { isAuthenticated ?
+        <>
+
+<div className="gridContent">
         <div className="grid-label">
           <h1 className="text-label">Habits</h1>
           <button className="create-habit" onClick={createHabit}>
@@ -42,18 +46,24 @@ function HabitPage() {
           </button>
         </div>
       </div>
-      <HabitGrid habits={habits} />
+      <HabitGrid habits={habits} errors = {errors} setErrors = {setErrors} />
+
+      </> :
+      <>
+      <Register/>
+      </>
+      }
     </div>
   );
 }
 
-export default function HabitGrid({ habits }) {
+export default function HabitGrid({ habits, setErrors, errors}) {
 
 
   return (
     <div className="gridContent">
       {habits.map((habit, idx) => {
-        return <HabitCard key={idx} habit={habit} />;
+        return <HabitCard key={idx} habit={habit} setErrors = {setErrors} errors = {errors}/>;
       })}
     </div>
   );
@@ -61,9 +71,12 @@ export default function HabitGrid({ habits }) {
 
 
 
-function HabitCard({ habit }) {
+function HabitCard({ habit}) {
 
   const [logCount, setLogCount] = useState(0);
+
+  const [errors, setErrors] = useState()
+
 
   const updateLog = async (event) => {
     event.preventDefault();
