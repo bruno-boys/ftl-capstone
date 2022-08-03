@@ -15,6 +15,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import ResetPassword from './components/ResetPassword';
 import Dashboard from '../src/components/Dashboard/Dashboard';
+import UserProfile from '../src/components/UserProfile/UserProfile'
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/activity" element={<Dashboard />} />
+        <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
     </>
   );
