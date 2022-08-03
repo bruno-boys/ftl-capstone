@@ -47,13 +47,13 @@ export default function EditForm({ habitId, handleClose }) {
         }, [habit])
         
     const handleOnInputChange = (event) => {
+        event.preventDefault();
         setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
         };
 
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         const {data, error} = await apiClient.createHabit(form)
-        handleClose();
     };
 
     return (

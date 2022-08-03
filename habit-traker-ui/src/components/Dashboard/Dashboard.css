@@ -127,8 +127,7 @@ abbr[title] {
 }
 
 .activity-habits {
-    min-height: fit-content;
-    overflow-y: scroll;
+    min-height: max-content;
 }
 
 

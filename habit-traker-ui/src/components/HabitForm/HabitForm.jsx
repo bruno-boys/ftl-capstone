@@ -19,8 +19,6 @@ export default function HabitForm({ form, setForm, handleClose }) {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const {data, error} = await apiClient.createHabit(form)
-    // setVideoModalOpen(false);
-    // navigate('/activity')
     handleClose();
   };
 

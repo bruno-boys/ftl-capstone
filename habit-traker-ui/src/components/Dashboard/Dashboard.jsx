@@ -42,7 +42,6 @@ function Dashboard() {
 
     const closeModal = () => {
       setVideoModalOpen(false); 
-      setFormModalOpen(false);
       setForm({
         habitName: "",
         startDate: "",
