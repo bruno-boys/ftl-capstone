@@ -12,6 +12,8 @@ import HabitDetailPage from "../HabitDetailPage/HabitDetailPage";
 import HabitForm from "../HabitForm/HabitForm";
 import UserProfile from "../UserProfile/UserProfile";
 import EditForm from "../EditForm/EditForm";
+import Recover from "../Recover/Recover";
+import PasswordReset from "../PasswordReset/PasswordReset";
 import apiClient from "../../services/apiClient";
 
 export default function App() {
@@ -52,6 +54,8 @@ export default function App() {
               <Route path="/habit-form" element = { < HabitForm isAuthenticated = {isAuthenticated}/>} />
               <Route path = "/user-profile" element = {<UserProfile user = {user} isAuthenticated = {isAuthenticated}/>} />
               <Route path = "habit/edit/:habitId" element = {<EditForm isAuthenticated = {isAuthenticated}/>} />
+              <Route path="/recover" element={<Recover />} />
+              <Route path="/reset-password" element={<PasswordReset />} />
         
           </Routes>
         </main>
