@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Register from "../Register/Register";
 
-export default function EditForm() {
+export default function EditForm({isAuthenticated}) {
   const { habitId } = useParams();
   const [habit, setHabit] = useState({});
   const [error, setError] = useState("");
@@ -76,9 +77,13 @@ export default function EditForm() {
     event.preventDefault();
     navigate('/activity')
   }
+  
 
   return (
-    <div className="habit-form">
+    <>
+    {
+      isAuthenticated ?
+      <div className="habit-form">
       <div className="card">
         <h2> Add A Habit </h2>
 
@@ -150,5 +155,14 @@ export default function EditForm() {
         </div>
       </div>
     </div>
+    :
+    <>
+    <div> <Register /></div>
+    </>
+
+    }
+    
+    </>
+    
   );
 }

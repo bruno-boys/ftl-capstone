@@ -13,7 +13,8 @@ class User {
             last_name: user.lastName,
             email: user.email,
             createdAt: user.created_at,
-            updatedAt: user.updated_at
+            updatedAt: user.updated_at,
+            profilePhoto : user.profile_photo
         }
     }
 
@@ -101,6 +102,19 @@ class User {
         // if any of this goes wrong, throw an error
         throw new UnauthorizedError('Invalid email/password combo')
     }
+
+    static async editUser(form){
+        console.log("form", form)
+        await db.query(`update users set first_name = $1, last_name = $2, email = $3, username = $4 where id = $5`, [form.firstName, form.lastName, form.email, form.userName, form.id])
+        return "Success"
+      }
+
+      static async editPhoto(form){
+        console.log("form inside edit photo", form)
+        await db.query(`update users set profile_photo = $1 where id = $2`, [form.profilePhoto, form.id])
+        console.log("form from inside model edit photo",form.profilePhoto)
+        return form.profilePhoto
+      }
 
 }
 

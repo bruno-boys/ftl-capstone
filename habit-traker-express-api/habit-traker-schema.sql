@@ -6,7 +6,8 @@ CREATE TABLE users (
     phone_number    TEXT UNIQUE,
     password        TEXT NOT NULL,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at      TIMESTAMP NOT NULL DEFAULT NOW()
+    updated_at      TIMESTAMP NOT NULL DEFAULT NOW(),
+    profile_photo   TEXT
 );
 
 CREATE TABLE habits (
