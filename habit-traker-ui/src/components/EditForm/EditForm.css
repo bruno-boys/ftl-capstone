@@ -1,0 +1,13 @@
+.habit-goals {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.habit-form {
+    margin-top: 1rem;
+}
+/* 
+.activity-page .habit-card .max-w-6xl .habit-form {
+    position: relative;
+    top: 95px;
+} */

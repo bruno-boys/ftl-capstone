@@ -7,12 +7,14 @@ import Header from '../../partials/Header';
 import HabitGrid from '../HabitPage/HabitPage';
 import HabitForm from '../HabitForm/HabitForm';
 import Modal from '../../utils/Modal'
+import EditForm from '../EditForm/EditForm';
 import './Dashboard.css'
 
 function Dashboard() {
 
     const [habits, setHabits] = useState([]);
     const [videoModalOpen, setVideoModalOpen] = useState(false);
+    const [formModalOpen, setFormModalOpen] = useState(false);
     const [form, setForm] = useState({
       habitName: "",
       startDate: "",
@@ -40,6 +42,7 @@ function Dashboard() {
 
     const closeModal = () => {
       setVideoModalOpen(false); 
+      setFormModalOpen(false);
       setForm({
         habitName: "",
         startDate: "",
@@ -80,7 +83,7 @@ function Dashboard() {
                                   <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
                                 </div>
                                 <div className="activity-habits">
-                                    <HabitGrid habits={habits} />
+                                    <HabitGrid habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
                                 </div>
                               </div>
 
@@ -92,8 +95,6 @@ function Dashboard() {
                                   </div>
                                 </div>
                               </Modal>
-                             
-
                           </div>
                         </>
 

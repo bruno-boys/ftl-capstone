@@ -3,11 +3,19 @@
   height: 10px;
 } 
 
+
 .activity-page .habit-card .max-w-6xl {
   padding: 1rem;
   display: flex;
-  position: relative;
-  top: -95px;
+  /* position: relative;
+  top: -95px; */
+}
+
+.gridContent {
+  display: flex;
+  gap: 5rem;
+  flex-direction: column;
+  height: fit-content;
 }
 
 .habit-card .pt-12 {

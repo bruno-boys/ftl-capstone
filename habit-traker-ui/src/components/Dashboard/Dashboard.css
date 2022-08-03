@@ -104,7 +104,7 @@ abbr[title] {
 }
 
 #create-habit-modal {
-    min-height: 30rem;
+    min-height: 40rem;
     max-width: 60rem;
     border-radius: 10px;
     padding: 1rem;
@@ -127,6 +127,7 @@ abbr[title] {
 }
 
 .activity-habits {
+    min-height: fit-content;
     overflow-y: scroll;
 }
 

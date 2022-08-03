@@ -13,9 +13,7 @@ export default function HabitDetails({ habitId }) {
         const getHabitById = async () => {
             const {data, err} = await apiClient.fetchHabitById(habitId);
             if (err) {setError(err)}
-            if (data) {
-                setHabit(data);
-            }
+            if (data) {setHabit(data);}
         }
         getHabitById();
     }, [])
