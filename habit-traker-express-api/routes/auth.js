@@ -44,8 +44,10 @@ router.get("/me", requireAuthenticatedUser, async (req, res, next) => {
     console.log("Res.locals", res.locals)
     const { email } = res.locals.user;
     const user = await User.fetchUserByEmail(email);
+   
     //function to list activity stuff
     const publicUser = await User.makePublicUser(user);
+    console.log("public User", publicUser)
     return res.status(200).json({ user: publicUser });
   } catch (error) {
     next(error);
