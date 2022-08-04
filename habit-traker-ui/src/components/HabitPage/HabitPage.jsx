@@ -100,22 +100,59 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
+  console.log("habit in habit card", habit)
+  let start_date = habit.temp_start_date
+  let end_date = new Date(start_date)
+  console.log("start_date", start_date)
+  console.log("end date", end_date)
+  end_date.setDate(end_date.getDate())
 
+
+  let today = new Date()
+  today.setHours(0,0,0,0)
+  end_date.setHours(0,0,0,0)
+  today.setDate(today.getDate())
   const updateLog = async (event) => {
     event.preventDefault();
+<<<<<<< HEAD
     const { data, error } = await apiClient.logHabit({habitId: habit.id});
+=======
+    
+
+    if ( today.getTime() >= end_date.getTime()){
+      const tempObj = {tempStartDate : today}
+      const obj = {
+        id : habit.id,
+        habitName : habit.habit_name,
+        frequency : habit.frequency,
+        period : habit.period,
+        startDate : habit.start_date,
+        endDate : habit.end_date
+      }
+      const {data, error} = await apiClient.editHabit({...obj, ...tempObj})
+      end_date.setDate(today.getDate() + 1)
+      start_date = today
+
+    }
+    const anotherDay = new Date(end_date).toISOString()
+    console.log("another day", anotherDay)
+    const { data, error } = await apiClient.logHabit({id: habit.id, startDate : start_date, endDate : anotherDay})
+>>>>>>> origin/logging
     if (error) {
       setErrors(error);
     }
     fetchLogCount()
+    
   }
 
 
   const fetchLogCount = async () => {
+    const anotherDay = new Date(end_date).toISOString()
+    const anotherStart = new Date(start_date).toISOString()
     const logObj = {
       habitId: habit.id,
-      startTime: habit.start_date,
-      endTime: habit.end_date
+      startTime: anotherStart,
+      endTime: anotherDay
     }
   
     const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
