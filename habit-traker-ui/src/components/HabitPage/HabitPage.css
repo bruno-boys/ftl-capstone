@@ -2,65 +2,27 @@
   width: 100%;
   height: 10px;
 } 
-
-
-.activity-page .habit-card .max-w-6xl {
-  padding: 1rem;
+.habit-page .gridContent {
   display: flex;
-  /* position: relative;
-  top: -95px; */
-}
-
-.top {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
-#delete {
-background-color: red;
-}
-
-.gridContent {
-  display: flex;
-  gap: 7rem;
+  gap: 9rem;
   flex-direction: column;
+  margin-bottom: 100px;
 }
 
 .habit-card .pt-12 {
   width: 100%;
 }
-/* 
-.habit-card .relative {
-  position: relative;
-  top: -55px;
-} */
 
-.bottom {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+.hp-title {
+  font-weight: bold;
+  font-size: 30px;
+  flex-grow: 1;
 }
 
-.bottom .buttons {
+.hp-top {
   display: flex;
-  margin-top: 20px;
-  margin-right: 5px;
-  height: 40px;
-  width: 100%;
-  gap: 10px;
-  justify-content: flex-end;
-} 
-
-.top .buttons {
-  display: flex;
-  margin-top: 20px;
-  margin-right: 5px;
-  height: 40px;
-  width: 100%;
-  gap: 10px;
-  justify-content: flex-end;
-} 
+  flex-wrap: wrap;
+}
 
 
 /* 
