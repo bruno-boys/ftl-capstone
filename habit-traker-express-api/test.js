@@ -3,7 +3,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 class SendEmail {
 
   static async emailSend(user, resetPasswordUrl, APPLICATION_NAME, EMAIL_FROM_ADDRESS) {
-
     const msg = {
       to: user.email,
       from: EMAIL_FROM_ADDRESS,
@@ -11,7 +10,7 @@ class SendEmail {
       html: `
     <html>
       <body>
-        <p>Hi ${user.first_name},</p>
+        <p>Hi ${user.firstName},</p>
         <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
         <p>Please click on the following link, or paste this into your browser to complete the process:</p>
           <a href="${resetPasswordUrl}">

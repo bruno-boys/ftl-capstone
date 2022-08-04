@@ -55,11 +55,13 @@ class EmailService {
 
   async sendPasswordResetEmail(user, token) {
     const resetPasswordUrl = this.constructPasswordResetUrl(token);
+    console.log(user)
     await SendEmail.emailSend(user, resetPasswordUrl, APPLICATION_NAME, EMAIL_FROM_ADDRESS);
     
   }
 
   async sendPasswordResetConfirmationEmail(user) {
+    console.log(user)
     await SendEmail.sendpwdResetConfirmationEmail(user, APPLICATION_NAME, EMAIL_FROM_ADDRESS,);
   }
 }

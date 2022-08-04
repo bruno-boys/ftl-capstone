@@ -57,6 +57,7 @@ router.get("/me", requireAuthenticatedUser, async (req, res, next) => {
 router.post("/recover", async (req, res, next) => {
   try {
     const {email} = req.body;
+    console.log("email", email)
     const resetToken = generatePasswordResetToken()
     const user = await User.savePasswordResetToken(email, resetToken);
 
@@ -77,10 +78,6 @@ router.post("/password-reset", async (req, res, next) => {
     const { newPassword } = req.body;
    
     const user = await User.resetPassword( token, newPassword);
-
-    if (user) {
-      // await emailService.sendPasswordResetConfirmationEmail(user);
-    }
 
     return res.status(200).json({ message: "Password Successfuly reset" });
 
