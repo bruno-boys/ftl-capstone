@@ -27,12 +27,24 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   const [tab, setTab] = useState(1);
-
+  console.log("habit in habit card", habit)
   const updateLog = async (event) => {
     event.preventDefault();
-    console.log("habit in habit card", habit)
-    const { data, error } = await apiClient.logHabit({id: habit.id, startDate : habit.temp_start_date, endDate : "2022-08-10T07:00:00.000Z"});
-    console.log("data = ", habit.id)
+    let start_date = habit.temp_start_date
+    let end_date = new Date(start_date)
+    end_date.setDate(end_date.getDate() + 1)
+
+    let today = new Date()
+    today.setHours(0,0,0,0)
+
+    if ( today.getTime() >= end_date.getTime()){
+      const tempObj = {tempStartDate : today}
+      const {data, error} = await apiClient.editHabit({...habit, ...tempObj})
+      end_date.setDate(today.getDate() + 1)
+      start_date = today
+
+    }
+    const { data, error } = await apiClient.logHabit({id: habit.id, startDate : start_date, endDate : end_date})
     if (error) {
       setErrors(error);
     }
