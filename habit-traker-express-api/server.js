@@ -3,9 +3,10 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { NotFoundError } = require('./utils/error');
 const { PORT } = require('./config')
-const authRoutes = require('./routes/auth')
 const { extractUserFromJwt } = require('./middleware/security')
-const habitRoute = require('./routes/habits')
+const authRoutes = require('./routes/auth')
+const habitRoutes = require('./routes/habits')
+const statisticRoutes = require('./routes/stats')
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.use(express.json({limit : '25mb'}));
 app.use(extractUserFromJwt)
 
 app.use('/auth',authRoutes)
-app.use('/habits', habitRoute)
+app.use('/habits', habitRoutes)
+app.use('/stats', statisticRoutes);
 
 
 app.get('/', (req,res) => {

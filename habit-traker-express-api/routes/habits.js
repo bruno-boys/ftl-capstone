@@ -16,14 +16,6 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
   }
 });
 
-router.get("/tracked", requireAuthenticatedUser, async (req, res, next) => {
-  const habitInfo = req.body;
-
-  const completedCount = await Habits.getCompletedCount(habitInfo);
-
-  res.status(200).json({ completedCount: completedCount });
-});
-
 router.get("/log", requireAuthenticatedUser, async (req,res,next) => {
   try {
     const {habitId, startTime, endTime} = req.query

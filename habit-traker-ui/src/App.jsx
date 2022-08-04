@@ -16,6 +16,8 @@ import SignUp from './components/SignUp';
 import Recover from './components/Recover';
 import Dashboard from '../src/components/Dashboard/Dashboard';
 import UserProfile from '../src/components/UserProfile/UserProfile'
+import HabitDetails from './components/HabitDetails/HabitDetails';
+import HabitPage from './components/HabitPage/HabitPage';
 import ResetPassword from '../src/components/ResetPassword'
 
 function App() {
@@ -45,6 +47,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/recover" element={<Recover />} />
         <Route path="/activity" element={<Dashboard />} />
+        <Route path="/habits" element={<HabitPage />} />
+        <Route path="/habit/:habitId" element={<HabitDetails />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
