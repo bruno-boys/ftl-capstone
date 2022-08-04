@@ -16,6 +16,7 @@ import SignUp from './components/SignUp';
 import Recover from './components/Recover';
 import Dashboard from '../src/components/Dashboard/Dashboard';
 import UserProfile from '../src/components/UserProfile/UserProfile'
+import ResetPassword from '../src/components/ResetPassword'
 
 function App() {
 
@@ -45,6 +46,8 @@ function App() {
         <Route path="/recover" element={<Recover />} />
         <Route path="/activity" element={<Dashboard />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
       </Routes>
     </>
   );

@@ -3,7 +3,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 class SendEmail {
 
   static async emailSend(user, resetPasswordUrl, APPLICATION_NAME, EMAIL_FROM_ADDRESS) {
-
     const msg = {
       to: user.email,
       from: EMAIL_FROM_ADDRESS,

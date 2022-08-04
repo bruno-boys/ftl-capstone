@@ -79,10 +79,6 @@ router.post("/password-reset", async (req, res, next) => {
    
     const user = await User.resetPassword( token, newPassword);
 
-    if (user) {
-      // await emailService.sendPasswordResetConfirmationEmail(user);
-    }
-
     return res.status(200).json({ message: "Password Successfuly reset" });
 
   }
