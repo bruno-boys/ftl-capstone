@@ -20,7 +20,7 @@ CREATE TABLE habits (
     frequency       INTEGER NOT NULL,
     period          TEXT NOT NULL,
     start_date      TIMESTAMP NOT NULL DEFAULT NOW(),
-    temp_start_date TIMESTAMP NOT NULL DEFAULT NOW(), 
+    temp_start_date TIMESTAMP DEFAULT NOW(), 
     end_date        TIMESTAMP
 );
 
