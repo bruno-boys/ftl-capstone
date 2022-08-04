@@ -37,4 +37,16 @@ CREATE TABLE habit_progess (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
     completed_count INTEGER NOT NULL DEFAULT 0 
-)
+);
+
+CREATE TABLE buddy_request (
+    users_id        INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    link            TEXT NOT NULL,
+    expires_at      TIMESTAMP NOT NULL DEFAULT NOW() + INTERVAL '168' HOUR
+);
+
+CREATE TABLE buddy (
+    user_1          INTEGER NOT NULL REFERENCES buddy_request (users_id) ON DELETE CASCADE,
+    user_2          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    created_at      TIMESTAMP NOT NULL DEFAULT NOW()
+);
