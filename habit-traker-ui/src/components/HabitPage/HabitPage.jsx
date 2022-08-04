@@ -30,7 +30,8 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   const updateLog = async (event) => {
     event.preventDefault();
-    const { data, error } = await apiClient.logHabit({habitId: habit.id});
+    console.log("habit in habit card", habit)
+    const { data, error } = await apiClient.logHabit({id: habit.id, startDate : habit.temp_start_date, endDate : "2022-08-10T07:00:00.000Z"});
     console.log("data = ", habit.id)
     if (error) {
       setErrors(error);
