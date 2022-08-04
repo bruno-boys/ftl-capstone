@@ -26,7 +26,6 @@ export default function HabitDetails({}) {
         getHabitById();
     }, [])
 
-
     const deleteHabit = async () => {
         const {data, err} = await apiClient.deleteHabit(habitId);
         if (err) {setError(err)}

@@ -11,9 +11,6 @@ import { LitElement, html } from 'lit-element'
 import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
 
-
-
-
 function Dashboard() {
 
   const [habits, setHabits] = useState([]);
@@ -124,7 +121,6 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
 
 
 export const FORMAT_YEAR_WEEK = 'yyyy-c'
