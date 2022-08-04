@@ -24,14 +24,15 @@ export default function HabitGrid({ habits, formModalOpen, setFormModalOpen, han
 function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   const [logCount, setLogCount] = useState(0);
+  const [errors, setErrors] = useState()
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
 
   const updateLog = async (event) => {
     event.preventDefault();
     const { data, error } = await apiClient.logHabit({habitId: habit.id});
-    console.log("data = ", habit.id)
     if (error) {
       setErrors(error);
     }
@@ -56,25 +57,17 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     }
   }
 
-  const closeModal = async () => {
-    window.location.reload();
-    await setFormModalOpen(false);
-    await setFormModalOpen(false)
-  }
-
   const deleteHabit = async () => {
     const {data, err} = await apiClient.deleteHabit(habit.id);
     if (err) {setError(err)}
     if (data) {
-        window.location.reload()
+    navigate('/activity')
     }
   }
 
   useEffect(() => {
-    // console.log(habit)
-    console.log('form = ',formModalOpen)
     fetchLogCount()
-  }, [formModalOpen])
+  }, [])
 
 
   return (
@@ -95,16 +88,14 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                   >
                     <div className="card" style={{width:"100%"}}>
+                      <Link to={`/habit/${habit.id}`}>
                       <div className="top">
-                        <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">
-                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
-                        </span>
-                        <div className="buttons">
-                          <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
-                        </div>
+                        <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
+                      <div className="buttons">
+                        <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                      </div>
                       </div>
                       <div className="bottom">
-                        <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">
                         { 
                           logCount >= habit.frequency ? 
 
@@ -112,18 +103,25 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                           :
                           <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
                         }
-                        </span>
                         <div className="buttons">
                           <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
                           <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
                         </div>
                       </div>
+                      </Link>
                     </div>
                   </a>
                 </div>
                {/* Modal */}
-               <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
-                {
+               <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={handleClose}>
+                  <div className="relative pb-9/16">
+                    <div className="create-habit">
+                      <EditForm habitId={habit.id} />
+                    </div>
+                  </div>
+                </Modal>
+
+                {/* {
                   formModalOpen ?
 
                   <div className="relative pb-9/16">
@@ -141,7 +139,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                   </div>
 
                 }
-              </Modal>
+              </Modal> */}
             </div>
           </div >
       </section >
