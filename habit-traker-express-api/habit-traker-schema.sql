@@ -20,13 +20,17 @@ CREATE TABLE habits (
     frequency       INTEGER NOT NULL,
     period          TEXT NOT NULL,
     start_date      TIMESTAMP NOT NULL DEFAULT NOW(),
+    temp_start_date TIMESTAMP NOT NULL DEFAULT NOW(), 
     end_date        TIMESTAMP
 );
 
 CREATE TABLE tracked_habits (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
-    logged_time     TIMESTAMP NOT NULL DEFAULT NOW()
+    logged_time     TIMESTAMP NOT NULL DEFAULT NOW(), 
+    start_date      DATE NOT NULL, 
+    end_date        DATE NOT NULL
+    
 );
 
 CREATE TABLE habit_progess (

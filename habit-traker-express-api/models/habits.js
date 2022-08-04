@@ -15,12 +15,13 @@ class Habits {
     return results.rows;
   }
 
-  static async logHabit(habitId) {
+  static async logHabit(habitForm) {
+    console.log(habitForm)
       await db.query(
         `
-        INSERT INTO tracked_habits (habit_id)
-        VALUES ($1);
-        `, [habitId]
+        INSERT INTO tracked_habits (habit_id, start_date, end_date)
+        VALUES ($1, $2, $3);
+        `, [habitForm.id, habitForm.startDate, habitForm.endDate]
     )
   }
 
@@ -52,10 +53,12 @@ class Habits {
 
   static async createHabit(user, habitForm) {
     //allows user to create habits
+    console.log("habit form", habitForm)
+    console.log("user", user)
     await db.query(
       ` 
-            INSERT INTO habits (users_id, habit_name, frequency, period, start_date, end_date)
-            VALUES ((select id from users where email = $1), $2, $3, $4, $5, $6);
+            INSERT INTO habits (users_id, habit_name, frequency, period, start_date, temp_start_date, end_date)
+            VALUES ((select id from users where email = $1), $2, $3, $4, $5, $6, $7);
             `,
       [
         user.email,
@@ -63,7 +66,8 @@ class Habits {
         habitForm.frequency,
         habitForm.period,
         habitForm.startDate,
-        habitForm.endDate,
+        habitForm.tempStartDate,
+        habitForm.endDate
       ]
     );
   }
@@ -97,8 +101,7 @@ class Habits {
     }
 
    static async editHabit(form){
-    console.log("form", form)
-    await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5 where id = $6`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.id])
+    await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6 where id = $7`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.id])
   }
 
 }
