@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../images/habit-traker-logo.png'
 
 function Header() {
 
@@ -23,7 +24,7 @@ function Header() {
 
   return (
     <header className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top && 'bg-white backdrop-blur-sm shadow-lg'}`}>
-      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6" style={{display:"flex",justifyContent:"center"}}>
         <div className="flex items-center justify-between h-16 md:h-20" style={{minWidth: "1200px"}}>
 
           {/* Site branding */}
@@ -39,7 +40,7 @@ function Header() {
              :
 
               <Link to="/activity" className="block" aria-label="Cruip">
-                <img src="src/images/habit-traker-logo.png" alt="" style={{width:"150px", height:"auto"}} />
+                <img src={logo} alt="" style={{width:"150px", height:"auto"}} />
               </Link>
             }
 
@@ -71,6 +72,9 @@ function Header() {
               <ul className="flex flex-grow justify-end flex-wrap items-center">
                 <li>
                   <Link to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/habits" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Habits</Link>
                 </li>
                 <li>
                   <Link to="/user-profile" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">User Profile</Link>
