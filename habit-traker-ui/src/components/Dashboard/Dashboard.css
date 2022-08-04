@@ -133,11 +133,11 @@ abbr[title] {
     justify-content: center;
 }
 
-.left {
+.activity-page .left {
     width: 50%
 }
 
-.right {
+.activity-page .right {
     width: 50%;
 }
 
