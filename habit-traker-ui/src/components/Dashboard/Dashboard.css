@@ -98,9 +98,21 @@ abbr[title] {
 
 .daily-habits {
     margin-top: 20px;
-    width: 350px;
-    height: 200px;
+    width: 100%;
+    height: 600px;
     border-radius: 5px;
+    text-align: center;
+}
+
+.daily-habits-container {
+    background-color: gray;
+    border-radius: 5px;
+}
+
+.daily-habits .create-habit-btn {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
 }
 
 #create-habit-modal {
@@ -121,9 +133,20 @@ abbr[title] {
     justify-content: center;
 }
 
+.left {
+    width: 50%
+}
+
 .right {
+    width: 50%;
+}
+
+.dashboard-stats {
+    margin-top: 20px;
     width: 100%;
-    height: fit-content;
+    height: 600px;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .activity-habits {

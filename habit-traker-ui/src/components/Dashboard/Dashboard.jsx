@@ -71,18 +71,25 @@ function Dashboard() {
                           <div className="activity-page">
 
                               <div className='left'>
-                                  {/* <Calendar onClickDay={getPrint}/> */}
+                                <div className="daily-habits-container">
                                   <div className="daily-habits">
-                                  
+                                    <div className="create-habit-btn">
+                                      <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
+                                        <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                      </div>
+                                    </div>
+                                    <div className="activity-habits">
+                                      <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                    </div>
                                   </div>
+                                </div>
                               </div>
 
                               <div className='right'>
-                                <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                </div>
-                                <div className="activity-habits">
-                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                <div className="daily-habits-container">
+                                    <div className="dashboard-stats">
+                                      Right
+                                    </div>
                                 </div>
                               </div>
 
