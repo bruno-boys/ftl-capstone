@@ -4,7 +4,7 @@ import apiClient from "../../services/apiClient";
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import Header from '../../partials/Header';
-import HabitGrid from '../HabitPage/HabitPage';
+import DashHabits from '../DashHabits/DashHabits';
 import HabitForm from '../HabitForm/HabitForm';
 import Modal from '../../utils/Modal'
 import EditForm from '../EditForm/EditForm';
@@ -82,7 +82,7 @@ function Dashboard() {
                                   <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
                                 </div>
                                 <div className="activity-habits">
-                                    <HabitGrid habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
                                 </div>
                               </div>
 
