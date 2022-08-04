@@ -32,7 +32,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   let end_date = new Date(start_date)
   console.log("start_date", start_date)
   console.log("end date", end_date)
-  end_date.setDate(end_date.getDate() + 1)
+  end_date.setDate(end_date.getDate())
 
 
   let today = new Date()
@@ -65,6 +65,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       setErrors(error);
     }
     fetchLogCount()
+    
   }
 
 
