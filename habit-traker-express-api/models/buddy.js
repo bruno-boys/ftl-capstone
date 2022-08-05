@@ -32,8 +32,9 @@ class Buddy {
         await db.query(
             `
             INSERT INTO buddies (user_1, user_2) 
-            VALUES ((SELECT users_id FROM buddy_request WHERE link = $1), 
-                    (SELECT id FROM users WHERE email = $2));
+            VALUES 
+                ((SELECT users_id FROM buddy_request WHERE link = $1), (SELECT id FROM users WHERE email = $2)),
+                ((SELECT id FROM users WHERE email = $2), (SELECT users_id FROM buddy_request WHERE link = $1));
             `, [link, user.email]
         );
         
@@ -43,6 +44,62 @@ class Buddy {
             WHERE link = $1;
             `, [link]
         );
+    }
+
+    // static async fetchBuddy(user) {
+    //     //uses the buddy's id from the database and fetches the buddy
+
+    //     /* takes the logged in user and queries the db in order to find the 
+    //         buddy that they are matched with.*/
+    // }
+
+    static async fetchBuddyId(user) {
+       /* takes the logged in user and queries the db in order to find the 
+            user id of buddy that they are matched with. */
+        const buddy = await db.query(
+            `
+            SELECT user_2 FROM buddies WHERE user_1 = (SELECT id FROM users WHERE email = $1);
+            `, [user.email]
+        )
+        return buddy.rows[0].user_2;
+    }
+
+
+    /*  It then uses the buddy's info to 
+            fetch their habits, progress and other information*/
+
+    static async fetchBuddyName(user) {
+         /* calls the fetchBuddyId function in order to get 
+                the name of user's buddy*/
+        const buddyId = await Buddy.fetchBuddyId(user)
+
+        const results = await db.query(
+            `
+            SELECT first_name, last_name FROM users WHERE id = $1;
+            `, [buddyId]
+        )
+        return results.rows[0];
+    }
+
+    static async fetchBuddyHabits(user) {
+        /* calls the fetchBuddyId function in order to get 
+                the list of habits of user's buddy*/
+        const buddyId = await Buddy.fetchBuddyId(user)
+
+        const results = await db.query(
+            `
+            SELECT * FROM habits WHERE users_id = $1; 
+            `, [buddyId]
+        );
+        return results.rows
+    }
+
+    static async fetchTrackedBuddyHabits(user) {
+        /* calls the fetchBuddyId function in order to get 
+                the list of tracked habits of user's buddy*/
+
+                //figure out how to get tracked habits for all and individual habits
+        const buddyId = await Buddy.fetchBuddyId(user)
     }
 
 }

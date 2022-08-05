@@ -102,6 +102,10 @@ class ApiClient {
     async generateURLId() {
         return await this.request({ endpoint: `buddy`, method: `GET` })
     }
+
+    async acceptBuddyRequest(link) {
+        return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
+    }
 }
 
 export default new ApiClient('http://localhost:3001')
