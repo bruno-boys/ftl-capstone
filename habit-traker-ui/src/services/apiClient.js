@@ -91,12 +91,20 @@ class ApiClient {
 
     async editUser(form){
         console.log("form in edit user", form)
-        return await this.request({endpoint : `auth/editUser`, method : `PUT`, data : form})
+        return await this.request({endpoint: `auth/editUser`, method : `PUT`, data : form})
     }
 
     async editPhoto(form){
         console.log("form in edit photo", form)
-        return await this.request({endpoint : `auth/editPhoto`, method : `PUT`, data : form})
+        return await this.request({endpoint: `auth/editPhoto`, method : `PUT`, data : form})
+    }
+
+    async generateURLId() {
+        return await this.request({ endpoint: `buddy`, method: `GET` })
+    }
+
+    async acceptBuddyRequest(link) {
+        return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
     }
 }
 

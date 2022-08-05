@@ -19,7 +19,6 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
 router.get("/log", requireAuthenticatedUser, async (req,res,next) => {
   try {
     const {habitId, startTime, endTime} = req.query
-    console.log("req.query", req.query)
     const logCount = await Habits.fetchLoggedHabitCount(habitId, startTime, endTime);
     res.status(200).json({logCount});
   }
@@ -75,7 +74,6 @@ catch(error){
 router.post("/log", requireAuthenticatedUser, async (req, res, next) => {
   try {
     await Habits.logHabit(req.body);
-    console.log("req.body", req.body)
     res.status(201).json({ status: "Habit Logged!" });
   } catch (error) {
     next(error);

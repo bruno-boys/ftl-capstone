@@ -11,6 +11,7 @@ function SignIn() {
   const [newUser, setNewUser] = useState(null);
 
   const handleOnFormChange = (event) => {
+    setError("")
     if (event.target.name === "email") {
       if (event.target.value.indexOf("@") === -1) {
         setError((e) => ({ ...e, email: "Please enter a valid email." }));
@@ -24,7 +25,7 @@ function SignIn() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const {data, error} = await apiClient.loginUser(newUser)
-    if (error) { setError(error) }
+    if (error) {setError(error.data.error)}
     if (data?.user) {
       setNewUser(null);
       apiClient.setToken(data.token)
@@ -33,10 +34,6 @@ function SignIn() {
       navigate('/activity')
     };
   };
-
-  useEffect(() => {
-    console.log("user =",newUser)
-  }, [newUser])
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
@@ -59,9 +56,13 @@ function SignIn() {
               {/* Form */}
               <div className="max-w-sm mx-auto">
                 <form onSubmit={handleOnSubmit}>
+                <div style={{display:"flex", justifyContent:"center"}}>
+                  {error.message && <span className="error" style={{color:"red",textAlign:"center",fontSize:"16px"}}>{error.message}</span>}
+                </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="email">Email</label>
+                      {error.email && <span className="error" style={{color:"red",fontSize:"13px"}}>{error.email}</span>}
                       <input name="email" type="email" className="form-input w-full text-gray-800" placeholder="Enter your email address" onChange={handleOnFormChange} required />
                     </div>
                   </div>

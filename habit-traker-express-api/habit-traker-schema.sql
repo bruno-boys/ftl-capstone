@@ -10,7 +10,6 @@ CREATE TABLE users (
     pw_reset_token      TEXT,
     pw_reset_token_exp  TIMESTAMP,
     profile_photo       TEXT
-
 );
 
 CREATE TABLE habits (
@@ -30,11 +29,23 @@ CREATE TABLE tracked_habits (
     logged_time     TIMESTAMP NOT NULL DEFAULT NOW(), 
     start_date      TIMESTAMP NOT NULL, 
     end_date        TIMESTAMP NOT NULL
-    
 );
 
 CREATE TABLE habit_progess (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
     completed_count INTEGER NOT NULL DEFAULT 0 
-)
+);
+
+CREATE TABLE buddy_request (
+    users_id        INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    link            TEXT NOT NULL,
+    expires_at      TIMESTAMP NOT NULL DEFAULT NOW() + INTERVAL '168' HOUR
+);
+
+
+CREATE TABLE buddies (
+    user_1          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    user_2          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    created_at      TIMESTAMP NOT NULL DEFAULT NOW()
+);

@@ -23,7 +23,6 @@ function Recover() {
       return;
     }
 
-    console.log("email", email);
     const { data, error } = await apiClient.recoverAccount({ email: email });
     if (error) setErrors(error);
     if (data?.message) {

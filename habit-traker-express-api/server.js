@@ -7,6 +7,7 @@ const { extractUserFromJwt } = require('./middleware/security')
 const authRoutes = require('./routes/auth')
 const habitRoutes = require('./routes/habits')
 const statisticRoutes = require('./routes/stats')
+const buddyRoutes = require('./routes/buddy')
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(extractUserFromJwt)
 app.use('/auth',authRoutes)
 app.use('/habits', habitRoutes)
 app.use('/stats', statisticRoutes);
+app.use('/buddy', buddyRoutes)
 
 
 app.get('/', (req,res) => {

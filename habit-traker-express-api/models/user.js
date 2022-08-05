@@ -8,7 +8,6 @@ class User {
   static async makePublicUser(user) {
     /*details out the information which the API will return to the user 
             upon registering or logging in */
-            console.log("user in make public user", user)
         return {
             id: user.id,
             firstName: user.first_name,
@@ -39,7 +38,6 @@ class User {
   static async register(credentials) {
       /* user should submit their full name, email, and password
           if any of these fields are missing, throw an error */
-      console.log(credentials)
       const requiredFields = ['firstName', 'lastName', 'email', 'password']
       requiredFields.forEach(field => {
           if (!credentials.hasOwnProperty(field)) {
@@ -151,16 +149,13 @@ class User {
 
 
   static async editUser(form){
-      console.log("form", form)
       await db.query(`update users set first_name = $1, last_name = $2, email = $3 where id = $4`, [form.firstName, form.lastName, form.email, form.id])
       return "Success"
     }
 
     
     static async editPhoto(form){
-      console.log("form inside edit photo", form)
       await db.query(`update users set profile_photo = $1 where id = $2`, [form.profilePhoto, form.id])
-      console.log("form from inside model edit photo",form.profilePhoto)
       return form.profilePhoto
     }
 
