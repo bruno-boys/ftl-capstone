@@ -15,7 +15,7 @@ class EmailService {
     );
     this.transport = transport;
     this.isActive = isActive;
-    this.clientUrl = clientUrl;
+    this.clientUrl = CLIENT_URL;
     this.emailFromAddress = emailFromAddress;
     this.applicationName = applicationName;
   }

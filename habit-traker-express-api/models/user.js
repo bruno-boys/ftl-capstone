@@ -8,7 +8,6 @@ class User {
   static async makePublicUser(user) {
     /*details out the information which the API will return to the user 
             upon registering or logging in */
-            console.log("user in make public user", user)
         return {
             id: user.id,
             firstName: user.first_name,
