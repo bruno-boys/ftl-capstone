@@ -23,10 +23,12 @@ function Dashboard() {
     frequency: "",
     period: "Per Day",
   });
+  const [datePicked, setDatePicked] = useState('')
 
-  function getPrint(event) {
-    console.log("day = ",event)
-}
+  function setDate() {
+    setDatePicked(localStorage.getItem('datePicked'))
+  }
+
 
   useEffect(() => {
       const getHabits = async () => {
@@ -53,8 +55,8 @@ function Dashboard() {
   }
 
     useEffect(() => {
-      console.log('habits = ',habits);
-    }, [habits])
+      console.log('date = ',datePicked);
+    }, [datePicked])
 
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
@@ -70,7 +72,7 @@ function Dashboard() {
 
                       <>
                       <div className="date-slider">
-                        <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)"></date-carousel>
+                        <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)" onClick={setDate}></date-carousel>
                       </div>
                       {/* <DateCarousel /> */}
                         <div className="activity-page">
@@ -230,6 +232,7 @@ class DateCarousel extends LitElement {
     this.dateUnixValue = event.currentTarget.dataset.unix
     this._calculateDays()
     this.dispatchEvent(new CustomEvent('on-day-pick'))
+    localStorage.setItem('datePicked', this.datePicked)
   }
 
   _today() {
@@ -244,6 +247,7 @@ class DateCarousel extends LitElement {
     this.dateUnixValue = now.toFormat('X')
     this._calculateDays()
     this.dispatchEvent(new CustomEvent('on-day-pick'))
+    localStorage.setItem('datePicked', this.datePicked)
   }
 
   render() {
