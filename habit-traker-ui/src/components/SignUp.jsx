@@ -48,6 +48,9 @@ function SignUp() {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
+    if (newUser.passwordConfirm != newUser.password) {
+      return null;
+    }
     const { data, error } = await apiClient.registerUser(newUser);
     if (error) {
       setError(error);

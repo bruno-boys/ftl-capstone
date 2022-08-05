@@ -11,48 +11,52 @@ function ResetPassword() {
     const [message, setMessage] = useState(null);
     const [form, setForm] = useState({
       password: "",
-      passwordConfirmation: "",
+      confirmPassword: "",
     });
 
 
 
   const handleOnChange = (event) => {
-    if (event.target.name === "passwordConfirm") {
-      if (event.target.value !== form.password) {
-        setErrors((e) => ({
-          ...e,
-          passwordConfirm: "Passwords do not match.",
-        }));
+    if (event.target.name === "confirmPassword") {
+      if (form.password && form.password !== event.target.value) {
+        setErrors((e) => ({ ...e, confirmPassword: "Password's do not match" }));
       } else {
-        setErrors((e) => ({ ...e, passwordConfirm: null }));
+        setErrors((e) => ({ ...e, confirmPassword: null }));
       }
     }
 
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
   const location = useLocation();
-  console.log({ location });
   const searchParams = new URLSearchParams(location.search);
-  console.log({ searchParams: searchParams.toString() })
   const token = searchParams.get("token");
-  console.log("token before function", token)
+
 
   const handleOnResetSubmit = async (event) => {
     setIsProcessing(true);
     event.preventDefault()
-    setErrors((e) => ({ ...e, form: null }));
-    console.log("token:", token)
+    if (form.confirmPassword != form.password) {
+      return null;
+    }
     const { data, error } = await apiClient.resetPassword({
       token,
       newPassword: form.password,
     });
-  
-    if (error) setErrors((e) => ({ ...e, form: error }));
+    if (error) {setErrors(error.data.error)}
     if (data?.message) 
     setMessage(data.message);
 
     setIsProcessing(false);
   };
+
+  useEffect(() => {
+    console.log('error = ',errors)
+  }, [errors])
+
+  useEffect(() => {
+    console.log('form = ',form)
+  }, [form])
+
 
   
 
@@ -99,8 +103,8 @@ function ResetPassword() {
                       <div className="flex justify-between">
                         <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Confirm Password</label>
                       </div>
+                      {errors.confirmPassword && (<span className="error" style={{color:"red",fontSize:"13px"}}>{errors.confirmPassword}</span>)}
                       <input name="confirmPassword" type="password" className="form-input w-full text-gray-800" placeholder="Confirm your password" value={form.passwordConfirm} onChange={handleOnChange} required />
-                      {errors.passwordConfirm && (<span className="error">{errors.passwordConfirm}</span>)}
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
