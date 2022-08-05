@@ -10,6 +10,12 @@ function SignUp() {
   const [newUser, setNewUser] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [passwordShown, setPasswordShown] = useState(false);
+
+    const togglePassword = (event) => {
+      event.preventDefault()
+      setPasswordShown(!passwordShown);
+    };
   
   const handleOnFormChange = (event) => {
     if (event.target.name === "password") {
@@ -117,7 +123,10 @@ function SignUp() {
                     <div className="w-full px-3">
                       <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Password <span className="text-red-600">*</span></label>
                       {error.password && <span className="error" style={{color:"red",fontSize:"13px"}}>{error.password}</span>}
-                      <input name="password" type="password" className="form-input w-full text-gray-800" placeholder="Enter your password" onChange={handleOnFormChange} required />
+                      <input name="password" type={ passwordShown ? "text" : "password"} className="form-input w-full text-gray-800" placeholder="Enter your password" onChange={handleOnFormChange} required />
+                      <div style={{display:"flex", justifyContent:"flex-end"}}>
+                        <button onClick={(event) => {togglePassword(event)}}>Show Password</button>
+                      </div>
                     </div>
                   </div>
 
@@ -125,7 +134,7 @@ function SignUp() {
                     <div className="w-full px-3">
                       <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Confirm Password <span className="text-red-600">*</span></label>
                       {error.passwordConfirm && (<span className="error" style={{color:"red",fontSize:"13px"}}>{error.passwordConfirm}</span>)}
-                      <input name="passwordConfirm" type="password" className="form-input w-full text-gray-800" placeholder="Confirm your password" onChange={handleOnFormChange} required />
+                      <input name="passwordConfirm" type={ passwordShown ? "text" : "password"} className="form-input w-full text-gray-800" placeholder="Confirm your password" onChange={handleOnFormChange} required />
                     </div>
                   </div>
 

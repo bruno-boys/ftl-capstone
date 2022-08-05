@@ -13,7 +13,12 @@ function ResetPassword() {
       password: "",
       confirmPassword: "",
     });
+    const [passwordShown, setPasswordShown] = useState(false);
 
+    const togglePassword = (event) => {
+      event.preventDefault()
+      setPasswordShown(!passwordShown);
+    };
 
 
   const handleOnChange = (event) => {
@@ -94,7 +99,10 @@ function ResetPassword() {
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Password</label>
-                      <input name="password" type="password" className="form-input w-full text-gray-800" placeholder="Enter a secure password" value={form.password} onChange={handleOnChange} required />
+                      <input name="password" type={ passwordShown ? "text" : "password"} className="form-input w-full text-gray-800" placeholder="Enter a secure password" value={form.password} onChange={handleOnChange} required />
+                      <div style={{display:"flex", justifyContent:"flex-end"}}>
+                        <button onClick={(event) => {togglePassword(event)}}>Show Password</button>
+                      </div>
                      {errors.password && (<span className="error">{errors.password}</span>)}
                      </div>
                   </div>
@@ -104,7 +112,7 @@ function ResetPassword() {
                         <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="password">Confirm Password</label>
                       </div>
                       {errors.confirmPassword && (<span className="error" style={{color:"red",fontSize:"13px"}}>{errors.confirmPassword}</span>)}
-                      <input name="confirmPassword" type="password" className="form-input w-full text-gray-800" placeholder="Confirm your password" value={form.passwordConfirm} onChange={handleOnChange} required />
+                      <input name="confirmPassword" type={ passwordShown ? "text" : "password"} className="form-input w-full text-gray-800" placeholder="Confirm your password" value={form.passwordConfirm} onChange={handleOnChange} required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
