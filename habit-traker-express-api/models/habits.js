@@ -30,8 +30,8 @@ class Habits {
       `
       SELECT COUNT(*) FROM tracked_habits
       WHERE (habit_id = $1)
-      AND logged_time >= $2 
-      AND logged_time <= $3;
+      AND start_date = $2 
+      AND end_date = $3;
       `, [habitId, startTime, endTime]
     )
     return results.rows[0];
@@ -99,6 +99,7 @@ class Habits {
     }
 
    static async editHabit(form){
+    console.log("form in edit habit", form)
     await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6 where id = $7`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.id])
   }
 

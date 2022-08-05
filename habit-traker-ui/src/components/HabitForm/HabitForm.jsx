@@ -18,7 +18,11 @@ export default function HabitForm({ form, setForm, handleClose }) {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    const {data, error} = await apiClient.createHabit(form)
+    const tempObj = {tempStartDate : form.startDate}
+    setForm((f) => ({ ...f, [tempStartDate]: temporaryStartDate }))
+    const {data, error} = await apiClient.createHabit({...form, ...tempObj})
+    console.log("data", data)
+    console.log("error", error)
     handleClose();
   };
 

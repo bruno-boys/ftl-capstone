@@ -28,8 +28,8 @@ CREATE TABLE tracked_habits (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
     logged_time     TIMESTAMP NOT NULL DEFAULT NOW(), 
-    start_date      DATE NOT NULL, 
-    end_date        DATE NOT NULL
+    start_date      TIMESTAMP NOT NULL, 
+    end_date        TIMESTAMP NOT NULL
     
 );
 

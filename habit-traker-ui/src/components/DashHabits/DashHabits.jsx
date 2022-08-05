@@ -10,6 +10,7 @@ import HabitDetails from "../HabitDetails/HabitDetails";
 
 
 export default function DashHabits({ habits, formModalOpen, setFormModalOpen, handleClose }) {
+  console.log("habits in dashhabits", habits)
 
   return (
     <div className="gridContent">
@@ -29,22 +30,78 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
   const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
+  console.log("habit in habit card", habit)
+  let start_date = habit.temp_start_date
+  let end_date = new Date(start_date)
+  console.log("start_date", start_date)
+  console.log("end date", end_date)
+  
 
+
+  let today = new Date()
+  today.setHours(0,0,0,0)
+  end_date.setHours(0,0,0,0)
+  today.setDate(today.getDate())
+
+  const setPeriodEndDate = (date, period) => {
+
+    if (period == "Per Day") {
+
+      date.setDate(date.getDate() + 1)
+    }
+
+    if (period == "Per Week"){
+      date.setDate(date.getDate() +7)
+    }
+
+    if (period == "Per Month"){
+      date.setMonth(date.getMonth() + 1)
+    }
+
+
+  }
+
+  setPeriodEndDate(end_date, habit.period)
   const updateLog = async (event) => {
     event.preventDefault();
-    const { data, error } = await apiClient.logHabit({habitId: habit.id});
+    
+
+    if ( today.getTime() >= end_date.getTime()){
+      const tempObj = {tempStartDate : today}
+      const obj = {
+        id : habit.id,
+        habitName : habit.habit_name,
+        frequency : habit.frequency,
+        period : habit.period,
+        startDate : habit.start_date,
+        endDate : habit.end_date
+      }
+      const {data, error} = await apiClient.editHabit({...obj, ...tempObj})
+      end_date = today
+      setPeriodEndDate(end_date, habit.period)
+      start_date = today
+
+    }
+    const anotherDay = new Date(end_date).toISOString()
+    console.log("another day", anotherDay)
+    
+    const { data, error } = await apiClient.logHabit({id: habit.id, startDate : start_date, endDate : anotherDay})
+    console.log("data form log count", data)
     if (error) {
       setErrors(error);
     }
     fetchLogCount()
+    
   }
 
 
   const fetchLogCount = async () => {
+    const anotherDay = new Date(end_date).toISOString()
+    const anotherStart = new Date(start_date).toISOString()
     const logObj = {
       habitId: habit.id,
-      startTime: habit.start_date,
-      endTime: habit.end_date
+      startTime: anotherStart,
+      endTime: anotherDay
     }
   
     const { data, error } = await apiClient.fetchLoggedHabitCount(logObj);
@@ -56,12 +113,17 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
       await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
     }
   }
+  const closeModal = async () => {
+    window.location.reload();
+    await setFormModalOpen(false);
+    await setFormModalOpen(false)
+  }
 
   const deleteHabit = async () => {
     const {data, err} = await apiClient.deleteHabit(habit.id);
     if (err) {setError(err)}
     if (data) {
-    navigate('/activity')
+    navigate('/habits')
     }
   }
 
