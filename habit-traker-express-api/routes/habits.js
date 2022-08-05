@@ -75,6 +75,7 @@ catch(error){
 router.post("/log", requireAuthenticatedUser, async (req, res, next) => {
   try {
     await Habits.logHabit(req.body);
+    console.log("req.body", req.body)
     res.status(201).json({ status: "Habit Logged!" });
   } catch (error) {
     next(error);

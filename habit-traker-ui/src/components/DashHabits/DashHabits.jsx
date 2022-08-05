@@ -10,6 +10,7 @@ import HabitDetails from "../HabitDetails/HabitDetails";
 
 
 export default function DashHabits({ habits, formModalOpen, setFormModalOpen, handleClose }) {
+  console.log("habits in dashhabits", habits)
 
   return (
     <div className="gridContent">

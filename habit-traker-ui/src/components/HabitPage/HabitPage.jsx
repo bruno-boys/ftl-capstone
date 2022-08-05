@@ -12,6 +12,7 @@ import HabitForm from "../HabitForm/HabitForm";
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [formModalOpen, setFormModalOpen] = useState(false)
   const [errors, setErrors] = useState("")
   const [form, setForm] = useState({
     habitName: "",
@@ -62,9 +63,9 @@ export default function HabitPage() {
                   <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
                 </div>
               </div>
-              <HabitGrid habits={habits} errors = {errors} setErrors = {setErrors} /> 
+              <HabitGrid setFormModalOpen={setFormModalOpen} habits={habits} errors = {errors} setErrors = {setErrors} /> 
             </div>
-          </div>
+          </div>``
           {/* Modal */}
           <Modal id="create-habit-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
             <div className="relative pb-9/16">
@@ -84,7 +85,7 @@ function HabitGrid({ habits, formModalOpen, setFormModalOpen, handleClose }) {
 
   return (
     <div className="gridContent">
-      {habits.map((habit, idx) => {
+      {habits?.map((habit, idx) => {
         return <HabitCard key={idx} habit={habit}  formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={handleClose} />;
       })}
     </div>
@@ -99,24 +100,41 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const [tab, setTab] = useState(1);
+   const [tab, setTab] = useState(1);
   console.log("habit in habit card", habit)
   let start_date = habit.temp_start_date
   let end_date = new Date(start_date)
   console.log("start_date", start_date)
   console.log("end date", end_date)
-  end_date.setDate(end_date.getDate())
+  
 
 
   let today = new Date()
   today.setHours(0,0,0,0)
   end_date.setHours(0,0,0,0)
   today.setDate(today.getDate())
+
+  const setPeriodEndDate = (date, period) => {
+
+    if (period == "Per Day") {
+
+      date.setDate(date.getDate() + 1)
+    }
+
+    if (period == "Per Week"){
+      date.setDate(date.getDate() +7)
+    }
+
+    if (period == "Per Month"){
+      date.setMonth(date.getMonth() + 1)
+    }
+
+
+  }
+
+  setPeriodEndDate(end_date, habit.period)
   const updateLog = async (event) => {
     event.preventDefault();
-<<<<<<< HEAD
-    const { data, error } = await apiClient.logHabit({habitId: habit.id});
-=======
     
 
     if ( today.getTime() >= end_date.getTime()){
@@ -130,14 +148,16 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
         endDate : habit.end_date
       }
       const {data, error} = await apiClient.editHabit({...obj, ...tempObj})
-      end_date.setDate(today.getDate() + 1)
+      end_date = today
+      setPeriodEndDate(end_date, habit.period)
       start_date = today
 
     }
     const anotherDay = new Date(end_date).toISOString()
     console.log("another day", anotherDay)
+    
     const { data, error } = await apiClient.logHabit({id: habit.id, startDate : start_date, endDate : anotherDay})
->>>>>>> origin/logging
+    console.log("data form log count", data)
     if (error) {
       setErrors(error);
     }
@@ -163,6 +183,11 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       localStorage.setItem(`log_count_${habit.id}`, data.logCount.count)
       await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
     }
+  }
+  const closeModal = async () => {
+    window.location.reload();
+    await setFormModalOpen(false);
+    await setFormModalOpen(false)
   }
 
   const deleteHabit = async () => {
@@ -231,21 +256,17 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
                 {/* {
                   formModalOpen ?
-
                   <div className="relative pb-9/16">
                     <div className="create-habit">
                       <EditForm habitId={habit.id} />
                     </div>
                   </div>
-
                 :
-
                   <div className="relative pb-9/16">
                     <div className="hab-detail">
                       <HabitDetails habitId={habit.id} />
                     </div>
                   </div>
-
                 }
               </Modal> */}
             </div>
