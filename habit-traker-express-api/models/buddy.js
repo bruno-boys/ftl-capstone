@@ -5,12 +5,12 @@ const { nanoid } = require('nanoid')
 class Buddy {
 
     static async generateURLId() {
-        //this function generates a url to be sent out to other users
+        // this function generates a url to be sent out to other users
         return nanoid(10);
     }
 
     static async populateBuddyRequestTable(user, link) {
-        //fills the buddy_request table with the user information and link
+        // fills the buddy_request table with the user information and link
         await db.query(
             `
             DELETE FROM buddy_request
@@ -25,6 +25,31 @@ class Buddy {
             `, [user.email, link]
             );
     }
+
+
+    static async acceptBuddyRequest(user, link) {
+        // adds the users to the buddy table and allows them to become buddies
+        await db.query(
+            `
+            INSERT INTO buddies (user_1, user_2) 
+            VALUES ((SELECT users_id FROM buddy_request WHERE link = $1), 
+                    (SELECT id FROM users WHERE email = $2));
+            `, [link, user.email]
+        );
+        
+        setTimeout(() => {Buddy.removeFromBuddyRequest(link);}, 2000)
+    }
+
+    static async removeFromBuddyRequest(link) {
+        await db.query(
+                `
+                DELETE FROM buddy_request
+                WHERE link = $1;
+                `, [link]
+            );
+
+    }
+
 }
 
 module.exports = Buddy;
