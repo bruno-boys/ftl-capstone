@@ -87,10 +87,10 @@ function ResetPassword() {
               {/* Form */}
               {message ? (
                 <>
-                    <span className="message">{message}</span>
+                    <h2 className="h1" style={{fontSize:"20px"}}>{message}</h2>
                     <br/>
                     <p>
-                        Login <Link to="/signin">here</Link>
+                      <Link to="/signin" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"> Login here</Link>
                     </p>
                 </>
             ) : (
