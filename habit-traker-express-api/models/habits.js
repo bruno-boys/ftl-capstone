@@ -16,7 +16,6 @@ class Habits {
   }
 
   static async logHabit(habitForm) {
-    console.log(habitForm)
       await db.query(
         `
         INSERT INTO tracked_habits (habit_id, start_date, end_date)
@@ -99,7 +98,6 @@ class Habits {
     }
 
    static async editHabit(form){
-    console.log("form in edit habit", form)
     await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6 where id = $7`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.id])
   }
 
