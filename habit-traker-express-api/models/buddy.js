@@ -37,17 +37,12 @@ class Buddy {
             `, [link, user.email]
         );
         
-        setTimeout(() => {Buddy.removeFromBuddyRequest(link);}, 2000)
-    }
-
-    static async removeFromBuddyRequest(link) {
         await db.query(
-                `
-                DELETE FROM buddy_request
-                WHERE link = $1;
-                `, [link]
-            );
-
+            `
+            DELETE FROM buddy_request
+            WHERE link = $1;
+            `, [link]
+        );
     }
 
 }
