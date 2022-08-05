@@ -53,10 +53,8 @@ class Habits {
 
   static async createHabit(user, habitForm) {
     //allows user to create habits
-    console.log("habit form", habitForm)
-    console.log("user", user)
     await db.query(
-      ` 
+            ` 
             INSERT INTO habits (users_id, habit_name, frequency, period, start_date, temp_start_date, end_date)
             VALUES ((select id from users where email = $1), $2, $3, $4, $5, $6, $7);
             `,
