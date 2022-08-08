@@ -19,7 +19,7 @@ import UserProfile from '../src/components/UserProfile/UserProfile'
 import HabitDetails from './components/HabitDetails/HabitDetails';
 import HabitPage from './components/HabitPage/HabitPage';
 import ResetPassword from '../src/components/ResetPassword'
-import BuddyLink from './components/BuddyLink/BuddyLink';
+import BuddyLink from './components/BuddyLink';
 
 function App() {
 

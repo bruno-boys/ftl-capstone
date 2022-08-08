@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
-import apiClient from "../../services/apiClient";
-import Header from "../../partials/Header";
+import apiClient from "../services/apiClient"
+import Header from "../partials/Header";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 export default function BuddyLink() {
