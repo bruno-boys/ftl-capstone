@@ -33,6 +33,8 @@ export default function BuddyDecision() {
         if (data) {
             setMessage("You and your Buddy have been matched!")
             setAccepted(true)
+            localStorage.removeItem("buddyId");
+            localStorage.removeItem("fromLink")
         }
     }
 
@@ -43,6 +45,8 @@ export default function BuddyDecision() {
         if (data) {
             setMessage("The Buddy Request has been Declined")
             setAccepted(false)
+            localStorage.removeItem("buddyId");
+            localStorage.removeItem("fromLink")
         }
     }
 
