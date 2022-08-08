@@ -20,6 +20,7 @@ import HabitDetails from './components/HabitDetails/HabitDetails';
 import HabitPage from './components/HabitPage/HabitPage';
 import ResetPassword from '../src/components/ResetPassword'
 import BuddyLink from './components/BuddyLink';
+import BuddyDecision from './components/BuddyDecision';
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path='/buddy-link' element={<BuddyLink />} />
+        <Route path='/buddy/:buddyId' element={<BuddyDecision />} />
       </Routes>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient"
 import Header from "../partials/Header";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -8,8 +8,8 @@ export default function BuddyLink() {
 
     const [isProcessing, setIsProcessing] = useState(null);
     const [errors, setErrors] = useState("")
-    const [link, setLink] = useState("")
-    const [copied, setCopied] = useState(false)
+    const [link, setLink] = useState()
+    const [copied, setCopied] = useState()
     
     const generateLink = async (event) => {
         setIsProcessing(true);
@@ -45,7 +45,7 @@ export default function BuddyLink() {
                                     </p>
                                 </div>
                                 <form>
-                                    { copied ? 
+                                    { copied == true && link ? 
                                         <div style={{display:"flex", justifyContent:"flex-end"}}>
                                             <p style={{color:"green", fontSize:'12px'}}>Link Copied</p>
                                         </div> 
@@ -56,7 +56,10 @@ export default function BuddyLink() {
                                         <CopyToClipboard text={link}>
                                             <button className="btn text-white bg-gray-600 hover:bg-gray-700 w-half" 
                                                     style={{maxHeight:"50px", width:"20%"}}
-                                                    onClick={(event) => {event.preventDefault(); setCopied(true);}}>
+                                                    onClick={(event) => {
+                                                        event.preventDefault(); 
+                                                        if (link) {setCopied(true)}
+                                                    }}>
                                                 Copy
                                             </button>
                                         </CopyToClipboard>
