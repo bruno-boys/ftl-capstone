@@ -106,6 +106,10 @@ class ApiClient {
     async acceptBuddyRequest(link) {
         return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
     }
+
+    async declineBuddyRequest(link) {
+        return await this.request({ endpoint: `buddy/decline`, method: `DELETE`, data: link})
+    }
 }
 
 export default new ApiClient('http://localhost:3001')

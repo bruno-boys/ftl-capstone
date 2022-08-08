@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', requireAuthenticatedUser, async (req,res,next) => {
    try{
     const user = res.locals.user
+    console.log('user =',user)
     let buddyId = await Buddy.generateURLId();
     const url = `http://localhost:3001/buddy/${buddyId}`
     await Buddy.populateBuddyRequestTable(user, url)
@@ -40,6 +41,17 @@ router.post('/accept', requireAuthenticatedUser, async (req,res,next) => {
       const link = req.body.link
       await Buddy.acceptBuddyRequest(user, link)
       return res.status(201).json("Buddies have been matched!")
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
+router.delete('/decline', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const link = req.body.link
+      await Buddy.deleteBuddyRequest(link)
+      return res.status(201).json("Buddies Request has been declined!")
    }
    catch(error) {
       next(error)

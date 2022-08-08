@@ -37,7 +37,14 @@ class Buddy {
                 ((SELECT id FROM users WHERE email = $2), (SELECT users_id FROM buddy_request WHERE link = $1));
             `, [link, user.email]
         );
+
+        await Buddy.deleteBuddyRequest(link)
         
+    }
+
+    static async deleteBuddyRequest(link) {
+        // this function removes the row with the specified link
+        // from the buddy_request table
         await db.query(
             `
             DELETE FROM buddy_request
