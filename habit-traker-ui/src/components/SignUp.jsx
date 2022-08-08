@@ -73,9 +73,6 @@ function SignUp() {
     };
   };
 
-  useEffect(() => {
-    console.log('new user = ', newUser)
-  }, [newUser])
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">

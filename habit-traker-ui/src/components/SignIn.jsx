@@ -33,7 +33,7 @@ function SignIn({ fromLink }) {
       localStorage.setItem("name", data.user.name);
       localStorage.setItem("email", data.user.email);
       if (localStorage.getItem("fromLink") == "true") {
-        navigate(`/buddy/${buddyId}`)
+        navigate(`/buddy/${localStorage.getItem("buddyId")}`)
       }
       else { navigate('/activity') }
     };
