@@ -5,6 +5,7 @@ import {
   useLocation
 } from 'react-router-dom';
 
+
 import 'aos/dist/aos.css';
 import './css/style.css';
 
@@ -21,10 +22,12 @@ import HabitPage from './components/HabitPage/HabitPage';
 import ResetPassword from '../src/components/ResetPassword'
 import BuddyLink from './components/BuddyLink';
 import BuddyDecision from './components/BuddyDecision';
+import ErrorPage from './ErrorPage';
 
 function App() {
 
   const location = useLocation();
+  const [fromLink, setFromLink] = useState(true)
 
   useEffect(() => {
     AOS.init({
@@ -54,7 +57,8 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path='/buddy-link' element={<BuddyLink />} />
-        <Route path='/buddy/:buddyId' element={<BuddyDecision />} />
+        <Route path='/buddy/:buddyId' element={ !localStorage.getItem("habit_traker_token") ? <SignIn fromLink={fromLink} /> : <BuddyDecision />} />
+        <Route path="/*" element={<ErrorPage/>} />
       </Routes>
     </>
   );

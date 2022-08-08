@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import Header from '../partials/Header';
 import apiClient from "../services/apiClient";
 
-function SignIn() {
+function SignIn({ fromLink }) {
 
   const navigate = useNavigate();
   const [error, setError] = useState({});
   const [newUser, setNewUser] = useState(null);
+  const { buddyId } = useParams();
 
   const handleOnFormChange = (event) => {
     setError("")
@@ -31,9 +32,17 @@ function SignIn() {
       apiClient.setToken(data.token)
       localStorage.setItem("name", data.user.name);
       localStorage.setItem("email", data.user.email);
-      navigate('/activity')
+      if (localStorage.getItem("fromLink") == "true") {
+        navigate(`/buddy/${buddyId}`)
+      }
+      else { navigate('/activity') }
     };
   };
+
+  useEffect(() => {
+    localStorage.setItem("fromLink", fromLink);
+    // console.log("fromLink =",typeof localStorage.getItem("fromLink"))
+  }, [])
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
