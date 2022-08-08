@@ -1,5 +1,6 @@
 const db = require("../db");
 const { nanoid } = require('nanoid')
+const { BadRequestError } = require('../utils/error')
 // model.id = nanoid() //=> "V1StGXR8_Z5jdHi6B-myT"
 
 class Buddy {
@@ -11,6 +12,25 @@ class Buddy {
 
     static async populateBuddyRequestTable(user, link) {
         // fills the buddy_request table with the user information and link
+        // if user already has a buddy, and error is returned
+
+        const userInfo = await db.query(
+            `
+            SELECT id FROM users WHERE email = $1;
+            `, [user.email]
+        )
+
+        const userId = userInfo.rows[0].id
+
+        const results = await db.query(
+            `
+            SELECT COUNT(*) FROM buddies
+            WHERE user_1 = $1 OR user_2 = $1;
+            `, [userId]
+        )
+
+        if (results.rows[0].count != 0) { throw new BadRequestError('You are already matched with a Buddy.')}
+
         await db.query(
             `
             DELETE FROM buddy_request

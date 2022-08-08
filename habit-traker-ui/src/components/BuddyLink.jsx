@@ -39,10 +39,21 @@ export default function BuddyLink() {
                                     <h1 className="h1 mb-4">
                                         Everything is better with a friend!
                                     </h1>
-                                    <p className="text-xl text-gray-600">
-                                        Generate a link below to send to your friend and track 
-                                        each other's progress.
-                                    </p>
+                                    { !errors ?
+
+                                        <p className="text-xl text-gray-600">
+                                            Generate a link below to send to your friend and track 
+                                            each other's progress.
+                                        </p>
+
+                                        :
+
+                                        <p className="text-xl text-gray-600" style={{color:"red"}}>
+                                           You are already matched with a Buddy. If you wish to connect 
+                                           with a new buddy, remove your current Buddy.
+                                        </p>
+
+                                    }
                                 </div>
                                 <form>
                                     { copied == true && link ? 
