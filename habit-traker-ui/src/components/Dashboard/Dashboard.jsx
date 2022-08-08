@@ -100,12 +100,16 @@ function Dashboard() {
                               <div className="daily-habits-container">
                                 <div className="daily-habits">
                                   <div className="create-habit-btn">
-                                    <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                      <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                    </div>
+                                      { localStorage.getItem("toggleOn") == "false" ?
+                                        <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
+                                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                        </div>
+                                        :
+                                        <></>
+                                      }
                                   </div>
                                   <div className="activity-habits">
-                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>

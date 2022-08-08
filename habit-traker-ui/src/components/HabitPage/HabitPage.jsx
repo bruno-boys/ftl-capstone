@@ -85,9 +85,13 @@ export default function HabitPage() {
             <div className="pt-32 pb-12 md:pt-40 md:pb-20">
               <div className="hp-top">
                 <h1 className="hp-title">All Habits</h1>
-                <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
-                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                </div>
+                { localStorage.getItem("toggleOn") == "false" ?
+                  <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
+                    <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                  </div>
+                  :
+                  <></>
+                }
               </div>
               <ToggleButton buddy={buddy} habits={habits} setHabits={setHabits} />
               { localStorage.getItem("toggleOn") == "false" ?
