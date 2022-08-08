@@ -41,7 +41,7 @@ function SignIn({ fromLink }) {
 
   useEffect(() => {
     localStorage.setItem("fromLink", fromLink);
-    // console.log("fromLink =",typeof localStorage.getItem("fromLink"))
+    localStorage.setItem("buddyId", buddyId)
   }, [])
 
   return (

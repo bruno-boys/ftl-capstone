@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../services/apiClient";
 import Header from '../partials/Header';
 
@@ -11,6 +11,7 @@ function SignUp() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [passwordShown, setPasswordShown] = useState(false);
+  const { buddyId } = useParams();
 
     const togglePassword = (event) => {
       event.preventDefault()
@@ -65,8 +66,11 @@ function SignUp() {
       localStorage.setItem("name", data.user.name);
       localStorage.setItem("email", data.user.email);
       apiClient.setToken(data.token);
-      navigate('/activity')
-    }
+      if (localStorage.getItem("fromLink") == "true") {
+        navigate(`/buddy/${localStorage.getItem("buddyId")}`)
+      }
+      else { navigate('/activity') }
+    };
   };
 
   useEffect(() => {
@@ -182,5 +186,6 @@ function SignUp() {
     </div>
   );
 }
+
 
 export default SignUp;
