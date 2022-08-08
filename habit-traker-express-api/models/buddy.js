@@ -53,12 +53,29 @@ class Buddy {
         );
     }
 
-    // static async fetchBuddy(user) {
-    //     //uses the buddy's id from the database and fetches the buddy
 
-    //     /* takes the logged in user and queries the db in order to find the 
-    //         buddy that they are matched with.*/
-    // }
+    static async fetchBuddyNameFromLink(link) {
+        // fetches the user who generated the link from
+        // the database using the link itself
+        const results = await db.query(
+            `
+            SELECT users_id FROM buddy_request WHERE link = $1;
+            `, [link]
+        );
+
+        const userId = results.rows[0].users_id
+
+        const buddyName = await db.query(
+            `
+            SELECT first_name, last_name FROM users
+            WHERE id = $1;
+            `, [userId]
+        );
+
+        return buddyName.rows[0];
+
+    }
+
 
     static async fetchBuddyId(user) {
        /* takes the logged in user and queries the db in order to find the 

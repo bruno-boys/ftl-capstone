@@ -103,6 +103,10 @@ class ApiClient {
         return await this.request({ endpoint: `buddy`, method: `GET` })
     }
 
+    async fetchNameFromLink(link) {
+        return await this.request({ endpoint: `buddy/buddy-name?link=${link}`, method: `GET` })
+    }
+
     async acceptBuddyRequest(link) {
         return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
     }
