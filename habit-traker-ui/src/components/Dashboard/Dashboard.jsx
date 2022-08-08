@@ -70,6 +70,10 @@ function Dashboard() {
       console.log('date = ',datePicked);
     }, [datePicked])
 
+    useEffect(() => {
+      console.log('buddy = ',buddy)
+    }, [buddy])
+
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
 

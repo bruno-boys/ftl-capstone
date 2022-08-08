@@ -8,12 +8,15 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from '../../partials/Header'
 import HabitForm from "../HabitForm/HabitForm";
+import ToggleButton from "../Dashboard/ToggleButton/ToggleButton";
 
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false)
   const [errors, setErrors] = useState("")
+  const [buddy, setBuddy] = useState()
+  const [toggleOn, setToggleOn] = useState(localStorage.getItem("toggleOn"))
   const [form, setForm] = useState({
     habitName: "",
     startDate: "",
@@ -21,19 +24,29 @@ export default function HabitPage() {
     frequency: "",
     period: "Per Day",
   });
+
   const navigate = useNavigate();
 
   useEffect(() => {
+
     const getHabits = async () => {
       const { data, error } = await apiClient.fetchHabitList();
       if (error) {
         setErrors(error);
       }
       if (data?.habits) {
-        setHabits(data.habits);
+        setHabits(data.habits)
       }
     };
+
+    const getBuddyData = async () => {
+      const { data, error } = await apiClient.fetchBuddyData();
+      if (error) {setErrors(error)}
+      if (data) {setBuddy(data)}
+    }
+
     getHabits();
+    getBuddyData();
   }, []);
 
   const closeModal = () => {
@@ -47,9 +60,22 @@ export default function HabitPage() {
     window.location.reload();
   }
 
+  // useEffect(() => {
+  //   if (localStorage.getItem("toggleOn") == "true") {
+  //     setHabits(buddy?.buddyHabits)
+  //   }
+  // }, [localStorage.getItem("toggleOn")])
+
+  // useEffect(() => {
+  //   console.log('buddy = ',buddy)
+  // }, [buddy])
+
+  // useEffect(() => {
+  //   console.log('habits = ',habits)
+  // }, [habits])
+
+
   return (
-
-
     
     <div className="habit-page">
       <Header />
@@ -63,7 +89,14 @@ export default function HabitPage() {
                   <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
                 </div>
               </div>
-              <HabitGrid setFormModalOpen={setFormModalOpen} habits={habits} errors = {errors} setErrors = {setErrors} /> 
+              <ToggleButton buddy={buddy} habits={habits} setHabits={setHabits} />
+              { localStorage.getItem("toggleOn") == "false" ?
+
+                  <HabitGrid setFormModalOpen={setFormModalOpen} habits={habits} errors = {errors} setErrors = {setErrors} /> 
+                  :
+                  <HabitGrid setFormModalOpen={setFormModalOpen} habits={buddy?.buddyHabits} errors = {errors} setErrors = {setErrors} /> 
+
+              }
             </div>
           </div>``
           {/* Modal */}
@@ -101,12 +134,8 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const navigate = useNavigate();
 
    const [tab, setTab] = useState(1);
-  console.log("habit in habit card", habit)
   let start_date = habit.temp_start_date
   let end_date = new Date(start_date)
-  console.log("start_date", start_date)
-  console.log("end date", end_date)
-  
 
 
   let today = new Date()
@@ -181,7 +210,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     }
     if (data?.logCount) {
       localStorage.setItem(`log_count_${habit.id}`, data.logCount.count)
-      await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
+      setLogCount(localStorage.getItem(`log_count_${habit.id}`));
     }
   }
   const closeModal = async () => {
@@ -192,7 +221,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   const deleteHabit = async () => {
     const {data, err} = await apiClient.deleteHabit(habit.id);
-    if (err) {setError(err)}
+    if (err) {setErrors(err)}
     if (data) {
     navigate('/habits')
     }
@@ -225,7 +254,14 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                       <div className="top">
                         <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
                       <div className="buttons">
-                        <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                      { localStorage.getItem("toggleOn") == "false" ?
+
+                          <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                          :
+                          <></>
+
+                      }
+                        
                       </div>
                       </div>
                       <div className="bottom">
@@ -237,8 +273,15 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                           <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
                         }
                         <div className="buttons">
-                          <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
-                          <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
+                          { localStorage.getItem("toggleOn") == "false" ?
+                            <>
+                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
+                            </>
+                            :
+                            <></>
+                          }
+                          
                         </div>
                       </div>
                       </Link>
