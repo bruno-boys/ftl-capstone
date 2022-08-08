@@ -23,17 +23,16 @@ export default function EditForm({ habitId, handleClose }) {
         getHabitById()
         }, []);
         
-    const formatDate = (date) => {
-        var d = new Date(date),
-            month = "" + (d.getMonth() + 1),
-            day = "" + d.getDate(),
-            year = d.getFullYear();
-    
-        if (month.length < 2) month = "0" + month;
-        if (day.length < 2) day = "0" + day;
-    
-        return [year, month, day].join("-");
-        }
+        const formatDate = (date) => {
+            console.log("date clicked", date)
+            var d = new Date(date),
+                month = "" + (d.getMonth() + 1),
+                day = "" + (d.getDate() + 1),
+                year = d.getFullYear();
+            if (month.length < 2) month = "0" + month;
+            if (day.length < 2) day = "0" + day;
+            return [year, month, day].join("-");
+            }
 
     useEffect(() => {
         setForm({
@@ -48,7 +47,12 @@ export default function EditForm({ habitId, handleClose }) {
         
     const handleOnInputChange = (event) => {
         event.preventDefault();
-        setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
+        let targetValue = event.target.value
+        if (event.target.name == "startDate" || event.target.name == "endDate"){
+            console.log("date change here")
+            targetValue = formatDate(event.target.value)
+        }
+        setForm((f) => ({ ...f, [event.target.name]: targetValue }));
         };
 
     const handleOnSubmit = async (event) => {

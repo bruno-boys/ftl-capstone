@@ -106,6 +106,12 @@ class ApiClient {
     async acceptBuddyRequest(link) {
         return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
     }
+    async logProgress(progressForm){
+        return await this.request({endpoint : `habits/streak`, method : `POST`, data : progressForm})
+    }
+    async fetchStreakCount(logData){
+        return await this.request({ endpoint: `habits/streak?habitId=${logData.habitId}&startDate=${logData.startDate}&endDate=${logData.endDate}`, method: `GET` })
+    }
 }
 
 export default new ApiClient('http://localhost:3001')
