@@ -31,7 +31,7 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
 
   const [tab, setTab] = useState(1);
   console.log("habit in habit card", habit)
-  let start_date = habit.temp_start_date
+  let start_date = new Date(habit.temp_start_date)
   let end_date = new Date(start_date)
   console.log("start_date", start_date)
   console.log("end date", end_date)
@@ -43,7 +43,7 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
   end_date.setHours(0,0,0,0)
   today.setDate(today.getDate())
 
-  const setPeriodEndDate = (date, period) => {
+  const getEndDate = (date, period) => {
 
     if (period == "Per Day") {
 
@@ -60,14 +60,38 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
 
 
   }
+  const setPeriodEndDate = (start, date, period) => {
+    console.log("start", start)
+    console.log("end", date)
+    if (period == "Per Day") {
+      date.setDate(date.getDate() + 1);
+    }
 
-  setPeriodEndDate(end_date, habit.period)
+    if (period == "Per Week") {
+      let daysAfterEndDate = today.getTime() - date.getTime()
+      daysAfterEndDate = (daysAfterEndDate)/ (1000 * 3600 * 24)
+      console.log("days after end date", daysAfterEndDate)
+      let daysAfterNextStartDate = daysAfterEndDate - (daysAfterEndDate % 7)
+      console.log("days after next start date", daysAfterNextStartDate)
+      start.setDate((new Date(date).getDate()) + daysAfterNextStartDate)
+      date.setDate(date.getDate() + (7 + daysAfterNextStartDate));
+      console.log("start date after functtion call", start)
+      console.log("end date after functtion call", date)
+
+    }
+
+    if (period == "Per Month") {
+
+    }
+
+    
+  };
+
+  getEndDate(end_date, habit.period)
   const updateLog = async (event) => {
     event.preventDefault();
-    
-
     if ( today.getTime() >= end_date.getTime()){
-      const tempObj = {tempStartDate : today}
+      
       const obj = {
         id : habit.id,
         habitName : habit.habit_name,
@@ -76,10 +100,9 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
         startDate : habit.start_date,
         endDate : habit.end_date
       }
+      setPeriodEndDate(start_date, end_date, habit.period)
+      const tempObj = {tempStartDate : start_date}
       const {data, error} = await apiClient.editHabit({...obj, ...tempObj})
-      end_date = today
-      setPeriodEndDate(end_date, habit.period)
-      start_date = today
 
     }
     const anotherDay = new Date(end_date).toISOString()
