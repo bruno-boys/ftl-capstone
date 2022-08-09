@@ -42,12 +42,32 @@ export default function HabitForm({ form, setForm, handleClose }) {
     
         if (period == "Per Month") {
           let endDate = new Date(date)
-          console.log("end date after reset", endDate)
-          endDate.setMonth(endDate.getMonth + 1);
-          console.log("date return after function", endDate)
-          return endDate
+          const daysInNextMonth = getDaysInNextMonth(endDate)
+          if ((endDate.getDate() > 28) && (getDaysInNextMonth(endDate) < endDate.getDate())){
+
+            endDate.setDate(getDaysInNextMonth(endDate))
+            endDate.setMonth(endDate.getMonth() + 1)
+            return endDate
+          }
+
+          else{
+            endDate.setMonth(endDate.getMonth() + 1)
+            return endDate
+          }
+
+
         }
       };
+
+      const getDaysInNextMonth = (date) =>{
+
+        const newDate = new Date(date)
+        newDate.setMonth(newDate.getMonth() + 1)
+        const nextMonth = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0)
+    
+        return nextMonth.getDate()
+    
+      }
 
 
   const handleOnInputChange = (event) => {
@@ -55,6 +75,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
     if (event.target.name == "startDate" || event.target.name == "endDate"){
         console.log("date change here")
         targetValue = formatDate(event.target.value)
+        console.log("target value", targetValue)
     }
     setForm((f) => ({ ...f, [event.target.name]: targetValue }));
     };

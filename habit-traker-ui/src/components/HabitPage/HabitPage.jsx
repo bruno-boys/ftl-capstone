@@ -209,7 +209,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate() + 7);
+  today.setDate(today.getDate());
 
   
 
@@ -217,12 +217,22 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
     var d = new Date(date),
         month = "" + (d.getMonth() + 1),
-        day = "" + d.getDate(),
+        day = "" + (d.getDate()),
         year = d.getFullYear();
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
     return [year, month, day].join("-");
     }
+
+  const formatLogProgressDate = (date) => {
+    var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + (1),
+    year = d.getFullYear();
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    return [year, month, day].join("-");
+}
   const setPeriodEndDate = (start, date, period) => {
     if (period == "Per Day") {
       start.setFullYear(today.getFullYear())
@@ -247,12 +257,18 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     }
 
     if (period == "Per Month") {
+      start.setMonth(start.getMonth() + 1)
+      setStartDate(start)
+      date.setMonth(date.getMonth() + 1)
+      setEndDate(date)
+
     }
   };
 
   
   const updateLog = async (event) => {
     event.preventDefault();
+    console.log("today", today)
     if (today.getTime() >= endDate.getTime()) {
       const obj = {
         id: habit.id,
@@ -266,14 +282,22 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       console.log("logCount here?", logCount)
       console.log("streak here?", streakCount)
       if ((logCount >= habit.frequency)){
-        await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
+        if (habit.period == "Per Month"){
+          await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
+        }
+        else{
+          await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
+        }
+        
       }
       setPeriodEndDate(startDate, endDate, habit.period);
       const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
       const { data, error } = await apiClient.editHabit({ ...obj, ...tempObj })
       location.reload()
     }
+    console.log("end date", endDate)
     const anotherDay = new Date(endDate).toISOString();
+    console.log("anotherDate", anotherDay)
     const { data, error } = await apiClient.logHabit({
       id: habit.id,
       startDate: formatDate(startDate),
@@ -316,6 +340,13 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     if (habit.period == "Per Week") {
       previousEndDate.setDate(previousEndDate.getDate() - 7);
       previousStartDate.setDate(previousStartDate.getDate() - 7);
+    }
+    
+    if (habit.period == "Per Month"){
+      previousEndDate.setMonth(previousEndDate.getMonth() - 1)
+      previousEndDate.setDate(1)
+      previousStartDate.setMonth(previousStartDate.getMonth() - 1)
+      previousStartDate.setDate(1)
     }
 
     console.log("previous start date", previousStartDate)
