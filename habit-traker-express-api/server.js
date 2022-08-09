@@ -19,17 +19,10 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json({limit : '25mb'}));
 // set static path
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'src')));
 app.use(bodyParser.json())
 
 webpush.setVapidDetails("mailto:habit.traker.customer.services@gmail.com", PUBLIC_VAPID_KEY, PRIVATE_VAPID_KEY);
-
-app.use(extractUserFromJwt)
-
-app.use('/auth',authRoutes)
-app.use('/habits', habitRoutes)
-app.use('/stats', statisticRoutes);
-app.use('/buddy', buddyRoutes)
 
 
 //Subscribe Route
@@ -44,8 +37,16 @@ app.post("/subscribe", (req,res) => {
   const payload = JSON.stringify({ title: 'HabitTraker Push Test' });
 
   // pass the object into the sendNotification function
-  webpush.sendNotification(subscription, payload).catch(err => console.error(err));
+  webpush.sendNotification(subscription, payload, ).catch(err => console.error(err));
 });
+
+app.use(extractUserFromJwt)
+
+app.use('/auth',authRoutes)
+app.use('/habits', habitRoutes)
+app.use('/stats', statisticRoutes);
+app.use('/buddy', buddyRoutes)
+
 
 
 
