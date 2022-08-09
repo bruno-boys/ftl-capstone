@@ -1,13 +1,15 @@
 import "./HabitPage.css";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
+
 import apiClient from "../../services/apiClient";
 import EditForm from "../EditForm/EditForm";
 import Modal from "../../utils/Modal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
+import HabitDetails from "../HabitDetails/HabitDetails";
 
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
@@ -209,7 +211,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate());
+  today.setDate(today.getDate()+ 11);
 
   
 
@@ -411,14 +413,13 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                 }}
               >
                 <div className="card" style={{ width: "100%" }}>
-                  <Link to={`/habit/${habit.id}`}>
+                  <Link to={ `/habit/${habit.id}`} state = {streakCount}>
                     <div className="top">
                       <div
                         className="font-bold leading-snug tracking-tight mb-1"
                         style={{ width: "100%" }}
                       >
                         {habit.habit_name}
-                        {streakCount}
                       </div>
                       <div className="buttons">
                         <button
@@ -482,6 +483,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
               </div>
             </Modal>
 
+
             {/* {
                   formModalOpen ?
                   <div className="relative pb-9/16">
@@ -500,6 +502,9 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
           </div>
         </div>
       </section>
+      <Routes>
+      <Route path="/habit/:habitId" element={<HabitDetails streakCount = {streakCount}/>} />
+      </Routes>
     </div>
   );
 }
