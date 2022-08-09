@@ -123,7 +123,7 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
     const {data, err} = await apiClient.deleteHabit(habit.id);
     if (err) {setError(err)}
     if (data) {
-    navigate('/habits')
+    navigate('/activity')
     }
   }
 
@@ -145,6 +145,7 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
               {/* Tabs buttons */}
                 <div className="mb-8 md:mb-0">
                   <a
+                    id = "habit-cards"
                     className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
                     href="#0"
                     onClick={(e) => { e.preventDefault(); setTab(1); }}
