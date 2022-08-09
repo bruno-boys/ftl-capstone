@@ -11,7 +11,38 @@ import { LitElement, html } from 'lit-element'
 import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
 
+
 function Dashboard() {
+
+
+useEffect(() => {
+
+  function showNotifications() {
+
+    const notification = new Notification("New Message from HabitTraker", {
+      body: "Welcome to HabitTraker! Let's make your first habit!",
+      icon: "src/images/ht-icon.png"
+    });
+
+    notification.onclick = (e) => {
+      window.location.href = "http://localhost:5173/habits";
+    }
+  }
+
+  // defualt, granted, denied
+  console.log(Notification.permission);
+
+  if (Notification.permission == 'granted') {
+    showNotifications();
+  } 
+  else if (Notification.permission != 'denied') {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') { showNotifications(); }
+    })
+  }
+  
+}, [])
+
 
   const [habits, setHabits] = useState([]);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -54,9 +85,6 @@ function Dashboard() {
     window.location.reload();
   }
 
-    useEffect(() => {
-      console.log('date = ',datePicked);
-    }, [datePicked])
 
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
