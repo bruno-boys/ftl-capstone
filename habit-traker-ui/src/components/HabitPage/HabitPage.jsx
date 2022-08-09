@@ -209,7 +209,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate()+91);
+  today.setDate(today.getDate() + 7);
 
   
 
@@ -271,9 +271,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       setPeriodEndDate(startDate, endDate, habit.period);
       const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
       const { data, error } = await apiClient.editHabit({ ...obj, ...tempObj })
-      
-      
-      
+      location.reload()
     }
     const anotherDay = new Date(endDate).toISOString();
     const { data, error } = await apiClient.logHabit({
@@ -389,6 +387,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                         style={{ width: "100%" }}
                       >
                         {habit.habit_name}
+                        {streakCount}
                       </div>
                       <div className="buttons">
                         <button
