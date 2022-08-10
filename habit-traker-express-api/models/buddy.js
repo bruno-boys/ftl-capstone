@@ -49,14 +49,26 @@ class Buddy {
 
     static async acceptBuddyRequest(user, link) {
         // adds the users to the buddy table and allows them to become buddies
-        await db.query(
+
+        const results = await db.query(
             `
-            INSERT INTO buddies (user_1, user_2) 
-            VALUES 
-                ((SELECT users_id FROM buddy_request WHERE link = $1), (SELECT id FROM users WHERE email = $2)),
-                ((SELECT id FROM users WHERE email = $2), (SELECT users_id FROM buddy_request WHERE link = $1));
-            `, [link, user.email]
+            SELECT expires_at FROM buddy_request WHERE link = $1;
+            `, [link]
         );
+
+        var today = new Date();
+        const expirationDate = results.rows[0].expires_at
+
+        if (today < expirationDate) {
+            await db.query(
+                `
+                INSERT INTO buddies (user_1, user_2) 
+                VALUES 
+                    ((SELECT users_id FROM buddy_request WHERE link = $1), (SELECT id FROM users WHERE email = $2)),
+                    ((SELECT id FROM users WHERE email = $2), (SELECT users_id FROM buddy_request WHERE link = $1));
+                `, [link, user.email]
+            );
+        }
 
         await Buddy.deleteBuddyRequest(link)
         

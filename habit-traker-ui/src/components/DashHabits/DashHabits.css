@@ -17,7 +17,7 @@ background-color: red;
 
 .gridContent {
 display: flex;
-gap: 6.05rem;
+gap: 6.15rem;
 flex-direction: column;
 }
 

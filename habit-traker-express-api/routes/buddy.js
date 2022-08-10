@@ -50,7 +50,7 @@ router.post('/accept', requireAuthenticatedUser, async (req,res,next) => {
    try {
       const user = res.locals.user
       const link = req.body.link
-      await Buddy.acceptBuddyRequest(user, link)
+      const hi = await Buddy.acceptBuddyRequest(user, link)
       return res.status(201).json("Buddies have been matched!")
    }
    catch(error) {

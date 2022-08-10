@@ -24,7 +24,14 @@ export default function BuddyDecision() {
         }
 
         getBuddyName()
+        redirect()
     }, [])
+
+    function redirect() {
+        if (!buddy) {
+            navigate('/*')
+        }
+    }
 
     const acceptInvitation = async (event) => {
         event.preventDefault()
