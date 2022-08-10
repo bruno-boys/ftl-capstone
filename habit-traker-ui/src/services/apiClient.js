@@ -91,21 +91,33 @@ class ApiClient {
 
     async editUser(form){
         console.log("form in edit user", form)
-        return await this.request({endpoint: `auth/editUser`, method : `PUT`, data : form})
+        return await this.request({ endpoint: `auth/editUser`, method : `PUT`, data : form })
     }
 
     async editPhoto(form){
         console.log("form in edit photo", form)
-        return await this.request({endpoint: `auth/editPhoto`, method : `PUT`, data : form})
+        return await this.request({ endpoint: `auth/editPhoto`, method : `PUT`, data : form })
     }
 
     async generateURLId() {
         return await this.request({ endpoint: `buddy`, method: `GET` })
     }
 
+    async fetchNameFromLink(link) {
+        return await this.request({ endpoint: `buddy/buddy-name?link=${link}`, method: `GET` })
+    }
+
     async acceptBuddyRequest(link) {
         return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
     }
+
+    async declineBuddyRequest(link) {
+        return await this.request({ endpoint: `buddy/decline`, method: `DELETE`, data: link })
+    }
+
+    async fetchBuddyData () {
+        return await this.request({ endpoint: `buddy/view`, method: `GET` })
+    } 
 }
 
 export default new ApiClient('http://localhost:3001')

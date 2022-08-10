@@ -10,6 +10,7 @@ import './Dashboard.css'
 import { LitElement, html } from 'lit-element'
 import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
+import ToggleButton from './ToggleButton/ToggleButton';
 
 function Dashboard() {
 
@@ -24,6 +25,7 @@ function Dashboard() {
     period: "Per Day",
   });
   const [datePicked, setDatePicked] = useState('')
+  const [buddy, setBuddy] = useState()
 
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
@@ -31,6 +33,7 @@ function Dashboard() {
 
 
   useEffect(() => {
+
       const getHabits = async () => {
         const { data, error } = await apiClient.fetchHabitList();
         if (error) {
@@ -40,7 +43,16 @@ function Dashboard() {
           setHabits(data.habits);
         }
       };
+
+      const getBuddyData = async () => {
+        const { data, error } = await apiClient.fetchBuddyData();
+        if (error) {setErrors(error)}
+        if (data) {setBuddy(data)}
+      }
+
       getHabits();
+      getBuddyData();
+
     }, []);
 
   const closeModal = () => {
@@ -58,6 +70,10 @@ function Dashboard() {
       console.log('date = ',datePicked);
     }, [datePicked])
 
+    useEffect(() => {
+      console.log('buddy = ',buddy)
+    }, [buddy])
+
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
 
@@ -69,24 +85,31 @@ function Dashboard() {
               <section className="bg-gradient-to-b from-gray-100 to-white">
                   <div className="max-w-6xl mx-auto px-4 sm:px-6">
                     <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-
+                     
                       <>
+                      <ToggleButton buddy={buddy}/>
+                      {/* <DateCarousel /> */}
                       <div className="date-slider">
                         <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)" onClick={setDate}></date-carousel>
                       </div>
-                      {/* <DateCarousel /> */}
+
+                      {/* Page Content */}
                         <div className="activity-page">
 
                             <div className='left'>
                               <div className="daily-habits-container">
                                 <div className="daily-habits">
                                   <div className="create-habit-btn">
-                                    <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                      <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                    </div>
+                                      { localStorage.getItem("toggleOn") == "false" ?
+                                        <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
+                                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                        </div>
+                                        :
+                                        <></>
+                                      }
                                   </div>
                                   <div className="activity-habits">
-                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>

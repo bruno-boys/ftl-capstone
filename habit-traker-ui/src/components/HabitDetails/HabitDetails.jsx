@@ -44,8 +44,17 @@ export default function HabitDetails({}) {
                         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                             <div className='detail-buttons'>
                                 <h1>{habit.habit_name}</h1>
-                                <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
-                                <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit} style={{backgroundColor:"red"}}>Delete</button>
+                                { localStorage.getItem("toggleOn") == "false" ? 
+
+                                    <>
+                                      <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                                        <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit} style={{backgroundColor:"red"}}>Delete</button>
+                                    </>
+                                    :
+                                    <></>
+                                
+                                }
+                                
                             </div>
                             <div className="habit-detail-page">
                                 <HabitDetailContainer habit={habit} />

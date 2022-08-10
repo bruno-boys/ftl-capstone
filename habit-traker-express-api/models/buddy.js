@@ -1,5 +1,6 @@
 const db = require("../db");
 const { nanoid } = require('nanoid')
+const { BadRequestError } = require('../utils/error')
 // model.id = nanoid() //=> "V1StGXR8_Z5jdHi6B-myT"
 
 class Buddy {
@@ -11,6 +12,25 @@ class Buddy {
 
     static async populateBuddyRequestTable(user, link) {
         // fills the buddy_request table with the user information and link
+        // if user already has a buddy, and error is returned
+
+        const userInfo = await db.query(
+            `
+            SELECT id FROM users WHERE email = $1;
+            `, [user.email]
+        )
+
+        const userId = userInfo.rows[0].id
+
+        const results = await db.query(
+            `
+            SELECT COUNT(*) FROM buddies
+            WHERE user_1 = $1 OR user_2 = $1;
+            `, [userId]
+        )
+
+        if (results.rows[0].count != 0) { throw new BadRequestError('You are already matched with a Buddy.')}
+
         await db.query(
             `
             DELETE FROM buddy_request
@@ -29,15 +49,34 @@ class Buddy {
 
     static async acceptBuddyRequest(user, link) {
         // adds the users to the buddy table and allows them to become buddies
-        await db.query(
+
+        const results = await db.query(
             `
-            INSERT INTO buddies (user_1, user_2) 
-            VALUES 
-                ((SELECT users_id FROM buddy_request WHERE link = $1), (SELECT id FROM users WHERE email = $2)),
-                ((SELECT id FROM users WHERE email = $2), (SELECT users_id FROM buddy_request WHERE link = $1));
-            `, [link, user.email]
+            SELECT expires_at FROM buddy_request WHERE link = $1;
+            `, [link]
         );
+
+        var today = new Date();
+        const expirationDate = results.rows[0].expires_at
+
+        if (today < expirationDate) {
+            await db.query(
+                `
+                INSERT INTO buddies (user_1, user_2) 
+                VALUES 
+                    ((SELECT users_id FROM buddy_request WHERE link = $1), (SELECT id FROM users WHERE email = $2)),
+                    ((SELECT id FROM users WHERE email = $2), (SELECT users_id FROM buddy_request WHERE link = $1));
+                `, [link, user.email]
+            );
+        }
+
+        await Buddy.deleteBuddyRequest(link)
         
+    }
+
+    static async deleteBuddyRequest(link) {
+        // this function removes the row with the specified link
+        // from the buddy_request table
         await db.query(
             `
             DELETE FROM buddy_request
@@ -46,12 +85,29 @@ class Buddy {
         );
     }
 
-    // static async fetchBuddy(user) {
-    //     //uses the buddy's id from the database and fetches the buddy
 
-    //     /* takes the logged in user and queries the db in order to find the 
-    //         buddy that they are matched with.*/
-    // }
+    static async fetchBuddyNameFromLink(link) {
+        // fetches the user who generated the link from
+        // the database using the link itself
+        const results = await db.query(
+            `
+            SELECT users_id FROM buddy_request WHERE link = $1;
+            `, [link]
+        );
+
+        const userId = results.rows[0].users_id
+
+        const buddyName = await db.query(
+            `
+            SELECT first_name, last_name FROM users
+            WHERE id = $1;
+            `, [userId]
+        );
+
+        return buddyName.rows[0];
+
+    }
+
 
     static async fetchBuddyId(user) {
        /* takes the logged in user and queries the db in order to find the 

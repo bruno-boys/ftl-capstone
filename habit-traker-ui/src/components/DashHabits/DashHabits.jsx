@@ -9,20 +9,27 @@ import { Link } from "react-router-dom";
 import HabitDetails from "../HabitDetails/HabitDetails";
 
 
-export default function DashHabits({ habits, formModalOpen, setFormModalOpen, handleClose }) {
-  console.log("habits in dashhabits", habits)
+export default function DashHabits({ habits, formModalOpen, setFormModalOpen, handleClose, buddy }) {
+
 
   return (
+    localStorage.getItem("toggleOn") == "false" ?
+
     <div className="gridContent">
       {habits.map((habit, idx) => {
-        return <DashHabitCard key={idx} habit={habit}  formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={handleClose} />;
+        return <DashHabitCard key={idx} habit={habit} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={handleClose} />;
+      })}
+    </div>
+    :
+    <div className="gridContent">
+      {buddy?.buddyHabits.map((habit, idx) => {
+        return <DashHabitCard key={idx} habit={habit} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={handleClose} />;
       })}
     </div>
   );
 }
 
-
-function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
+function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleClose }) {
 
   const [logCount, setLogCount] = useState(0);
   const [errors, setErrors] = useState()
@@ -155,7 +162,13 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
                       <div className="top">
                         <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
                       <div className="buttons">
+                      { localStorage.getItem("toggleOn") == "false" ?
+
                         <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                        :
+                        <></>
+
+                      }
                       </div>
                       </div>
                       <div className="bottom">
@@ -167,8 +180,14 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
                           <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
                         }
                         <div className="buttons">
-                          <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
-                          <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
+                        { localStorage.getItem("toggleOn") == "false" ?
+                            <>
+                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
+                            </>
+                            :
+                            <></>
+                          }
                         </div>
                       </div>
                       </Link>
