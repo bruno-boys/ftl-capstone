@@ -35,8 +35,7 @@ class Habits {
     )
     return results.rows[0];
   }
-
-
+  
   static async fetchHabitById(user, habitId) {
     //allows for user to fetch a single habit by its id
     const results = await db.query(
@@ -54,8 +53,8 @@ class Habits {
     //allows user to create habits
     await db.query(
             ` 
-            INSERT INTO habits (users_id, habit_name, frequency, period, start_date, temp_start_date, end_date)
-            VALUES ((select id from users where email = $1), $2, $3, $4, $5, $6, $7);
+            INSERT INTO habits (users_id, habit_name, frequency, period, start_date, temp_start_date, temp_end_date, end_date)
+            VALUES ((select id from users where email = $1), $2, $3, $4, $5, $6, $7, $8);
             `,
       [
         user.email,
@@ -64,10 +63,13 @@ class Habits {
         habitForm.period,
         habitForm.startDate,
         habitForm.tempStartDate,
+        habitForm.tempEndDate,
         habitForm.endDate
       ]
     );
   }
+
+  
 
 
   static async deleteHabit(user, habitId) {
@@ -98,7 +100,39 @@ class Habits {
     }
 
    static async editHabit(form){
-    await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6 where id = $7`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.id])
+    await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6, temp_end_date = $7 where id = $8`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.tempEndDate, form.id])
+  }
+  static async fetchStreakCount(habitId, startTime, endTime){
+    console.log("streak count reached?")
+    const results = await db.query(
+      `
+      SELECT current_streak FROM habit_progress
+      WHERE (habit_id = $1)
+      AND start_date = $2 
+      AND end_date = $3;
+      `, [habitId, startTime, endTime]
+    )
+    const streakCount = results.rows[0];
+    console.log("streakCount", streakCount)
+    console.log(Boolean(streakCount))
+    if (Boolean(streakCount)){
+      console.log("tried to return undefine??")
+      return streakCount
+    }
+    else{
+      return {current_streak : 0}
+    }
+   
+
+  }
+
+  static async logProgress(progressForm){
+    await db.query(
+      `
+      INSERT INTO habit_progress (habit_id, start_date, end_date, current_streak)
+      VALUES ($1, $2, $3, $4);
+      `, [progressForm.habitId, progressForm.startDate, progressForm.endDate, progressForm.current_streak]
+  )
   }
 
 }

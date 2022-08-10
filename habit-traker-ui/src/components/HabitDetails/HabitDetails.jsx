@@ -6,16 +6,19 @@ import Modal from '../../utils/Modal';
 import EditForm from '../EditForm/EditForm';
 import apiClient from '../../services/apiClient';
 import Calendar from 'react-calendar';
+import { useLocation } from 'react-router-dom'
 import './HabitDetails.css'
 
 
-export default function HabitDetails({}) {
+export default function HabitDetails() {
     //gets the habitId from the URL
     const { habitId } = useParams()
     const [videoModalOpen, setVideoModalOpen] = useState(false);
     const [habit, setHabit] = useState({})
     const [error, setError] = useState("")
     const navigate = useNavigate()
+    const location = useLocation()
+    const streakCount = location.state
 
     useEffect(() => {
         const getHabitById = async () => {
@@ -34,7 +37,7 @@ export default function HabitDetails({}) {
         }
     }
 
-
+    // console.log("streak count", from)
     return (
         <div className="flex flex-col min-h-screen overflow-hidden">
             <Header />
@@ -57,7 +60,7 @@ export default function HabitDetails({}) {
                                 
                             </div>
                             <div className="habit-detail-page">
-                                <HabitDetailContainer habit={habit} />
+                                <HabitDetailContainer habit={habit} streakCount = {streakCount}/>
                             </div>
                         </div> 
                          {/* Modal */}
@@ -77,7 +80,7 @@ export default function HabitDetails({}) {
 }
 
 
-function HabitDetailContainer({ habit }) {
+function HabitDetailContainer({ habit, streakCount }) {
 
     const options = {  
         year: "numeric", month: "short",  
@@ -109,6 +112,9 @@ function HabitDetailContainer({ habit }) {
                         >
                             <div>
                                 <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Current Streak</div>
+                            </div>
+                            <div className='streak-count'>
+                                {streakCount ? streakCount : 0}
                             </div>
                         </a>
                         <div className="status-days">
