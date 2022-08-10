@@ -7,11 +7,15 @@ import apiClient from './services/apiClient';
 const publicVapidKey = "BGCM3ooo1OPVCeWRy0xKLPtiI3c9zqFmo4cUeJv7uu875oA3GEz3S5B3G5CrhisZ5s-udsRgsFj4e1jaP8btoi4";
 
 // Check for service worker
-if('serviceWorker' in navigator) {
-  send().catch(err => console.error(err));
-}
+// if('serviceWorker' in navigator) {
+//   send().catch(err => console.error(err));
+// }
 
-// setInterval(send, 5000);
+//new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+
+const etaMs = new Date(2022, 7, 9, 17, 15).getTime() - Date.now();
+
+// setTimeout(send, etaMs);
 
 // register the service worker, register push, send push
 async function send() {
