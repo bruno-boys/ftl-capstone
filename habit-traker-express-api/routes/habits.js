@@ -26,6 +26,30 @@ router.get("/log", requireAuthenticatedUser, async (req,res,next) => {
     next(error);
   }
 })
+router.get("/streak", requireAuthenticatedUser, async (req, res,next) => {
+  try{
+
+    const {habitId, startDate, endDate} = req.query
+    console.log(req.query)
+    const streakCount = await Habits.fetchStreakCount(habitId, startDate, endDate)
+    console.log("streak count", streakCount.current_streak)
+    res.status(200).json({streakCount : streakCount.current_streak})
+
+  } catch(error){
+    next(error)
+  }
+
+})
+
+router.post("/streak", requireAuthenticatedUser, async(req, res, next) => {
+  try {
+    await Habits.logProgress(req.body);
+    console.log("req.body", req.body)
+    res.status(201).json({ status: "Progress Logged!" });
+  } catch (error) {
+    next(error);
+  }
+})
 
 router.get("/:id", requireAuthenticatedUser, async (req, res, next) => {
   try {

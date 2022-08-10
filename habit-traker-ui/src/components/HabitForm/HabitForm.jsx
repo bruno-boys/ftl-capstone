@@ -11,15 +11,82 @@ export default function HabitForm({ form, setForm, handleClose }) {
       { key: 3, label: "Per Month", value: "Per Month" },
     ];
 
+    const formatDate = (date) => {
+      console.log("date clicked", date)
+      var d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + (d.getDate() + 1),
+          year = d.getFullYear();
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      return [year, month, day].join("-");
+      }
+
+      const getEndDate = (date, period) => {
+
+        if (period == "Per Day") {
+          let endDate = new Date(date)
+          console.log("end date after reset", endDate)
+          endDate.setDate(endDate.getDate() + 1);
+          console.log("date return after function", endDate)
+          return endDate
+        }
+    
+        if (period == "Per Week") {
+          let endDate = new Date(date)
+          console.log("end date after reset", endDate)
+          endDate.setDate(endDate.getDate() + 7);
+          console.log("date return after function", endDate)
+          return endDate
+        }
+    
+        if (period == "Per Month") {
+          let endDate = new Date(date)
+          const daysInNextMonth = getDaysInNextMonth(endDate)
+          if ((endDate.getDate() > 28) && (getDaysInNextMonth(endDate) < endDate.getDate())){
+
+            endDate.setDate(getDaysInNextMonth(endDate))
+            endDate.setMonth(endDate.getMonth() + 1)
+            return endDate
+          }
+
+          else{
+            endDate.setMonth(endDate.getMonth() + 1)
+            return endDate
+          }
+
+
+        }
+      };
+
+      const getDaysInNextMonth = (date) =>{
+
+        const newDate = new Date(date)
+        newDate.setMonth(newDate.getMonth() + 1)
+        const nextMonth = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0)
+    
+        return nextMonth.getDate()
+    
+      }
+
 
   const handleOnInputChange = (event) => {
-      setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
+    let targetValue = event.target.value
+    if (event.target.name == "startDate" || event.target.name == "endDate"){
+        console.log("date change here")
+        targetValue = formatDate(event.target.value)
+        console.log("target value", targetValue)
+    }
+    setForm((f) => ({ ...f, [event.target.name]: targetValue }));
     };
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    const tempObj = {tempStartDate : form.startDate}
-    setForm((f) => ({ ...f, [tempStartDate]: temporaryStartDate }))
+    console.log("forms start date", form.startDate)
+    const tempEndDate =  getEndDate(form.startDate, form.period)
+    console.log("end date after function", tempEndDate)
+    const tempObj = {tempStartDate : form.startDate, tempEndDate : tempEndDate}
+    // setForm((f) => ({ ...f}))
     const {data, error} = await apiClient.createHabit({...form, ...tempObj})
     console.log("data", data)
     console.log("error", error)

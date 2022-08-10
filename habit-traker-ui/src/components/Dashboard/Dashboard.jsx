@@ -64,6 +64,7 @@ askPermission();
 
 
   const [habits, setHabits] = useState([]);
+  const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [form, setForm] = useState({
@@ -73,12 +74,24 @@ askPermission();
     frequency: "",
     period: "Per Day",
   });
-  const [datePicked, setDatePicked] = useState('')
+  const formatDate = (date) => {
+
+    var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + (d.getDate()),
+        year = d.getFullYear();
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    return [year, month, day].join("-");
+    }
+  const [datePicked, setDatePicked] = useState(formatDate(new Date()))
   const [buddy, setBuddy] = useState()
 
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
   }
+
+  
 
 
   useEffect(() => {
@@ -114,6 +127,27 @@ askPermission();
     });
     window.location.reload();
   }
+  useEffect(()=> {
+
+    const filterHabits = (date) => {
+      
+      setFilteredHabits(
+        habits.filter(
+          (habit) =>(new Date(formatDate(habit.start_date))).getTime() <= (new Date(datePicked)).getTime() && (new Date(habit.end_date).getTime() >  (new Date(datePicked)).getTime())
+        )
+      );
+    }
+
+    filterHabits()
+
+  },  [datePicked, habits])
+
+
+  useEffect(() => {
+    console.log("date picked", datePicked)
+    console.log("start date get time", habits[0]?.start_date)
+  }, [datePicked])
+
 
 
     useEffect(() => {
@@ -155,7 +189,7 @@ askPermission();
                                       }
                                   </div>
                                   <div className="activity-habits">
-                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
+                                    <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>
