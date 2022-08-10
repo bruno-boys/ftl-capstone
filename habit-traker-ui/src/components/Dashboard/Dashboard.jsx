@@ -10,8 +10,58 @@ import './Dashboard.css'
 import { LitElement, html } from 'lit-element'
 import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
+import ToggleButton from './ToggleButton/ToggleButton';
+
 
 function Dashboard() {
+
+
+// useEffect(() => {
+
+//   function showNotifications() {
+
+//     const notification = new Notification("New Message from HabitTraker", {
+//       body: "Welcome to HabitTraker! Let's make your first habit!",
+//       icon: "src/images/ht-icon.png"
+//     });
+
+//     notification.onclick = (e) => {
+//       window.location.href = "http://localhost:5173/habits";
+//     }
+//   }
+
+//   // defualt, granted, denied
+//   console.log(Notification.permission);
+
+//   if (Notification.permission == 'granted') {
+//     showNotifications();
+//   } 
+//   else if (Notification.permission != 'denied') {
+//     Notification.requestPermission().then(permission => {
+//       if (permission === 'granted') { showNotifications(); }
+//     })
+//   }
+  
+// }, [])
+
+async function askPermission() {
+  return new Promise(function (resolve, reject) {
+    const permissionResult = Notification.requestPermission(function (result) {
+      resolve(result);
+    });
+
+    if (permissionResult) {
+      permissionResult.then(resolve, reject);
+    }
+  }).then(function (permissionResult) {
+    if (permissionResult !== 'granted') {
+      throw new Error("We weren't granted permission.");
+    }
+  });
+}
+
+askPermission();
+
 
   const [habits, setHabits] = useState([]);
   const [filteredHabits, setFilteredHabits] = useState([])
@@ -35,6 +85,7 @@ function Dashboard() {
     return [year, month, day].join("-");
     }
   const [datePicked, setDatePicked] = useState(formatDate(new Date()))
+  const [buddy, setBuddy] = useState()
 
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
@@ -44,6 +95,7 @@ function Dashboard() {
 
 
   useEffect(() => {
+
       const getHabits = async () => {
         const { data, error } = await apiClient.fetchHabitList();
         if (error) {
@@ -53,7 +105,16 @@ function Dashboard() {
           setHabits(data.habits);
         }
       };
+
+      const getBuddyData = async () => {
+        const { data, error } = await apiClient.fetchBuddyData();
+        if (error) {setErrors(error)}
+        if (data) {setBuddy(data)}
+      }
+
       getHabits();
+      getBuddyData();
+
     }, []);
 
   const closeModal = () => {
@@ -89,6 +150,10 @@ function Dashboard() {
 
 
 
+    useEffect(() => {
+      console.log('buddy = ',buddy)
+    }, [buddy])
+
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
 
@@ -100,24 +165,31 @@ function Dashboard() {
               <section className="bg-gradient-to-b from-gray-100 to-white">
                   <div className="max-w-6xl mx-auto px-4 sm:px-6">
                     <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-
+                     
                       <>
+                      <ToggleButton buddy={buddy}/>
+                      {/* <DateCarousel /> */}
                       <div className="date-slider">
                         <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)" onClick={setDate}></date-carousel>
                       </div>
-                      {/* <DateCarousel /> */}
+
+                      {/* Page Content */}
                         <div className="activity-page">
 
                             <div className='left'>
                               <div className="daily-habits-container">
                                 <div className="daily-habits">
                                   <div className="create-habit-btn">
-                                    <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                      <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                    </div>
+                                      { localStorage.getItem("toggleOn") == "false" ?
+                                        <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
+                                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                        </div>
+                                        :
+                                        <></>
+                                      }
                                   </div>
                                   <div className="activity-habits">
-                                    <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                    <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>

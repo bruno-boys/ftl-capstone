@@ -9,14 +9,25 @@ import { useNavigate, Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
+<<<<<<< HEAD
 import HabitDetails from "../HabitDetails/HabitDetails";
+=======
+import ToggleButton from "../Dashboard/ToggleButton/ToggleButton";
+>>>>>>> origin/test-main
 
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
   const [filteredHabits, setFilteredHabits] = useState([]);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+<<<<<<< HEAD
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [errors, setErrors] = useState("");
+=======
+  const [formModalOpen, setFormModalOpen] = useState(false)
+  const [errors, setErrors] = useState("")
+  const [buddy, setBuddy] = useState()
+  const [toggleOn, setToggleOn] = useState(localStorage.getItem("toggleOn"))
+>>>>>>> origin/test-main
   const [form, setForm] = useState({
     habitName: "",
     startDate: "",
@@ -24,6 +35,7 @@ export default function HabitPage() {
     frequency: "",
     period: "Per Day",
   });
+
   const navigate = useNavigate();
   const [duration, setDuration] = useState("All Habits");
 
@@ -35,17 +47,30 @@ export default function HabitPage() {
   ];
 
   useEffect(() => {
+
     const getHabits = async () => {
       const { data, error } = await apiClient.fetchHabitList();
       if (error) {
         setErrors(error);
       }
       if (data?.habits) {
+<<<<<<< HEAD
         setHabits(data.habits);
         setFilteredHabits(data.habits);
+=======
+        setHabits(data.habits)
+>>>>>>> origin/test-main
       }
     };
+
+    const getBuddyData = async () => {
+      const { data, error } = await apiClient.fetchBuddyData();
+      if (error) {setErrors(error)}
+      if (data) {setBuddy(data)}
+    }
+
     getHabits();
+    getBuddyData();
   }, []);
 
   const closeModal = () => {
@@ -59,6 +84,7 @@ export default function HabitPage() {
     window.location.reload();
   };
 
+<<<<<<< HEAD
   const handleOnInputChange = (event) => {
     setDuration(event.target.value);
     // setHabits(habits.filter(habit => habit.end_date))
@@ -97,6 +123,25 @@ export default function HabitPage() {
   }, [duration]);
 
   return (
+=======
+  // useEffect(() => {
+  //   if (localStorage.getItem("toggleOn") == "true") {
+  //     setHabits(buddy?.buddyHabits)
+  //   }
+  // }, [localStorage.getItem("toggleOn")])
+
+  // useEffect(() => {
+  //   console.log('buddy = ',buddy)
+  // }, [buddy])
+
+  // useEffect(() => {
+  //   console.log('habits = ',habits)
+  // }, [habits])
+
+
+  return (
+    
+>>>>>>> origin/test-main
     <div className="habit-page">
       <Header />
       <main className="flex-grow">
@@ -129,6 +174,7 @@ export default function HabitPage() {
               </div>
               <div className="hp-top">
                 <h1 className="hp-title">All Habits</h1>
+<<<<<<< HEAD
                 <div
                   id="hp-create-btn-wrapper"
                   className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3"
@@ -152,6 +198,24 @@ export default function HabitPage() {
                 errors={errors}
                 setErrors={setErrors}
               />
+=======
+                { localStorage.getItem("toggleOn") == "false" ?
+                  <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
+                    <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                  </div>
+                  :
+                  <></>
+                }
+              </div>
+              <ToggleButton buddy={buddy} habits={habits} setHabits={setHabits} />
+              { localStorage.getItem("toggleOn") == "false" ?
+
+                  <HabitGrid setFormModalOpen={setFormModalOpen} habits={habits} errors = {errors} setErrors = {setErrors} /> 
+                  :
+                  <HabitGrid setFormModalOpen={setFormModalOpen} habits={buddy?.buddyHabits} errors = {errors} setErrors = {setErrors} /> 
+
+              }
+>>>>>>> origin/test-main
             </div>
           </div>
           ``
@@ -205,9 +269,15 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const [tab, setTab] = useState(1);
   // let start_date = new Date(habit.temp_start_date);
   // let end_date = new Date(start_date);
+=======
+   const [tab, setTab] = useState(1);
+  let start_date = habit.temp_start_date
+  let end_date = new Date(start_date)
+>>>>>>> origin/test-main
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -326,8 +396,13 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       setErrors(error);
     }
     if (data?.logCount) {
+<<<<<<< HEAD
       localStorage.setItem(`log_count_${habit.id}`, data.logCount.count);
       await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
+=======
+      localStorage.setItem(`log_count_${habit.id}`, data.logCount.count)
+      setLogCount(localStorage.getItem(`log_count_${habit.id}`));
+>>>>>>> origin/test-main
     }
   };
 
@@ -371,10 +446,15 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   };
 
   const deleteHabit = async () => {
+<<<<<<< HEAD
     const { data, err } = await apiClient.deleteHabit(habit.id);
     if (err) {
       setError(err);
     }
+=======
+    const {data, err} = await apiClient.deleteHabit(habit.id);
+    if (err) {setErrors(err)}
+>>>>>>> origin/test-main
     if (data) {
       navigate("/habits");
     }
@@ -393,6 +473,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       <section className="relative">
         {/* Section background (needs .relative class on parent and next sibling elements) */}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+<<<<<<< HEAD
           {/* Content */}
           <div
             className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6"
@@ -420,6 +501,31 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                         style={{ width: "100%" }}
                       >
                         {habit.habit_name}
+=======
+
+            {/* Content */}
+            <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
+              {/* Tabs buttons */}
+                <div className="mb-8 md:mb-0">
+                  <a
+                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
+                    href="#0"
+                    onClick={(e) => { e.preventDefault(); setTab(1); }}
+                  >
+                    <div className="card" style={{width:"100%"}}>
+                      <Link to={`/habit/${habit.id}`}>
+                      <div className="top">
+                        <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
+                      <div className="buttons">
+                      { localStorage.getItem("toggleOn") == "false" ?
+
+                          <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                          :
+                          <></>
+
+                      }
+                        
+>>>>>>> origin/test-main
                       </div>
                       <div className="buttons">
                         <button
@@ -430,6 +536,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                           Delete
                         </button>
                       </div>
+<<<<<<< HEAD
                     </div>
                     <div className="bottom">
                       {logCount >= habit.frequency ? (
@@ -442,6 +549,26 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                       ) : (
                         <div className="text-gray-600">
                           {logCount}/{habit.frequency} {habit.period}
+=======
+                      <div className="bottom">
+                        { 
+                          logCount >= habit.frequency ? 
+
+                          <div className="text-gray-600" style={{color: "green", width:"100%"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
+                          :
+                          <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
+                        }
+                        <div className="buttons">
+                          { localStorage.getItem("toggleOn") == "false" ?
+                            <>
+                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
+                            </>
+                            :
+                            <></>
+                          }
+                          
+>>>>>>> origin/test-main
                         </div>
                       )}
                       <div className="buttons">
