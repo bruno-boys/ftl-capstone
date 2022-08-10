@@ -29,7 +29,6 @@ webpush.setVapidDetails("mailto:habit.traker.customer.services@gmail.com", PUBLI
 app.post("/subscribe", (req,res) => {
   // get pushSubscription object
   const subscription = req.body;
-
   // send 201 - resource created
   res.status(201).json({});
 
@@ -37,7 +36,7 @@ app.post("/subscribe", (req,res) => {
   const payload = JSON.stringify({ title: 'HabitTraker Push Test' });
 
   // pass the object into the sendNotification function
-  webpush.sendNotification(subscription, payload, ).catch(err => console.error(err));
+  webpush.sendNotification(subscription, payload).catch(err => console.error(err));
 });
 
 app.use(extractUserFromJwt)

@@ -15,33 +15,51 @@ import { DateTime } from 'luxon'
 function Dashboard() {
 
 
-useEffect(() => {
+// useEffect(() => {
 
-  function showNotifications() {
+//   function showNotifications() {
 
-    const notification = new Notification("New Message from HabitTraker", {
-      body: "Welcome to HabitTraker! Let's make your first habit!",
-      icon: "src/images/ht-icon.png"
+//     const notification = new Notification("New Message from HabitTraker", {
+//       body: "Welcome to HabitTraker! Let's make your first habit!",
+//       icon: "src/images/ht-icon.png"
+//     });
+
+//     notification.onclick = (e) => {
+//       window.location.href = "http://localhost:5173/habits";
+//     }
+//   }
+
+//   // defualt, granted, denied
+//   console.log(Notification.permission);
+
+//   if (Notification.permission == 'granted') {
+//     showNotifications();
+//   } 
+//   else if (Notification.permission != 'denied') {
+//     Notification.requestPermission().then(permission => {
+//       if (permission === 'granted') { showNotifications(); }
+//     })
+//   }
+  
+// }, [])
+
+async function askPermission() {
+  return new Promise(function (resolve, reject) {
+    const permissionResult = Notification.requestPermission(function (result) {
+      resolve(result);
     });
 
-    notification.onclick = (e) => {
-      window.location.href = "http://localhost:5173/habits";
+    if (permissionResult) {
+      permissionResult.then(resolve, reject);
     }
-  }
+  }).then(function (permissionResult) {
+    if (permissionResult !== 'granted') {
+      throw new Error("We weren't granted permission.");
+    }
+  });
+}
 
-  // defualt, granted, denied
-  console.log(Notification.permission);
-
-  if (Notification.permission == 'granted') {
-    showNotifications();
-  } 
-  else if (Notification.permission != 'denied') {
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') { showNotifications(); }
-    })
-  }
-  
-}, [])
+askPermission();
 
 
   const [habits, setHabits] = useState([]);
