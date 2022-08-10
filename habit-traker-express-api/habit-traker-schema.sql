@@ -23,6 +23,12 @@ CREATE TABLE habits (
     end_date        TIMESTAMP
 );
 
+CREATE TABLE reminders (
+    id              SERIAL PRIMARY KEY, 
+    habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE, 
+    time            TEXT NOT NULL 
+);
+
 CREATE TABLE tracked_habits (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
