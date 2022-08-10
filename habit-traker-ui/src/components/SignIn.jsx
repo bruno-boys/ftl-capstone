@@ -26,7 +26,7 @@ function SignIn({ fromLink }) {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const {data, error} = await apiClient.loginUser(newUser)
-    if (error) {setError(error.data.error)}
+    if (error) {setError(error?.data?.error)}
     if (data?.user) {
       setNewUser(null);
       apiClient.setToken(data.token)
