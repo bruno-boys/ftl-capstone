@@ -111,6 +111,9 @@ class ApiClient {
         return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
     }
 
+    async subscribe(subscription) {
+        return await this.request({ endpoint: `subscribe`, method: `POST`, data: subscription })
+    }
     async declineBuddyRequest(link) {
         return await this.request({ endpoint: `buddy/decline`, method: `DELETE`, data: link })
     }

@@ -37,11 +37,8 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
   const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
-  console.log("habit in habit card", habit)
   let start_date = habit.temp_start_date
   let end_date = new Date(start_date)
-  console.log("start_date", start_date)
-  console.log("end date", end_date)
   
 
 
@@ -90,10 +87,8 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
 
     }
     const anotherDay = new Date(end_date).toISOString()
-    console.log("another day", anotherDay)
     
     const { data, error } = await apiClient.logHabit({id: habit.id, startDate : start_date, endDate : anotherDay})
-    console.log("data form log count", data)
     if (error) {
       setErrors(error);
     }

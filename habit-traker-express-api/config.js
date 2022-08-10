@@ -2,18 +2,26 @@ require("dotenv").config();
 require("colors");
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001;
+
 const SECRET_KEY = process.env.SECRET_KEY || "secret_dev";
 
+const PUBLIC_VAPID_KEY = process.env.PUBLIC_VAPID_KEY
+
+const PRIVATE_VAPID_KEY = process.env.PRIVATE_VAPID_KEY
+
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+
 const IS_TESTING = process.env.NODE_ENV === "test";
+
+const EMAIL_SERVICE_ACTIVE = IS_TESTING
+  ? false
+  : process.env.EMAIL_SERVICE_STATUS === "active";
+
+const EMAIL_FROM_ADDRESS = process.env.EMAIL_FROM_ADDRESS;
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const EMAIL_SERVICE_ACTIVE = IS_TESTING
-  ? false
-  : process.env.EMAIL_SERVICE_STATUS === "active";
-const EMAIL_FROM_ADDRESS = process.env.EMAIL_FROM_ADDRESS;
 
 function getDatabaseURI() {
     const dbUser = process.env.DATABASE_USER || 'postgres'
@@ -35,16 +43,20 @@ console.log("PORT:".blue, PORT);
 console.log("SECRET_KEY:".blue, SECRET_KEY);
 console.log("Database URI:".blue, getDatabaseURI());
 console.log("SENDGRID_API_key:".blue, SENDGRID_API_KEY);
+// console.log("PUBLIC_VAPID_KEY:".red, PUBLIC_VAPID_KEY);
+// console.log("PRIVATE_VAPID_KEY:".red, PRIVATE_VAPID_KEY);
 console.log("EMAIL_SERVICE_ACTIVE:".blue, EMAIL_SERVICE_ACTIVE);
 console.log("CLIENT_URL:".blue, CLIENT_URL);
-console.log("IS_TESTING:".blue, IS_TESTING);
-console.log("BCRYPT_WORK_FACTOR:".blue, BCRYPT_WORK_FACTOR);
+// console.log("IS_TESTING:".blue, IS_TESTING);
+// console.log("BCRYPT_WORK_FACTOR:".blue, BCRYPT_WORK_FACTOR);
 console.log("EMAIL_FROM_ADDRESS:".blue, EMAIL_FROM_ADDRESS);
 console.log("---");
 
 module.exports = {
   PORT,
   SECRET_KEY,
+  PUBLIC_VAPID_KEY,
+  PRIVATE_VAPID_KEY,
   getDatabaseURI,
   SENDGRID_API_KEY,
   EMAIL_SERVICE_ACTIVE,
