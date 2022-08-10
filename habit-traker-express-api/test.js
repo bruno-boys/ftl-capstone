@@ -18,7 +18,7 @@ class SendEmail {
           </a>
         <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
         <p>Thanks,</p>
-        <p>The Habit Tracker Team</p>
+        <p>The HabitTraker Team</p>
       </body>
     </html>
     `,
@@ -50,7 +50,7 @@ class SendEmail {
 //             </a>
 //           <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
 //           <p>Thanks,</p>
-//           <p>The Habit Tracker Team</p>
+//           <p>The HabitTraker Team</p>
 //         </body>
 //       </html>
 //       `,
@@ -83,7 +83,7 @@ module.exports = SendEmail;
 //           <p>This is a confirmation of a successful password reset for your accorunt.</p>
 //           <p>If you did not request this, contact Yaw, Aloye, or Abdul immediately.</p>
 //           <p>Thanks,</p>
-//           <p>The Habit Tracker Team</p>
+//           <p>The HabitTraker Team</p>
 //         </body>
 //       </html>
 //       `,
