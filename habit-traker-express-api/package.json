@@ -35,13 +35,9 @@
     "nodemailer-sendgrid": "^1.0.3",
     "nodemon": "^2.0.19",
     "pg": "^8.7.3",
-<<<<<<< HEAD
     "postgres": "^3.2.4",
-    "test": "^3.2.0"
-=======
     "test": "^3.2.0",
     "web-push": "^3.5.0"
->>>>>>> origin/test-main
   },
   "devDependencies": {
     "jest": "^28.1.3",
