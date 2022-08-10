@@ -12,7 +12,11 @@ if('serviceWorker' in navigator && Notification.permission == "granted") {
   send().catch(err => console.error(err));
 }
 
-// setInterval(send, 5000);
+//new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+
+const etaMs = new Date(2022, 7, 9, 17, 15).getTime() - Date.now();
+
+// setTimeout(send, etaMs);
 
 // register the service worker, register push, send push
 async function send() {
