@@ -202,9 +202,6 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
     if (err) {
       setError(err);
     }
-    if (data) {
-      navigate("/habits");
-    }
   };
 
   useEffect(() => {

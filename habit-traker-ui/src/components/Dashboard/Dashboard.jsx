@@ -14,6 +14,7 @@ import { DateTime } from 'luxon'
 function Dashboard() {
 
   const [habits, setHabits] = useState([]);
+  const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [form, setForm] = useState({
@@ -23,11 +24,23 @@ function Dashboard() {
     frequency: "",
     period: "Per Day",
   });
-  const [datePicked, setDatePicked] = useState('')
+  const formatDate = (date) => {
+
+    var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + (d.getDate()),
+        year = d.getFullYear();
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    return [year, month, day].join("-");
+    }
+  const [datePicked, setDatePicked] = useState(formatDate(new Date()))
 
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
   }
+
+  
 
 
   useEffect(() => {
@@ -53,10 +66,28 @@ function Dashboard() {
     });
     window.location.reload();
   }
+  useEffect(()=> {
 
-    useEffect(() => {
-      console.log('date = ',datePicked);
-    }, [datePicked])
+    const filterHabits = (date) => {
+      
+      setFilteredHabits(
+        habits.filter(
+          (habit) =>(new Date(formatDate(habit.start_date))).getTime() <= (new Date(datePicked)).getTime() && (new Date(habit.end_date).getTime() >  (new Date(datePicked)).getTime())
+        )
+      );
+    }
+
+    filterHabits()
+
+  },  [datePicked, habits])
+
+
+  useEffect(() => {
+    console.log("date picked", datePicked)
+    console.log("start date get time", habits[0]?.start_date)
+  }, [datePicked])
+
+
 
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
@@ -86,7 +117,7 @@ function Dashboard() {
                                     </div>
                                   </div>
                                   <div className="activity-habits">
-                                    <DashHabits habits={habits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
+                                    <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal}/>
                                   </div>
                                 </div>
                               </div>
