@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient"
 import Header from "../partials/Header";
 import { useParams, useNavigate } from "react-router-dom";
+import ErrorPage from '../ErrorPage'
 
 export default function BuddyDecision() {
 
@@ -19,19 +20,20 @@ export default function BuddyDecision() {
     useEffect(() => {
         async function getBuddyName() {
             const { data, error } = await apiClient.fetchNameFromLink(url.link)
-            if (error) {setErrors(error)}
-            if (data?.name) {setBuddy(data.name)}
+            if (error) {
+                setErrors(error);
+            }
+            if (data?.name) { setBuddy(data.name) }
         }
-
         getBuddyName()
-        redirect()
     }, [])
 
-    function redirect() {
-        if (!buddy) {
-            navigate('/*')
-        }
-    }
+    // function redirect() {
+    //     if (nullPage) {
+    //         navigate('/*')
+    //     }
+    // }
+
 
     const acceptInvitation = async (event) => {
         event.preventDefault()
@@ -59,6 +61,9 @@ export default function BuddyDecision() {
 
 
     return(
+        
+        !buddy ? <ErrorPage /> :    
+
         <div className="flex flex-col min-h-screen overflow-hidden">
         {/*  Site header */}
         <Header />
@@ -67,6 +72,7 @@ export default function BuddyDecision() {
                 <section className="bg-gradient-to-b from-gray-100 to-white">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6">
                         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+
                             {/* Page header */}
                             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                                 { message && buddy ?
@@ -117,7 +123,7 @@ export default function BuddyDecision() {
                                     :
 
                                     <>
-                                         <p className="text-xl text-gray-600">
+                                        <p className="text-xl text-gray-600">
                                             Return to HabitTraker
                                         </p>
                                         <div className="buddy-decision-btns" style={{marginTop:"3rem",display:"flex",justifyContent:"center", gap:"1.5rem"}}>
@@ -135,6 +141,5 @@ export default function BuddyDecision() {
                 </section>
             </main>
         </div>
-    
     )
 }

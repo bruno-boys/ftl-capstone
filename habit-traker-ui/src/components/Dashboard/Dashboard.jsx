@@ -44,29 +44,13 @@ function Dashboard() {
   
 // }, [])
 
-async function askPermission() {
-  return new Promise(function (resolve, reject) {
-    const permissionResult = Notification.requestPermission(function (result) {
-      resolve(result);
-    });
-
-    if (permissionResult) {
-      permissionResult.then(resolve, reject);
-    }
-  }).then(function (permissionResult) {
-    if (permissionResult !== 'granted') {
-      throw new Error("We weren't granted permission.");
-    }
-  });
-}
-
-askPermission();
 
 
   const [habits, setHabits] = useState([]);
   const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
+  const [errors, setErrors] = useState();
   const [form, setForm] = useState({
     habitName: "",
     startDate: "",
@@ -86,6 +70,22 @@ askPermission();
     }
   const [datePicked, setDatePicked] = useState(formatDate(new Date()))
   const [buddy, setBuddy] = useState()
+
+  async function askNotificationPermission() {
+    return new Promise(function (resolve, reject) {
+      const permissionResult = Notification.requestPermission(function (result) {
+        resolve(result);
+      });
+
+      if (permissionResult) {
+        permissionResult.then(resolve, reject);
+      }
+    }).then(function (permissionResult) {
+      if (permissionResult !== 'granted') {
+        throw new Error("We weren't granted permission.");
+      }
+    });
+  }
 
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
@@ -114,6 +114,7 @@ askPermission();
 
       getHabits();
       getBuddyData();
+      askNotificationPermission();
 
     }, []);
 

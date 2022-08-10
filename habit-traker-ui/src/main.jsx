@@ -26,7 +26,7 @@ async function send() {
   const register = await navigator.serviceWorker.register('src/worker.js', {
     scope: 'src/'
   });
-  console.log('Service Worker Registered...');
+  console.log('Service Worker Registered');
 
   // Register Push
   console.log('Registering Push...');
@@ -34,9 +34,9 @@ async function send() {
     userVisibleOnly: true,
     applicationServerKey: publicVapidKey
   });
-   console.log('Push Registered...');
+   console.log('Push Registered');
    // Send Push Notification
-   console.log('Sending Push...');
+   console.log('Sending Push');
    await apiClient.subscribe(subscription)
    console.log('Push Sent');
 }

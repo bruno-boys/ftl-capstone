@@ -78,7 +78,7 @@ export default function HabitPage() {
 
   useEffect(() => {
     let today = new Date();
-    // today.setHours(0,0,0,0)
+    today.setHours(0,0,0,0)
 
     if (duration == "Past Habits") {
 
@@ -217,7 +217,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate() + 9);
+  today.setDate(today.getDate() + 1);
 
   
 
@@ -414,15 +414,15 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                       <div className="top">
                         <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
                       <div className="buttons">
-                      {/* { localStorage.getItem("toggleOn") == "false" ?
+                      { localStorage.getItem("toggleOn") == "false" ?
 
                           <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
                           :
                           <></>
 
-                      } */}
+                      }
                         
-                      </div>
+                      {/* </div>
                       <div className="buttons">
                         <button
                           id="delete"
@@ -431,6 +431,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                         >
                           Delete
                         </button>
+                      </div> */}
                       </div>
                       </div>
                       <div className="bottom">
@@ -441,7 +442,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                           :
                           <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
                         }
-                        {/* <div className="buttons">
+                        <div className="buttons">
                           { localStorage.getItem("toggleOn") == "false" ?
                             <>
                               <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
@@ -451,8 +452,8 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                             <></>
                           }
                           
-                        </div> */}
-                      <div className="buttons">
+                        </div>
+                      {/* <div className="buttons">
                         <button
                           className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
                           onClick={(e) => {
@@ -471,7 +472,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                         >
                           Log
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </Link>
                 </div>
