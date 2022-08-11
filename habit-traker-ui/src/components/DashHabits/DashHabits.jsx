@@ -143,7 +143,6 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
       setErrors(error);
     }
     fetchLogCount();
-    // window.location.reload();
     
   };
 
@@ -241,7 +240,9 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
                     <div className="card" style={{width:"100%"}}>
                       <div className="top">
                       <Link to={`/habit/${habit.id}`} state = {streakCount}>
-                        <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
+                        <div className="title">
+                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"70px",}}>{habit.habit_name}</div>
+                        </div>
                       </Link>
                       <div className="buttons">
                       { localStorage.getItem("toggleOn") == "false" ?
@@ -258,12 +259,10 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
                         { 
                           logCount >= habit.frequency ? 
 
-                          <div className="text-gray-600" style={{color: "green", width:"100%"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
+                          <div className="text-gray-600" style={{color: "green", marginTop:"5px"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
                           :
-                          <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
+                          <div className="text-gray-600" style={{marginTop:"5px"}}>{logCount}/{habit.frequency} {habit.period}</div>
                         }
-                        <div className="buttons">
-                        </div>
                       </div>
                       </Link>
                     </div>

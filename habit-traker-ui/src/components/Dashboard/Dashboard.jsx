@@ -168,41 +168,53 @@ function Dashboard() {
                     <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                      
                       <>
-                      <ToggleButton buddy={buddy}/>
+
                       {/* <DateCarousel /> */}
                       <div className="date-slider">
                         <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)" onClick={setDate}></date-carousel>
                       </div>
-
                       {/* Page Content */}
                         <div className="activity-page">
 
-                            <div className='left'>
+                        <div className="header-buttons">
+
+                          <div className="buddy-button" style={{flexGrow: 1}}>
+                            <ToggleButton buddy={buddy}/>
+                          </div>
+
+                          <div className="create-habit-btn" style={{maxWidth:"100%"}}>
+                              { localStorage.getItem("toggleOn") == "false" ?
+                                <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
+                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                </div>
+                                :
+                                <></>
+                              }
+                            </div>
+                            
+                        </div>
+
+                          <div className="habit-boxes">
+
+                          <div className='left'>
                               <div className="daily-habits-container">
                                 <div className="daily-habits">
-                                  <div className="create-habit-btn">
-                                      { localStorage.getItem("toggleOn") == "false" ?
-                                        <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                        </div>
-                                        :
-                                        <></>
-                                      }
-                                  </div>
                                   <div className="activity-habits">
                                     <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                          </div>
 
-                            <div className='right'>
-                              <div className="daily-habits-container">
-                                  <div className="dashboard-stats">
-                                    Right
-                                  </div>
-                              </div>
+                          <div className='right'>
+                            <div className="daily-habits-container">
+                                <div className="dashboard-stats">
+                                  Right
+                                </div>
                             </div>
+                          </div>
+
+                          </div>
 
                             {/* Modal */}
                             <Modal id="create-habit-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
