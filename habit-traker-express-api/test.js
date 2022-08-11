@@ -1,5 +1,8 @@
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const schedule = require("node-schedule");
+const { SENDGRID_API_KEY } = require("./config");
+sgMail.setApiKey(SENDGRID_API_KEY);
+
 class SendEmail {
   static async emailSend(
     user,
@@ -7,6 +10,7 @@ class SendEmail {
     APPLICATION_NAME,
     EMAIL_FROM_ADDRESS
   ) {
+    console.log("user", user);
     const msg = {
       to: user.email,
       from: EMAIL_FROM_ADDRESS,
@@ -37,6 +41,40 @@ class SendEmail {
       });
   }
 
+  static async scheduleReminder(habitName, frequency, time, APPLICATION_NAME, EMAIL_FROM_ADDRESS) {
+    let result = time.split(":")
+    let hour = result[0]
+    let minute = result[1]
+    console.log(`${minute} ${hour} * * *`)
+
+    const job = schedule.scheduleJob(`${minute} ${hour} * * *`, function(){
+      const msg = {
+        to: "yawkesseyankomah@gmail.com",
+        from: EMAIL_FROM_ADDRESS,
+        subject: "Habit Reminder",
+        html: 
+        `
+        <html>
+        <body>
+          <p> Hello! </p>
+          <p> This is a reminder to log your ${habitName} habit</p>
+          <p>Click on the link below to login and log your habit. </p>
+            <a href="http://localhost:5173/activity">
+              Login to Log Your Habit
+            </a>
+          <p>Thanks,</p>
+          <p>The Habit Tracker Team</p>
+        </body>
+      </html>
+      `,
+      };
+      sgMail.send(msg);
+      console.log("Email sent");
+    });
+   
+  
+  }
 }
 
+// Don't forget to log your completion for your
 module.exports = SendEmail;

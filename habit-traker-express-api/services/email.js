@@ -56,12 +56,22 @@ class EmailService {
   async sendPasswordResetEmail(user, token) {
     const resetPasswordUrl = this.constructPasswordResetUrl(token);
     await SendEmail.emailSend(user, resetPasswordUrl, APPLICATION_NAME, EMAIL_FROM_ADDRESS);
-    
   }
 
-  async sendPasswordResetConfirmationEmail(user) {
-    await SendEmail.sendpwdResetConfirmationEmail(user, APPLICATION_NAME, EMAIL_FROM_ADDRESS,);
+  // Figure out what I need to pass through it
+  async sendReminderEmail ({reminder}) {
+    console.log("Reminder in email service", reminder)
+    let habitName = reminder.habit.habit_name
+    let frequency = reminder.habit.frequency
+    let time = reminder.reminder.time
+
+    
+    await SendEmail.scheduleReminder(habitName, frequency, time,  APPLICATION_NAME, EMAIL_FROM_ADDRESS);
   }
+
+
+
+
 }
 
 module.exports = EmailService;

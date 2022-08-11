@@ -1,17 +1,49 @@
 const db = require("../db");
 
 class Reminders {
-  static async fetchReminders(user) {
+  static async fetchReminders() {
     // Hold off on this one for now
     /*
             takes the logged in user and queries the db in order to find the
             reminders that they have created.
         */
+
+    const reminders = await db.query(
+      `
+            SELECT * FROM reminders
+            `,
+    );
+    return reminders.rows;
   }
 
-  static async createReminder(habitId, remindTime) {
+  static async fetchReminderById(habitId) {
+    const habit = await db.query(
+      `
+            SELECT * FROM reminders
+            WHERE habit_id = $1;
+            `,
+      [habitId]
+    );  
+
+    const result = await db.query(
+      `
+            SELECT * FROM habits
+            WHERE id = $1;
+            `,
+      [habitId]
+    );
+
+    const obj = {
+      reminder: habit.rows[0], 
+      habit: result.rows[0]
+    }
+    return obj;
+  }
+
+  static async createReminder(habitId) {
     /*
              allows user to create reminders for speciic habits
+             Should I be able to create a reminder for a habit that doesn't exist?
         */
     await db.query(
       `
@@ -20,6 +52,7 @@ class Reminders {
             `,
       [habitId.habitId, habitId.time]
     );
+
   }
 
   static async deleteReminder(habitId) {

@@ -25,7 +25,7 @@ CREATE TABLE habits (
 
 CREATE TABLE reminders (
     id              SERIAL PRIMARY KEY, 
-    habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE, 
+    habit_id        INTEGER NOT NULL UNIQUE REFERENCES habits (id) ON DELETE CASCADE , 
     time            TEXT NOT NULL 
 );
 
