@@ -6,7 +6,8 @@ import EditForm from "../EditForm/EditForm";
 import Modal from "../../utils/Modal";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import HabitDetails from "../HabitDetails/HabitDetails";
+import HabitMenu from '../HabitMenu'
+
 
 
 export default function DashHabits({ habits, formModalOpen, setFormModalOpen, handleClose, buddy }) {
@@ -29,7 +30,7 @@ export default function DashHabits({ habits, formModalOpen, setFormModalOpen, ha
   );
 }
 
-function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleClose }) {
+function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   const [logCount, setLogCount] = useState(0);
   const [streakCount, setStreakCount] = useState(0);
@@ -37,7 +38,6 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
   const [startDate, setStartDate] = useState(new Date(habit.temp_start_date))
   const [endDate, setEndDate] = useState(new Date(habit.temp_end_date))
   const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
   // let start_date = new Date(habit.temp_start_date);
@@ -143,6 +143,7 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
       setErrors(error);
     }
     fetchLogCount();
+    // window.location.reload();
     
   };
 
@@ -206,9 +207,8 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
 
   const deleteHabit = async () => {
     const { data, err } = await apiClient.deleteHabit(habit.id);
-    if (err) {
-      setError(err);
-    }
+    if (err) {setErrors(err);}
+    window.location.reload()
   };
 
   useEffect(() => {
@@ -239,19 +239,21 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                   >
                     <div className="card" style={{width:"100%"}}>
-                      <Link to={`/habit/${habit.id}`} state = {streakCount}>
                       <div className="top">
+                      <Link to={`/habit/${habit.id}`} state = {streakCount}>
                         <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
+                      </Link>
                       <div className="buttons">
                       { localStorage.getItem("toggleOn") == "false" ?
 
-                        <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
+                        <HabitMenu deleteHabit={deleteHabit} updateLog={updateLog} setVideoModalOpen={setVideoModalOpen} />
                         :
                         <></>
 
                       }
                       </div>
                       </div>
+                      <Link to={`/habit/${habit.id}`} state = {streakCount}>
                       <div className="bottom">
                         { 
                           logCount >= habit.frequency ? 
@@ -261,14 +263,6 @@ function DashHabitCard({ habit, formModalOpen, buddy, setFormModalOpen, handleCl
                           <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
                         }
                         <div className="buttons">
-                        { localStorage.getItem("toggleOn") == "false" ?
-                            <>
-                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
-                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
-                            </>
-                            :
-                            <></>
-                          }
                         </div>
                       </div>
                       </Link>
