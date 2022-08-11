@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import apiClient from '../../../services/apiClient';
 import './ToggleButton.css'
 
-export default function ToggleButton({ buddy, habits, setHabits }) {
+export default function ToggleButton({ buddy }) {
 
   const label = "Buddy View"
 
