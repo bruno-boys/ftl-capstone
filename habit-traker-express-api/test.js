@@ -26,7 +26,7 @@ class SendEmail {
           </a>
         <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
         <p>Thanks,</p>
-        <p>The Habit Tracker Team</p>
+        <p>The HabitTraker Team</p>
       </body>
     </html>
     `,

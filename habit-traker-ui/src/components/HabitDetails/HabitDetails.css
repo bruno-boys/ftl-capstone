@@ -137,3 +137,10 @@ border-bottom-right-radius: 6px;
 background: #6f48eb;
 color: white;
 }
+
+.streak-count{
+    display: flex;
+    font-weight: bolder;
+    margin-left : 250px;
+    font-size: 70px;
+}

@@ -20,6 +20,7 @@ CREATE TABLE habits (
     period          TEXT NOT NULL,
     start_date      TIMESTAMP NOT NULL DEFAULT NOW(),
     temp_start_date TIMESTAMP DEFAULT NOW(), 
+    temp_end_date   TIMESTAMP DEFAULT NOW(),
     end_date        TIMESTAMP
 );
 
@@ -37,10 +38,12 @@ CREATE TABLE tracked_habits (
     end_date        TIMESTAMP NOT NULL
 );
 
-CREATE TABLE habit_progess (
+CREATE TABLE habit_progress (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
-    completed_count INTEGER NOT NULL DEFAULT 0 
+    start_date      TIMESTAMP NOT NULL,
+    end_date        TIMESTAMP NOT NULL,
+    current_streak  INTEGER NOT NULL DEFAULT 0 
 );
 
 CREATE TABLE buddy_request (
@@ -51,7 +54,7 @@ CREATE TABLE buddy_request (
 
 
 CREATE TABLE buddies (
-    user_1          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    user_2          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    user_1          INTEGER NOT NULL UNIQUE REFERENCES users (id) ON DELETE CASCADE,
+    user_2          INTEGER NOT NULL UNIQUE REFERENCES users (id) ON DELETE CASCADE,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW()
 );
