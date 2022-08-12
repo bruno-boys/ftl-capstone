@@ -5,6 +5,10 @@ import "./HabitForm.css"
 
 export default function HabitForm({ form, setForm, handleClose }) {
 
+  const [checked, setChecked] = React.useState(false);
+  const handleChange = () => {
+    setChecked(!checked)
+  }
   const PeriodOptions = [
       { key: 1, label: "Per Day", value: "Per Day" },
       { key: 2, label: "Per Week", value: "Per Week" },
@@ -144,11 +148,27 @@ export default function HabitForm({ form, setForm, handleClose }) {
               </div>
             </div>
 
+           <div>
+            <label>
+              Remind 
+              <br/>
+              <input type="checkbox" checked={checked} onChange={handleChange}/>
+              <br/>
+              { !checked ? <></> :  <input type="time" placeholder="Time"/> }
+            </label>
+           </div>
+
+           
+
             <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
                   <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={handleOnSubmit}>Add Habit</button>
                 </div>
-              </div>
+            </div>
+
+            <div> 
+
+            </div>
         </form>
 
     </div>
