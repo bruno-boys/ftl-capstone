@@ -23,10 +23,11 @@ CREATE TABLE habits (
     temp_end_date   TIMESTAMP DEFAULT NOW(),
     end_date        TIMESTAMP
 );
+
 CREATE TABLE reminders (
     id              SERIAL PRIMARY KEY, 
-    habit_id        INTEGER NOT NULL UNIQUE REFERENCES habits (id) ON DELETE CASCADE , 
-    users_id        INTEGER NOT NULL REFERENCES habits (users_id) ON DELETE CASCADE,
+    habit_id        INTEGER NOT NULL UNIQUE REFERENCES habits (id) ON DELETE CASCADE ,
+    users_id        INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     time            TEXT NOT NULL 
 );
 

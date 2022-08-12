@@ -1,36 +1,34 @@
 const db = require("../db");
 
 class Reminders {
-  static async fetchReminders() {
-    // Hold off on this one for now
-    /*
-            takes the logged in user and queries the db in order to find the
-            reminders that they have created.
-        */
+  static async fetchRemindersList(user) {
 
     const reminders = await db.query(
       `
             SELECT * FROM reminders
-            `,
+            WHERE users_id = (SELECT id FROM users WHERE email = $1)
+            `, [user.email]
     );
     return reminders.rows;
   }
 
-  static async fetchReminderById(habitId) {
+  static async fetchReminderById(user, habitId) {
     const habit = await db.query(
       `
             SELECT * FROM reminders
-            WHERE habit_id = $1;
+            WHERE (users_id = (SELECT id FROM users WHERE email = $1)) 
+              AND (habit_id = $2);
             `,
-      [habitId]
+      [user.email, habitId]
     );  
 
     const result = await db.query(
       `
             SELECT * FROM habits
-            WHERE id = $1;
+            WHERE (users_id = (SELECT id FROM users WHERE email = $1))
+                AND (id = $2);
             `,
-      [habitId]
+      [user.email, habitId]
     );
 
     const obj = {
@@ -40,31 +38,32 @@ class Reminders {
     return obj;
   }
 
-  static async createReminder(habitId) {
+  static async createReminder(user, habitId) {
     /*
              allows user to create reminders for speciic habits
              Should I be able to create a reminder for a habit that doesn't exist?
         */
     await db.query(
       `
-            INSERT INTO reminders (habit_id, time)
-            VALUES ((SELECT id FROM habits WHERE id = $1), $2);
+            INSERT INTO reminders (habit_id, time, users_id)
+            VALUES ((SELECT id FROM habits WHERE id = $1), $2, (SELECT id FROM users WHERE email = $3));
             `,
-      [habitId.habitId, habitId.time]
+      [habitId.habitId, habitId.time, user.email]
     );
 
   }
 
-  static async deleteReminder(habitId) {
+  static async deleteReminder(user, habitId) {
     /*
             allows user to delete reminders
         */
     await db.query(
       `
             DELETE FROM reminders
-            WHERE (habit_id = $1);
+            WHERE (users_id = (SELECT id FROM users WHERE email = $1))
+              AND (habit_id = $2);
                 `,
-      [habitId]
+      [user.email, habitId]
     );
   }
 
@@ -84,6 +83,3 @@ class Reminders {
 }
 
 module.exports = Reminders;
-// Email for daily habits at 9am
-// Email for weekly habits at the beginning of the week
-// Email for montjly habits at the beginning of the month, middle of the month, and end of the month

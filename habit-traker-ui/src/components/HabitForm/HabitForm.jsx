@@ -6,9 +6,17 @@ import "./HabitForm.css"
 export default function HabitForm({ form, setForm, handleClose }) {
 
   const [checked, setChecked] = React.useState(false);
-  const handleChange = () => {
+  const [remindTime, setRemindTime] = React.useState("")
+  const handleClick = () => {
     setChecked(!checked)
   }
+
+  const handleTimeChange = (event) => {
+    console.log(event.target.val)
+    setRemindTime(event.target.value)
+    console.log("remindTime", remindTime)
+  }
+
   const PeriodOptions = [
       { key: 1, label: "Per Day", value: "Per Day" },
       { key: 2, label: "Per Week", value: "Per Week" },
@@ -73,7 +81,6 @@ export default function HabitForm({ form, setForm, handleClose }) {
     
       }
 
-
   const handleOnInputChange = (event) => {
     let targetValue = event.target.value
     if (event.target.name == "startDate" || event.target.name == "endDate"){
@@ -82,6 +89,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
         console.log("target value", targetValue)
     }
     setForm((f) => ({ ...f, [event.target.name]: targetValue }));
+    console.log("form", form)
     };
 
   const handleOnSubmit = async (event) => {
@@ -92,6 +100,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
     const tempObj = {tempStartDate : form.startDate, tempEndDate : tempEndDate}
     // setForm((f) => ({ ...f}))
     const {data, error} = await apiClient.createHabit({...form, ...tempObj})
+    // const {data, error} = await apiClient
     console.log("data", data)
     console.log("error", error)
     handleClose();
@@ -150,11 +159,17 @@ export default function HabitForm({ form, setForm, handleClose }) {
 
            <div>
             <label>
-              Remind 
+              Would you like to be reminded daily? 
               <br/>
-              <input type="checkbox" checked={checked} onChange={handleChange}/>
+              <input name="reminder" type="checkbox" checked={checked} onClick={handleClick} />
               <br/>
-              { !checked ? <></> :  <input type="time" placeholder="Time"/> }
+              { !checked ?
+                <></> 
+                 :  
+                <label for="reminder"> Choose a time for your daily reminders
+                  <input type="time" onChange={handleTimeChange} required/>
+                </label> 
+              }
             </label>
            </div>
 
