@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
 import ToggleButton from "../Dashboard/ToggleButton/ToggleButton";
+import HabitMenu from '../HabitMenu'
 
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
@@ -18,7 +19,6 @@ export default function HabitPage() {
   const [formModalOpen, setFormModalOpen] = useState(false)
   const [errors, setErrors] = useState("")
   const [buddy, setBuddy] = useState()
-  const [toggleOn, setToggleOn] = useState(localStorage.getItem("toggleOn"))
   const [form, setForm] = useState({
     habitName: "",
     startDate: "",
@@ -141,6 +141,7 @@ export default function HabitPage() {
                 </div>
               </div>
               <div className="hp-top">
+              <ToggleButton buddy={buddy} habits={filteredHabits} setHabits={setHabits} />
                 <h1 className="hp-title">All Habits</h1>
                 { localStorage.getItem("toggleOn") == "false" ?
                   <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
@@ -150,7 +151,6 @@ export default function HabitPage() {
                   <></>
                 }
               </div>
-              <ToggleButton buddy={buddy} habits={filteredHabits} setHabits={setHabits} />
               { localStorage.getItem("toggleOn") == "false" ?
 
                   <HabitGrid setFormModalOpen={setFormModalOpen} habits={filteredHabits} errors = {errors} setErrors = {setErrors} /> 
@@ -410,71 +410,32 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                   >
                     <div className="card" style={{width:"100%"}}>
-                    <Link to={ `/habit/${habit.id}`} state = {streakCount}>
                       <div className="top">
-                        <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
-                      <div className="buttons">
-                      { localStorage.getItem("toggleOn") == "false" ?
-
-                          <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
-                          :
-                          <></>
-
-                      }
-                        
-                      {/* </div>
-                      <div className="buttons">
-                        <button
-                          id="delete"
-                          className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
-                          onClick={deleteHabit}
-                        >
-                          Delete
-                        </button>
-                      </div> */}
-                      </div>
+                        <Link to={ `/habit/${habit.id}`} state = {streakCount}>
+                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
+                            <div className="buttons">
+                          </div>
+                        </Link>
                       </div>
                       <div className="bottom">
                         { 
                           logCount >= habit.frequency ? 
 
-                          <div className="text-gray-600" style={{color: "green", width:"100%"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
+                          <div className="text-gray-600" style={{color: "green", width:"100%", marginTop:"10px"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
                           :
-                          <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
+                          <div className="text-gray-600" style={{width:"100%", marginTop:"10px"}}>{logCount}/{habit.frequency} {habit.period}</div>
                         }
-                        <div className="buttons">
-                          { localStorage.getItem("toggleOn") == "false" ?
-                            <>
-                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
-                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
-                            </>
-                            :
-                            <></>
-                          }
+                        <div className="hp-buttons">
+                        { localStorage.getItem("toggleOn") == "false" ?
+
+                          <HabitMenu deleteHabit={deleteHabit} updateLog={updateLog} setVideoModalOpen={setVideoModalOpen} />
+                          :
+                          <></>
+
+                        }
                           
                         </div>
-                      {/* <div className="buttons">
-                        <button
-                          className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setFormModalOpen(true);
-                            setVideoModalOpen(true);
-                          }}
-                          aria-controls="modal"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
-                          onClick={updateLog}
-                        >
-                          Log
-                        </button>
-                      </div> */}
                     </div>
-                  </Link>
                 </div>
               </a>
             </div>
