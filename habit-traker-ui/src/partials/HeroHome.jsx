@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Modal from '../utils/Modal';
+import {Link} from 'react-scroll'
 
-import HeroImage from '../images/hero-image.png';
-
-function HeroHome() {
+function HeroHome({  }) {
 
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
@@ -42,8 +41,10 @@ function HeroHome() {
                   <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" href="signup">Join us today</a>
                 </div>
                 <div>
-                  <a className="btn text-white bg-gray-900 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="/">Learn more</a>
-                  {/* take user to user stories */}
+                  <Link to="about" spy={true} >
+                    <a className="btn text-white bg-gray-900 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="/">Learn more</a>
+                    {/* take user to user stories */}
+                  </Link>
                 </div>
               </div>
             </div>

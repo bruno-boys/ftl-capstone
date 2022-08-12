@@ -168,41 +168,53 @@ function Dashboard() {
                     <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                      
                       <>
-                      <ToggleButton buddy={buddy}/>
+
                       {/* <DateCarousel /> */}
                       <div className="date-slider">
                         <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)" onClick={setDate}></date-carousel>
                       </div>
-
                       {/* Page Content */}
                         <div className="activity-page">
 
-                            <div className='left'>
+                        <div className="header-buttons">
+
+                          <div className="buddy-button" style={{flexGrow: 1}}>
+                            <ToggleButton buddy={buddy}/>
+                          </div>
+
+                          <div className="create-habit-btn" style={{maxWidth:"100%"}}>
+                              { localStorage.getItem("toggleOn") == "false" ?
+                                <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
+                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                </div>
+                                :
+                                <></>
+                              }
+                            </div>
+                            
+                        </div>
+
+                          <div className="habit-boxes">
+
+                          <div className='left'>
                               <div className="daily-habits-container">
                                 <div className="daily-habits">
-                                  <div className="create-habit-btn">
-                                      { localStorage.getItem("toggleOn") == "false" ?
-                                        <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                        </div>
-                                        :
-                                        <></>
-                                      }
-                                  </div>
                                   <div className="activity-habits">
                                     <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                          </div>
 
-                            <div className='right'>
-                              <div className="daily-habits-container">
-                                  <div className="dashboard-stats">
-                                    Right
-                                  </div>
-                              </div>
+                          <div className='right'>
+                            <div className="daily-habits-container">
+                                <div className="dashboard-stats">
+                                  Right
+                                </div>
                             </div>
+                          </div>
+
+                          </div>
 
                             {/* Modal */}
                             <Modal id="create-habit-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
@@ -245,8 +257,7 @@ class DateCarousel extends LitElement {
   // We have to list _days as a property otherwise change detection in the lit template doesn't work. 
   static get properties() {
     return { 
-      _days: { type: Array },
-      useEthiopianCalendar: { type: Boolean }
+      _days: { type: Array }
     };
   }
 
@@ -258,9 +269,6 @@ class DateCarousel extends LitElement {
     super.connectedCallback()
 
     var now = DateTime.local()
-    if (this.useEthiopianCalendar) {
-      now = now.reconfigure({ outputCalendar: 'ethiopic' })
-    }
 
     this.weekInView = now.startOf("week")
     this.weekUnixValue = now.startOf("week").toFormat('X') // unix timestamp in seconds
@@ -270,7 +278,7 @@ class DateCarousel extends LitElement {
   }
 
   _calculateHeaderText() {
-    let firstDayOfWeek = this.weekInView
+    let firstDayOfWeek = this.weekInView 
     let lastDayOfWeek = this.weekInView.plus({days: 6})
 
     const firstDayOfWeekYear = parseInt(firstDayOfWeek.toFormat('yyyy'))
@@ -279,10 +287,10 @@ class DateCarousel extends LitElement {
     let headerText
     if (firstDayOfWeekYear !== lastDayOfWeekYear) {
       // the week stradles a new year --- show year text in both strings
-      headerText = `${firstDayOfWeek.toFormat('dd LLL yyyy')} - ${lastDayOfWeek.toFormat('dd LLL yyyy')}`
+      headerText = `${firstDayOfWeek.toFormat('LLL dd yyyy')} - ${lastDayOfWeek.toFormat('LLL dd yyyy')}`
     } else {
       // the week is in the same year --- only show the year at the end
-      headerText = `${firstDayOfWeek.toFormat('dd LLL')} - ${lastDayOfWeek.toFormat('dd LLL yyyy')}`
+      headerText = `${firstDayOfWeek.toFormat('LLL dd')} - ${lastDayOfWeek.toFormat('LLL dd yyyy')}`
     }
     return headerText
   }
@@ -341,9 +349,6 @@ class DateCarousel extends LitElement {
 
   _today() {
     var now = DateTime.local()
-    if (this.useEthiopianCalendar) {
-      now = now.reconfigure({ outputCalendar: 'ethiopic' })
-    }
 
     this.weekInView = now.startOf("week")
     this.datePicked = now.toFormat(FORMAT_YEAR_MONTH_DAY)
@@ -361,6 +366,7 @@ class DateCarousel extends LitElement {
           display: block;
         }
         table {
+          font-family: Arial, Helvetica, sans-serif;
           width: var(--date-carousel-table-width, 100%);
           font-size: var(--date-carousel-table-font-size, 1em);
           color: var(--date-carousel-table-color, #000);
@@ -400,7 +406,7 @@ class DateCarousel extends LitElement {
           <td id="dc-title">
             <div class="month">${this._headerText}</div>
           </td>
-          <td class="clickable button" @click="${this._today}">
+          <td class="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3 clickable button" @click="${this._today}">
             <button class="today">Today</button>
           </td>
         </tr>

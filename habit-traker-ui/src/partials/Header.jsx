@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../images/habit-traker-logo.png'
+import Avatar from "./Avatar"
 
 function Header() {
 
@@ -24,8 +25,9 @@ function Header() {
 
   return (
     <header className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top && 'bg-white backdrop-blur-sm shadow-lg'}`}>
-      <div className="max-w-6xl mx-auto px-5 sm:px-6" style={{display:"flex",justifyContent:"center"}}>
-        <div className="flex items-center justify-between h-16 md:h-20" style={{minWidth: "1200px"}}>
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+        <div className="flex items-center justify-between h-16 md:h-20" >
 
           {/* Site branding */}
           <div className="flex-shrink-0 mr-4">
@@ -68,15 +70,15 @@ function Header() {
 
           :
 
-            <nav className="flex flex-grow">
-              <ul className="flex flex-grow justify-end flex-wrap items-center">
+            <nav className="flex flex-grow" style={{width:"100%"}}>
+              <ul className="flex flex-grow justify-end flex-wrap items-center" style={{width:"100%"}}>
                 <li>
-                  <Link to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Dashboard</Link>
+                  <Link to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}>Dashboard</Link>
                 </li>
                 <li>
-                  <Link to="/habits" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Habits</Link>
+                  <Link to="/habits" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}>Habits</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/buddy-link" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Buddies</Link>
                 </li>
                 <li>
@@ -89,6 +91,9 @@ function Header() {
                       <path d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z" fillRule="nonzero" />
                     </svg>                  
                   </div>
+                </li> */}
+                <li>
+                  <Avatar handleLogout={handleLogout}/>
                 </li>
               </ul>
             </nav>
@@ -96,6 +101,7 @@ function Header() {
 
         </div>
       </div>
+
     </header>
   );
 }
