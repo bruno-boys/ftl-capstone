@@ -17,11 +17,6 @@ export default function LongMenu({ deleteHabit, updateLog, setVideoModalOpen  })
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const habitFeatures = (option) => {
-    console.log("option =",option)
-    if (option == "Delete") {return deleteHabit}
-  }
-
 
   const openEditHabitForm = (e) => {
     handleClose();
