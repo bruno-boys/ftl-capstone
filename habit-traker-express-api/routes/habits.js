@@ -23,9 +23,11 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
 router.post("/reminder", requireAuthenticatedUser , async (req, res, next) => {
   try {
     console.log(req.body.habitId)
-    await Reminders.createReminder(req.body);
+    const user = res.locals.user
+    console.log("User for reminder:", user)
+    await Reminders.createReminder(user, req.body);
     let reminderId = req.body.habitId
-    let reminder = await Reminders.fetchReminderById(reminderId);
+    let reminder = await Reminders.fetchReminderById(user, reminderId);
     console.log("Reminder + Habit Info:", reminder)
     await emailService.sendReminderEmail({reminder})
     res.status(201).json({ status: "Reminder Created!" });
@@ -36,9 +38,9 @@ router.post("/reminder", requireAuthenticatedUser , async (req, res, next) => {
 
 router.delete("/reminder/:id", requireAuthenticatedUser, async (req, res, next) => {
   try {
+    const user = res.locals.user
     const reminderId = parseInt(req.params.id);
-    await Reminders.deleteReminder(reminderId);
-    console.log("reminderId", reminderId)
+    await Reminders.deleteReminder(user, reminderId);
     res.status(200).json({ status: "Reminder Deleted!" });
   } catch (error) {
     next(error);
@@ -57,7 +59,8 @@ router.put("/reminder/:id", requireAuthenticatedUser, async (req, res, next) => 
 
 router.get("/reminders", requireAuthenticatedUser, async (req, res, next) => {
   try {
-    let remindersList = await Reminders.fetchReminders();
+    const user = res.locals.user
+    let remindersList = await Reminders.fetchRemindersList(user);
     return res.status(200).json({
       reminders: remindersList,
     });
@@ -66,16 +69,11 @@ router.get("/reminders", requireAuthenticatedUser, async (req, res, next) => {
   }
 })
 
-// router.post("/schedule-reminder", requireAuthenticatedUser, async (req, res, next) => {
-//   try {
-//     const { habitId, time } = req.body;
-//   }
-// })
-
 router.get("/reminder/:id", requireAuthenticatedUser, async (req, res, next) => {
   try {
+    const user = res.locals.user
     const reminderId = parseInt(req.params.id);
-    let reminder = await Reminders.fetchReminderById(reminderId);
+    let reminder = await Reminders.fetchReminderById(user, reminderId);
     return res.status(200).json({
       reminder: reminder,
     });

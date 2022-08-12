@@ -48,6 +48,12 @@ class ApiClient {
         return await this.request({ endpoint: `auth/register`, method: `POST`, data: credentials })
     }
 
+    // async createReminder({habitId, remindTime}) {
+    //     console.log("habitId", habitId)
+    //     console.log("remindTime", remindTime)
+    //     return await this.request({endpoint: `habits/reminder`, method: `POST`, data: {habitId, remindTime}})
+    // }
+
     async createHabit(credentials){
         return await this.request({endpoint : `habits/create`, method: `POST`, data: credentials })
     }
@@ -127,6 +133,8 @@ class ApiClient {
     async fetchBuddyData () {
         return await this.request({ endpoint: `buddy/view`, method: `GET` })
     } 
+
+
 }
 
 export default new ApiClient('http://localhost:3001')
