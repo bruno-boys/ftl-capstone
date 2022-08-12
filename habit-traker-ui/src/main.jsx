@@ -8,13 +8,13 @@ const publicVapidKey = "BGCM3ooo1OPVCeWRy0xKLPtiI3c9zqFmo4cUeJv7uu875oA3GEz3S5B3
 
 
 // Check for service worker
-if('serviceWorker' in navigator && Notification.permission == "granted") {
-  send().catch(err => console.error(err));
-}
+// if('serviceWorker' in navigator && Notification.permission == "granted") {
+//   send().catch(err => console.error(err));
+// }
 
 //new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
-const etaMs = new Date(2022, 7, 9, 17, 15).getTime() - Date.now();
+// const etaMs = new Date(2022, 7, 11, 14, 8).getTime() - Date.now();
 
 // setTimeout(send, etaMs);
 
