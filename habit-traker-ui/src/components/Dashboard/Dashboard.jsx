@@ -257,8 +257,7 @@ class DateCarousel extends LitElement {
   // We have to list _days as a property otherwise change detection in the lit template doesn't work. 
   static get properties() {
     return { 
-      _days: { type: Array },
-      useEthiopianCalendar: { type: Boolean }
+      _days: { type: Array }
     };
   }
 
@@ -270,9 +269,6 @@ class DateCarousel extends LitElement {
     super.connectedCallback()
 
     var now = DateTime.local()
-    if (this.useEthiopianCalendar) {
-      now = now.reconfigure({ outputCalendar: 'ethiopic' })
-    }
 
     this.weekInView = now.startOf("week")
     this.weekUnixValue = now.startOf("week").toFormat('X') // unix timestamp in seconds
@@ -282,7 +278,7 @@ class DateCarousel extends LitElement {
   }
 
   _calculateHeaderText() {
-    let firstDayOfWeek = this.weekInView
+    let firstDayOfWeek = this.weekInView 
     let lastDayOfWeek = this.weekInView.plus({days: 6})
 
     const firstDayOfWeekYear = parseInt(firstDayOfWeek.toFormat('yyyy'))
@@ -291,10 +287,10 @@ class DateCarousel extends LitElement {
     let headerText
     if (firstDayOfWeekYear !== lastDayOfWeekYear) {
       // the week stradles a new year --- show year text in both strings
-      headerText = `${firstDayOfWeek.toFormat('dd LLL yyyy')} - ${lastDayOfWeek.toFormat('dd LLL yyyy')}`
+      headerText = `${firstDayOfWeek.toFormat('LLL dd yyyy')} - ${lastDayOfWeek.toFormat('LLL dd yyyy')}`
     } else {
       // the week is in the same year --- only show the year at the end
-      headerText = `${firstDayOfWeek.toFormat('dd LLL')} - ${lastDayOfWeek.toFormat('dd LLL yyyy')}`
+      headerText = `${firstDayOfWeek.toFormat('LLL dd')} - ${lastDayOfWeek.toFormat('LLL dd yyyy')}`
     }
     return headerText
   }
@@ -353,9 +349,6 @@ class DateCarousel extends LitElement {
 
   _today() {
     var now = DateTime.local()
-    if (this.useEthiopianCalendar) {
-      now = now.reconfigure({ outputCalendar: 'ethiopic' })
-    }
 
     this.weekInView = now.startOf("week")
     this.datePicked = now.toFormat(FORMAT_YEAR_MONTH_DAY)
@@ -373,6 +366,7 @@ class DateCarousel extends LitElement {
           display: block;
         }
         table {
+          font-family: Arial, Helvetica, sans-serif;
           width: var(--date-carousel-table-width, 100%);
           font-size: var(--date-carousel-table-font-size, 1em);
           color: var(--date-carousel-table-color, #000);
@@ -412,7 +406,7 @@ class DateCarousel extends LitElement {
           <td id="dc-title">
             <div class="month">${this._headerText}</div>
           </td>
-          <td class="clickable button" @click="${this._today}">
+          <td class="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3 clickable button" @click="${this._today}">
             <button class="today">Today</button>
           </td>
         </tr>
