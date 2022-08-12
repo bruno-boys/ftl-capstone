@@ -127,6 +127,26 @@ class ApiClient {
     async fetchBuddyData () {
         return await this.request({ endpoint: `buddy/view`, method: `GET` })
     } 
+
+    async createCompleted(completedCount){
+        return await this.request({endpoint : `habits/completed`, method : `POST`, data : completedCount})
+    }
+    async createMissed(missedCount){
+        return await this.request({endpoint : `habits/missed`, method : `POST`, data : missedCount})
+    }
+    async getCompletedCount(habitId){
+        console.log("This is in api client", await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`}))
+        return await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`})
+    }
+    async getMissedCount(habitId){
+        return await this.request({endpoint : `habits/missed/${habitId}`, method : `GET`})
+    }
+    async editCompleted(completedForm){
+        return await this.request({endpoint : `habits/completed`, method : `PUT`, data : completedForm})
+    }
+    async editMissed(missedForm){
+        return await this.request({endpoint : `habits/missed`, method : `PUT`, data : missedForm})
+    }
 }
 
 export default new ApiClient('http://localhost:3001')

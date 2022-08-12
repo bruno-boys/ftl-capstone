@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import apiClient from "../../services/apiClient";
 import EditForm from "../EditForm/EditForm";
 import Modal from "../../utils/Modal";
-import { useNavigate, Routes, Route } from "react-router-dom";
+import { useNavigate, Routes, Route, createPath } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
@@ -92,7 +92,7 @@ export default function HabitPage() {
       setFilteredHabits(
         habits.filter(
           (habit) =>
-            today.getTime() >= new Date(habit.start_date).getTime() &&
+          (new Date(today)).getTime() >= new Date(habit.start_date).getTime() &&
             today.getTime() < new Date(habit.end_date).getTime()
         )
       );
@@ -217,7 +217,10 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate() + 1);
+  today.setDate(today.getDate());
+
+
+
 
   
 
@@ -273,35 +276,24 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     }
   };
 
+
+
   
   const updateLog = async (event) => {
     event.preventDefault();
     console.log("today", today)
     if (today.getTime() >= endDate.getTime()) {
-      const obj = {
-        id: habit.id,
-        habitName: habit.habit_name,
-        frequency: habit.frequency,
-        period: habit.period,
-        startDate: habit.start_date,
-        endDate: habit.end_date,
-      }
-      fetchstreakCount()
       console.log("logCount here?", logCount)
       console.log("streak here?", streakCount)
       if ((logCount >= habit.frequency)){
+
         if (habit.period == "Per Month"){
           await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
         }
         else{
           await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
         }
-        
       }
-      setPeriodEndDate(startDate, endDate, habit.period);
-      const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
-      const { data, error } = await apiClient.editHabit({ ...obj, ...tempObj })
-      location.reload()
     }
     console.log("end date", endDate)
     const anotherDay = new Date(endDate).toISOString();
@@ -317,6 +309,73 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     fetchLogCount();
     
   };
+
+  
+
+    const logCompletedAndMissedHabits = async() => {
+      console.log("habit.id", habit.id)
+      console.log("today in new function", today)
+      console.log("endDate in new function", endDate)
+      console.log(" are they equal", today.getTime())
+      console.log("are they equal?", endDate.getTime())
+      if (today.getTime() >= endDate.getTime()){
+        console.log("they are now equal")
+        const {data, error} = await apiClient.getCompletedCount(habit.id)
+        console.log("data from completed count", data)
+        const results = await apiClient.getMissedCount(habit.id)
+        const missedCount = results.data.missedCount.missed_count
+        console.log("missed count :", missedCount)
+        console.log("logcount in new function", logCount)
+        
+        
+        const completedCount = data.completedCount.completed_count
+        console.log("completedCount in new function", completedCount)
+        if (completedCount < 1){
+          if (logCount >= habit.frequency){
+            console.log("there is currently no completed log for this habit")
+            const {results, errors} = await apiClient.createCompleted({id : habit.id, completedCount : 1})
+          }
+        }
+        else if (completedCount >= 1){
+          console.log("we are editing the completed count")
+          if (logCount >= habit.frequency){
+            console.log("we are editing the completed count")
+            const {results, errors} = await apiClient.editCompleted({id : habit.id, completedCount : (completedCount + 1)})
+          }
+        }
+        if (missedCount < 1){
+          if (logCount < habit.frequency){
+            const {results, errors} = await apiClient.createMissed({id : habit.id, missedCount : 1})
+          }
+        }
+
+        else if (missedCount >= 1) {
+          if (logCount < habit.frequency){
+            const {results, errors} = await apiClient.editMissed({id : habit.id, missedCount : (missedCount + 1)})
+          }
+          
+        }
+
+        const obj = {
+          id: habit.id,
+          habitName: habit.habit_name,
+          frequency: habit.frequency,
+          period: habit.period,
+          startDate: habit.start_date,
+          endDate: habit.end_date,
+        }
+
+
+      console.log("set period dates parameters. start date", startDate, "endDate" , endDate )
+      setPeriodEndDate(startDate, endDate, habit.period);
+      console.log("set period parameters after calling a functoin on it to change them. Start", startDate, "end date", endDate)
+      const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
+      const result = await apiClient.editHabit({ ...obj, ...tempObj })
+      location.reload()
+    }
+
+    
+  }
 
   const fetchLogCount = async () => {
     const anotherDay = new Date(endDate).toISOString();
@@ -393,6 +452,11 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   useEffect(() =>{
     fetchstreakCount()
   },[])
+
+  useEffect(() => {
+    console.log("logCount", logCount)
+    logCompletedAndMissedHabits()
+  }, [])
 
   return (
     <div className="habit-card">

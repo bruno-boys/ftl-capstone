@@ -69,6 +69,41 @@ class Habits {
     );
   }
 
+  static async logComplete(completedForm){
+
+    await db.query(
+      `insert into completed_habits (habit_id, completed_count) values ($1, $2);`, [completedForm.id, completedForm.completedCount]
+    )
+  }
+
+  static async fetchCompletedCount(habitId){
+    const results = await db.query(`select completed_count from completed_habits where habit_id = $1`, [habitId])
+    return results.rows[0]
+    
+  }
+
+  static async fetchMissedCount(habitId){
+    const results = await db.query(`select missed_count from missed_habits where habit_id = $1`, [habitId])
+    return results.rows[0]
+  }
+
+  static async editCompleted(completedForm){
+  
+      await db.query(`update completed_habits set completed_count = $1 where habit_id = $2`, [completedForm.completedCount, completedForm.id])
+  }
+
+  static async logMissed(missedForm){
+
+    await db.query(
+      `insert into missed_habits (habit_id, missed_count) values ($1, $2);`, [missedForm.id, missedForm.missedCount]
+    )
+  }
+
+  static async editMissed(missedForm){
+  
+    await db.query(`update missed_habits set missed_count = $1 where habit_id = $2`, [missedForm.missedCount, missedForm.id])
+}
+
   
 
 

@@ -32,6 +32,16 @@ CREATE TABLE tracked_habits (
     end_date        TIMESTAMP NOT NULL
 );
 
+CREATE TABLE completed_habits(
+    habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
+    completed_count INTEGER NOT NULL
+);
+
+CREATE TABLE missed_habits(
+    habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,
+    missed_count    INTEGER NOT NULL
+);
+
 CREATE TABLE habit_progress (
     id              SERIAL PRIMARY KEY,
     habit_id        INTEGER NOT NULL REFERENCES habits (id) ON DELETE CASCADE,

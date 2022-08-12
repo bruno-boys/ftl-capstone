@@ -128,6 +128,7 @@ function Dashboard() {
     });
     window.location.reload();
   }
+
   useEffect(()=> {
 
     const filterHabits = (date) => {

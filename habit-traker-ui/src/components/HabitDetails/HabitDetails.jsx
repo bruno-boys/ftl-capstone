@@ -18,6 +18,8 @@ export default function HabitDetails() {
     const [error, setError] = useState("")
     const navigate = useNavigate()
     const location = useLocation()
+    const [completedHabits, setCompletedHabits] = useState(0)
+    const [missedHabits, setMissedHabits] = useState(0)
     const streakCount = location.state
 
     useEffect(() => {
@@ -27,6 +29,25 @@ export default function HabitDetails() {
             if (data) {setHabit(data);}
         }
         getHabitById();
+    }, [])
+
+
+    useEffect(() => {
+        const getCompletedHabitsCount = async() => {
+        const {data, error} = await apiClient.getCompletedCount(habitId)
+        setCompletedHabits(data.completedCount.completed_count)
+    }
+
+    const getMissedHabitsCount = async () => {
+        const results = await apiClient.getMissedCount(habitId)
+        const missedCount = results.data.missedCount.missed_count
+        setMissedHabits(missedCount)
+
+    }
+
+    getCompletedHabitsCount()
+    getMissedHabitsCount()
+
     }, [])
 
     const deleteHabit = async () => {
@@ -60,7 +81,7 @@ export default function HabitDetails() {
                                 
                             </div>
                             <div className="habit-detail-page">
-                                <HabitDetailContainer habit={habit} streakCount = {streakCount}/>
+                                <HabitDetailContainer missedHabits={missedHabits} completedHabits = {completedHabits} habit={habit} streakCount = {streakCount}/>
                             </div>
                         </div> 
                          {/* Modal */}
@@ -80,7 +101,7 @@ export default function HabitDetails() {
 }
 
 
-function HabitDetailContainer({ habit, streakCount }) {
+function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount }) {
 
     const options = {  
         year: "numeric", month: "short",  
@@ -126,6 +147,7 @@ function HabitDetailContainer({ habit, streakCount }) {
                                 <div>
                                     <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Complete</div>
                                 </div>
+                                {completedHabits}
                             </a>
 
                             <a
@@ -136,6 +158,7 @@ function HabitDetailContainer({ habit, streakCount }) {
                                 <div>
                                     <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Missed</div>
                                 </div>
+                                {missedHabits}
                             </a>
 
                             <a
