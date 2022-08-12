@@ -241,7 +241,7 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
                       <div className="top">
                       <Link to={`/habit/${habit.id}`} state = {streakCount}>
                         <div className="title">
-                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"70px",}}>{habit.habit_name}</div>
+                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"150px"}}>{habit.habit_name}</div>
                         </div>
                       </Link>
                       <div className="buttons">

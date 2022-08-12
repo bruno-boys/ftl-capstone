@@ -14,9 +14,9 @@ const publicVapidKey = "BGCM3ooo1OPVCeWRy0xKLPtiI3c9zqFmo4cUeJv7uu875oA3GEz3S5B3
 
 //new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
-// const etaMs = new Date(2022, 7, 11, 14, 8).getTime() - Date.now();
+const etaMs = new Date(2022, 7, 12, 13, 30).getTime() - Date.now();
 
-// setTimeout(send, etaMs);
+setTimeout(send, etaMs);
 
 // register the service worker, register push, send push
 async function send() {

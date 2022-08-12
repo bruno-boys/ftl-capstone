@@ -382,7 +382,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       setErrors(err);
     }
     if (data) {
-      navigate("/habits");
+      window.location.reload();
     }
   };
 
