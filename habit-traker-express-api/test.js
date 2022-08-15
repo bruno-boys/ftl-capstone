@@ -59,7 +59,7 @@ class SendEmail {
           <p> Hello! </p>
           <p> This is a reminder to log your ${habitName} habit</p>
           <p>Click on the link below to login and log your habit. </p>
-            <a href="http://localhost:5173/activity">
+            <a href="http://localhost:5173/">
               Login to Log Your Habit
             </a>
           <p>Thanks,</p>

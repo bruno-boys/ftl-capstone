@@ -23,11 +23,11 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
 router.post("/reminder", requireAuthenticatedUser , async (req, res, next) => {
   try {
     console.log(req.body.habitId)
+    console.log("req.body", req.body)
     const user = res.locals.user
     console.log("User for reminder:", user)
     await Reminders.createReminder(user, req.body);
-    let reminderId = req.body.habitId
-    let reminder = await Reminders.fetchReminderById(user, reminderId);
+    let reminder = await Reminders.fetchReminderById(user, req.body.habitId);
     console.log("Reminder + Habit Info:", reminder)
     await emailService.sendReminderEmail({reminder})
     res.status(201).json({ status: "Reminder Created!" });

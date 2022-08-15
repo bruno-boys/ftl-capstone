@@ -43,12 +43,13 @@ class Reminders {
              allows user to create reminders for speciic habits
              Should I be able to create a reminder for a habit that doesn't exist?
         */
+       console.log("habit id in createReminder", habitId)
     await db.query(
       `
             INSERT INTO reminders (habit_id, time, users_id)
             VALUES ((SELECT id FROM habits WHERE id = $1), $2, (SELECT id FROM users WHERE email = $3));
             `,
-      [habitId.habitId, habitId.time, user.email]
+      [habitId.habitId, habitId.remindTime, user.email]
     );
 
   }

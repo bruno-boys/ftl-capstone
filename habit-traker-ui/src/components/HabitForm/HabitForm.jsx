@@ -100,7 +100,6 @@ export default function HabitForm({ form, setForm, handleClose }) {
     const tempObj = {tempStartDate : form.startDate, tempEndDate : tempEndDate}
     // setForm((f) => ({ ...f}))
     const {data, error} = await apiClient.createHabit({...form, ...tempObj})
-    // const {data, error} = await apiClient
     console.log("data", data)
     console.log("error", error)
     handleClose();
