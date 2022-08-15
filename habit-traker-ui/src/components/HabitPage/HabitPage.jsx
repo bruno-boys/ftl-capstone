@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import apiClient from "../../services/apiClient";
 import EditForm from "../EditForm/EditForm";
 import Modal from "../../utils/Modal";
-import { useNavigate, Routes, Route } from "react-router-dom";
+import { useNavigate, Routes, Route, createPath } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
@@ -93,7 +93,7 @@ export default function HabitPage() {
       setFilteredHabits(
         habits.filter(
           (habit) =>
-            today.getTime() >= new Date(habit.start_date).getTime() &&
+          (new Date(today)).getTime() >= new Date(habit.start_date).getTime() &&
             today.getTime() < new Date(habit.end_date).getTime()
         )
       );
@@ -210,6 +210,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const [startDate, setStartDate] = useState(new Date(habit.temp_start_date))
   const [endDate, setEndDate] = useState(new Date(habit.temp_end_date))
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
@@ -218,7 +219,10 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate() + 1);
+  today.setDate(today.getDate());
+
+
+
 
   
 
@@ -274,36 +278,12 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     }
   };
 
+
+
   
   const updateLog = async (event) => {
     event.preventDefault();
     console.log("today", today)
-    if (today.getTime() >= endDate.getTime()) {
-      const obj = {
-        id: habit.id,
-        habitName: habit.habit_name,
-        frequency: habit.frequency,
-        period: habit.period,
-        startDate: habit.start_date,
-        endDate: habit.end_date,
-      }
-      fetchstreakCount()
-      console.log("logCount here?", logCount)
-      console.log("streak here?", streakCount)
-      if ((logCount >= habit.frequency)){
-        if (habit.period == "Per Month"){
-          await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
-        }
-        else{
-          await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
-        }
-        
-      }
-      setPeriodEndDate(startDate, endDate, habit.period);
-      const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
-      const { data, error } = await apiClient.editHabit({ ...obj, ...tempObj })
-      location.reload()
-    }
     console.log("end date", endDate)
     const anotherDay = new Date(endDate).toISOString();
     console.log("anotherDate", anotherDay)
@@ -318,6 +298,82 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     fetchLogCount();
     
   };
+
+  
+
+    const logCompletedAndMissedHabits = async() => {
+      console.log("habit.id", habit.id)
+      console.log("today in new function", today)
+      console.log("endDate in new function", endDate)
+      console.log(" are they equal", today.getTime())
+      console.log("are they equal?", endDate.getTime())
+      if (today.getTime() >= endDate.getTime()){
+          if ((logCount >= habit.frequency)){
+    
+            if (habit.period == "Per Month"){
+              await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
+            }
+            else{
+              await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
+            }
+          }
+        console.log("they are now equal")
+        const {data, error} = await apiClient.getCompletedCount(habit.id)
+        console.log("data from completed count", data)
+        const results = await apiClient.getMissedCount(habit.id)
+        const missedCount = results.data.missedCount.missed_count
+        console.log("missed count :", missedCount)
+        console.log("logcount in new function", logCount)
+        
+        
+        const completedCount = data.completedCount.completed_count
+        console.log("completedCount in new function", completedCount)
+        if (completedCount < 1){
+          if (logCount >= habit.frequency){
+            console.log("there is currently no completed log for this habit")
+            const {results, errors} = await apiClient.createCompleted({id : habit.id, completedCount : 1})
+          }
+        }
+        else if (completedCount >= 1){
+          console.log("we are editing the completed count")
+          if (logCount >= habit.frequency){
+            console.log("we are editing the completed count")
+            const {results, errors} = await apiClient.editCompleted({id : habit.id, completedCount : (completedCount + 1)})
+          }
+        }
+        if (missedCount < 1){
+          if (logCount < habit.frequency){
+            const {results, errors} = await apiClient.createMissed({id : habit.id, missedCount : 1})
+          }
+        }
+
+        else if (missedCount >= 1) {
+          if (logCount < habit.frequency){
+            const {results, errors} = await apiClient.editMissed({id : habit.id, missedCount : (missedCount + 1)})
+          }
+          
+        }
+
+        const obj = {
+          id: habit.id,
+          habitName: habit.habit_name,
+          frequency: habit.frequency,
+          period: habit.period,
+          startDate: habit.start_date,
+          endDate: habit.end_date,
+        }
+
+
+      console.log("set period dates parameters. start date", startDate, "endDate" , endDate )
+      setPeriodEndDate(startDate, endDate, habit.period);
+      console.log("set period parameters after calling a functoin on it to change them. Start", startDate, "end date", endDate)
+      const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
+      const result = await apiClient.editHabit({ ...obj, ...tempObj })
+      location.reload()
+    }
+
+    
+  }
 
   const fetchLogCount = async () => {
     const anotherDay = new Date(endDate).toISOString();
@@ -395,48 +451,80 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     fetchstreakCount()
   },[])
 
+  useEffect(() => {
+    console.log("logCount", logCount)
+    logCompletedAndMissedHabits()
+  }, [])
+
   return (
     <div className="habit-card">
       <section className="relative">
         {/* Section background (needs .relative class on parent and next sibling elements) */}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-
-            {/* Content */}
-            <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
-              {/* Tabs buttons */}
-                <div className="mb-8 md:mb-0">
-                  <a
-                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
-                    href="#0"
-                    onClick={(e) => { e.preventDefault(); setTab(1); }}
-                  >
-                    <div className="card" style={{width:"100%"}}>
-                      <div className="top">
-                        <Link to={ `/habit/${habit.id}`} state = {streakCount}>
-                          <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
-                            <div className="buttons">
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="bottom">
-                        { 
-                          logCount >= habit.frequency ? 
-
-                          <div className="text-gray-600" style={{color: "green", width:"100%", marginTop:"10px"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
-                          :
-                          <div className="text-gray-600" style={{width:"100%", marginTop:"10px"}}>{logCount}/{habit.frequency} {habit.period}</div>
-                        }
-                        <div className="hp-buttons">
-                        { localStorage.getItem("toggleOn") == "false" ?
-
-                          <HabitMenu deleteHabit={deleteHabit} updateLog={updateLog} setVideoModalOpen={setVideoModalOpen} />
-                          :
-                          <></>
-
-                        }
-                          
+          {/* Content */}
+          <div
+            className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6"
+            data-aos="fade-right"
+          >
+            {/* Tabs buttons */}
+            <div className="mb-8 md:mb-0">
+              <a
+                id="habit-cards"
+                className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
+                  tab !== 1
+                    ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
+                    : "bg-gray-200 border-transparent"
+                }`}
+                href="#0"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTab(1);
+                }}
+              >
+                <div className="card" style={{ width: "100%" }}>
+                  <div className="top">
+                    <Link to={`/habit/${habit.id}`} state={streakCount}>
+                      <div className="title">
+                        <div
+                          className="font-bold leading-snug tracking-tight mb-1"
+                          style={{ width: "150px" }}
+                        >
+                          {habit.habit_name}
                         </div>
+                      </div>
+                    </Link>
+                    <div className="buttons">
+                      {localStorage.getItem("toggleOn") == "false" ? (
+                        <HabitMenu
+                          deleteHabit={deleteHabit}
+                          updateLog={updateLog}
+                          setVideoModalOpen={setVideoModalOpen}
+                          setReminderModalOpen={setReminderModalOpen}
+                        />
+                      ) : (
+                        <></>
+                      )}
                     </div>
+                  </div>
+                  <Link to={`/habit/${habit.id}`} state={streakCount}>
+                    <div className="bottom">
+                      {logCount >= habit.frequency ? (
+                        <div
+                          className="text-gray-600"
+                          style={{ color: "green", marginTop: "5px" }}
+                        >
+                          {logCount}/{habit.frequency} Times {habit.period}
+                        </div>
+                      ) : (
+                        <div
+                          className="text-gray-600"
+                          style={{ marginTop: "5px" }}
+                        >
+                          {logCount}/{habit.frequency} {habit.period}
+                        </div>
+                      )}
+                    </div>
+                  </Link>
                 </div>
               </a>
             </div>
@@ -453,11 +541,10 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                 </div>
               </div>
             </Modal>
-            
             <Modal
               id="habit-reminder-modal"
               ariaLabel="modal-headline"
-              show={videoModalOpen}
+              show={reminderModalOpen}
               handleClose={handleClose}
             >
               <div className="relative pb-9/16">
@@ -469,17 +556,21 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
             {/* {
                   formModalOpen ?
+
                   <div className="relative pb-9/16">
                     <div className="create-habit">
                       <EditForm habitId={habit.id} />
                     </div>
                   </div>
+
                 :
+
                   <div className="relative pb-9/16">
                     <div className="hab-detail">
                       <HabitDetails habitId={habit.id} />
                     </div>
                   </div>
+
                 }
               </Modal> */}
           </div>

@@ -164,6 +164,7 @@ function Dashboard({ send }) {
     });
     window.location.reload();
   }
+
   useEffect(()=> {
 
     const filterHabits = (date) => {
