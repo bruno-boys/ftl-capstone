@@ -116,6 +116,16 @@ export default function HabitForm({ form, setForm, handleClose }) {
         setError((e) => ({ ...e, endDate: null }));
       }
     }
+
+    if (event.target.name == "frequency"){
+      if(event.target.value < 1){
+        setError((e) => ({ ...e, frequency : "Frequency cannot be less than 1"}))
+      }
+      else{
+        setError((e) => ({...e, frequency : null}))
+      }
+    }
+   
     if (event.target.name == "startDate" || event.target.name == "endDate"){
         console.log("date change here")
         targetValue = formatDate(event.target.value)
@@ -134,6 +144,9 @@ export default function HabitForm({ form, setForm, handleClose }) {
     // setForm((f) => ({ ...f}))
     if (error.startDate || error.endDate) {
       setError((e) => ({ ...e, message: "Error with your start and end date" }))
+    }
+    else if (error.frequency){
+      setError((e) => ({...e, message : "Error with your frequency"}))
     }
     else{
 
@@ -180,8 +193,9 @@ export default function HabitForm({ form, setForm, handleClose }) {
                 </select>
               </div>
             </div>    
-                    
-          </div>  
+            
+          </div> 
+          {error.frequency && <span className="error" style={{color:"red",fontSize:"13px"}}>{error.frequency}</span>} 
 
             <div className="flex flex-wrap -mx-3 mb-4">
               <div className="w-full px-3">
