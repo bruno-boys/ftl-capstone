@@ -58,11 +58,11 @@ class ApiClient {
   }
 
   async createHabit(credentials) {
-    return await this.request({
-      endpoint: `habits/create`,
-      method: `POST`,
-      data: credentials,
-    });
+    return await this.request({ endpoint: `habits/create`, method: `POST`, data: credentials });
+  }
+
+  async fetchRemindersList() {
+    return await this.request({ endpoint: `habits/reminders`, method: `GET` });
   }
 
   async fetchHabitList() {

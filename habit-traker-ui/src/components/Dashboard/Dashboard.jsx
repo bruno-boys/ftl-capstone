@@ -16,13 +16,12 @@ import axios from 'axios';
 
 
 
-function Dashboard() {
+function Dashboard({ send }) {
 
 
 // useEffect(() => {
 
 //   function showNotifications() {
-
 //     const notification = new Notification("New Message from HabitTraker", {
 //       body: "Welcome to HabitTraker! Let's make your first habit!",
 //       icon: "src/images/ht-icon.png"
@@ -37,14 +36,13 @@ function Dashboard() {
 //   console.log(Notification.permission);
 
 //   if (Notification.permission == 'granted') {
-//     showNotifications();
+//     return;
 //   } 
 //   else if (Notification.permission != 'denied') {
 //     Notification.requestPermission().then(permission => {
 //       if (permission === 'granted') { showNotifications(); }
 //     })
 //   }
-  
 // }, [])
 
 
@@ -106,13 +104,30 @@ function Dashboard() {
     });
   }
 
+  const fetchRemindersList = async () => {
+    const {data, error} = await apiClient.fetchRemindersList();
+    if (error) {setErrors(error)}
+    if (data?.reminders) {
+      console.log('reminders = ', data.reminders)
+      let reminderList = data.reminders;
+      reminderList.map(async (reminder) => {
+        const {data, error} = await apiClient.fetchHabitById(reminder.habit_id);
+        if (data) { 
+          let habitName = data.habit_name;
+          let hour = parseInt(reminder.time.slice(0,2));
+          let minutes = parseInt(reminder.time.slice(3));
+          send(habitName, hour, minutes);
+          console.log('Notification set!');
+        }
+      })
+    }
+  }
+
+
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
   }
-
   
-
-
   useEffect(() => {
 
       const getHabits = async () => {
@@ -123,7 +138,7 @@ function Dashboard() {
         if (data?.habits) {
           setHabits(data.habits);
         }
-      };
+      }
 
       const getBuddyData = async () => {
         const { data, error } = await apiClient.fetchBuddyData();
@@ -134,6 +149,7 @@ function Dashboard() {
       getHabits();
       getBuddyData();
       askNotificationPermission();
+      fetchRemindersList();
 
     }, []);
 

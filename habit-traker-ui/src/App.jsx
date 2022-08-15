@@ -24,7 +24,7 @@ import BuddyLink from './components/BuddyLink';
 import BuddyDecision from './components/BuddyDecision';
 import ErrorPage from './ErrorPage';
 
-function App() {
+function App({ send }) {
 
   const location = useLocation();
   const [fromLink, setFromLink] = useState(true)
@@ -51,7 +51,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/recover" element={<Recover />} />
-        <Route path="/activity" element={<Dashboard />} />
+        <Route path="/activity" element={<Dashboard send={send} />} />
         <Route path="/habits" element={<HabitPage />} />
         <Route path="/habit/:habitId" element={<HabitDetails />} />
         <Route path="/user-profile" element={<UserProfile />} />
