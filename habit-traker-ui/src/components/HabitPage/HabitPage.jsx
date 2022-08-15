@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
 import ToggleButton from "../Dashboard/ToggleButton/ToggleButton";
+import AddReminder from "../AddReminder";
 import HabitMenu from '../HabitMenu'
 
 export default function HabitPage() {
@@ -452,7 +453,19 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                 </div>
               </div>
             </Modal>
-
+            
+            <Modal
+              id="habit-reminder-modal"
+              ariaLabel="modal-headline"
+              show={videoModalOpen}
+              handleClose={handleClose}
+            >
+              <div className="relative pb-9/16">
+                <div className="create-habit">
+                  <AddReminder habitId={habit.id} />
+                </div>
+              </div>
+            </Modal>
 
             {/* {
                   formModalOpen ?

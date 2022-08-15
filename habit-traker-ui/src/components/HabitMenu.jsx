@@ -8,12 +8,13 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 const options = [
   'Log',
   'Edit',
+  'Add Reminder',
   'Delete'
 ];
 
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu({ deleteHabit, updateLog, setVideoModalOpen  }) {
+export default function LongMenu({ deleteHabit, updateLog, setVideoModalOpen, setReminderModalOpen }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -23,6 +24,13 @@ export default function LongMenu({ deleteHabit, updateLog, setVideoModalOpen  })
     e.preventDefault();
     e.stopPropagation(); 
     setVideoModalOpen(true)
+  }
+
+  const openAddReminderForm = (e) => {
+    handleClose();
+    e.preventDefault();
+    e.stopPropagation(); 
+    setReminderModalOpen(true)
   }
 
   const handleClick = (event) => {
@@ -70,7 +78,11 @@ export default function LongMenu({ deleteHabit, updateLog, setVideoModalOpen  })
             option == "Log" ? 
             updateLog 
             :
+            option == "Add Reminder" ?
+            openAddReminderForm
+            :
             openEditHabitForm
+            
           }>
             {option}
           </MenuItem>

@@ -11,6 +11,7 @@ import { LitElement, html } from 'lit-element'
 import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
 import ToggleButton from './ToggleButton/ToggleButton';
+import AddReminder from '../AddReminder';
 
 
 function Dashboard() {
@@ -50,6 +51,7 @@ function Dashboard() {
   const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const [errors, setErrors] = useState();
   const [form, setForm] = useState({
     habitName: "",
@@ -120,6 +122,7 @@ function Dashboard() {
 
   const closeModal = () => {
     setVideoModalOpen(false); 
+    setReminderModalOpen(false)
     setForm({
       habitName: "",
       startDate: "",
@@ -224,6 +227,13 @@ function Dashboard() {
                                 </div>
                               </div>
                             </Modal>
+                            {/* <Modal id="create-reminder-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
+                              <div className="relative pb-9/16">
+                                <div className="create-habit">
+                                  <AddReminder handleClose={closeModal}/>
+                                </div>
+                              </div>
+                            </Modal> */}
                         </div>
                       </>
 
