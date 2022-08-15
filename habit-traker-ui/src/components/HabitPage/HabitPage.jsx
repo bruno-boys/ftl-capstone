@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import HabitForm from "../HabitForm/HabitForm";
 import ToggleButton from "../Dashboard/ToggleButton/ToggleButton";
+import AddReminder from "../AddReminder";
+import HabitMenu from '../HabitMenu'
 
 export default function HabitPage() {
   const [habits, setHabits] = useState([]);
@@ -18,7 +20,6 @@ export default function HabitPage() {
   const [formModalOpen, setFormModalOpen] = useState(false)
   const [errors, setErrors] = useState("")
   const [buddy, setBuddy] = useState()
-  const [toggleOn, setToggleOn] = useState(localStorage.getItem("toggleOn"))
   const [form, setForm] = useState({
     habitName: "",
     startDate: "",
@@ -141,6 +142,7 @@ export default function HabitPage() {
                 </div>
               </div>
               <div className="hp-top">
+              <ToggleButton buddy={buddy} habits={filteredHabits} setHabits={setHabits} />
                 <h1 className="hp-title">All Habits</h1>
                 { localStorage.getItem("toggleOn") == "false" ?
                   <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
@@ -150,7 +152,6 @@ export default function HabitPage() {
                   <></>
                 }
               </div>
-              <ToggleButton buddy={buddy} habits={filteredHabits} setHabits={setHabits} />
               { localStorage.getItem("toggleOn") == "false" ?
 
                   <HabitGrid setFormModalOpen={setFormModalOpen} habits={filteredHabits} errors = {errors} setErrors = {setErrors} /> 
@@ -209,6 +210,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const [startDate, setStartDate] = useState(new Date(habit.temp_start_date))
   const [endDate, setEndDate] = useState(new Date(habit.temp_end_date))
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
@@ -437,7 +439,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       setErrors(err);
     }
     if (data) {
-      navigate("/habits");
+      window.location.reload();
     }
   };
 
@@ -459,80 +461,68 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       <section className="relative">
         {/* Section background (needs .relative class on parent and next sibling elements) */}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-
-            {/* Content */}
-            <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
-              {/* Tabs buttons */}
-                <div className="mb-8 md:mb-0">
-                  <a
-                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
-                    href="#0"
-                    onClick={(e) => { e.preventDefault(); setTab(1); }}
-                  >
-                    <div className="card" style={{width:"100%"}}>
-                    <Link to={ `/habit/${habit.id}`} state = {streakCount}>
-                      <div className="top">
-                        <div className="font-bold leading-snug tracking-tight mb-1" style={{width:"100%"}}>{habit.habit_name}</div>
-                      <div className="buttons">
-                      { localStorage.getItem("toggleOn") == "false" ?
-
-                          <button id="delete" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit}>Delete</button>
-                          :
-                          <></>
-
-                      }
-                        
-                      {/* </div>
-                      <div className="buttons">
-                        <button
-                          id="delete"
-                          className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
-                          onClick={deleteHabit}
+          {/* Content */}
+          <div
+            className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6"
+            data-aos="fade-right"
+          >
+            {/* Tabs buttons */}
+            <div className="mb-8 md:mb-0">
+              <a
+                id="habit-cards"
+                className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
+                  tab !== 1
+                    ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
+                    : "bg-gray-200 border-transparent"
+                }`}
+                href="#0"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTab(1);
+                }}
+              >
+                <div className="card" style={{ width: "100%" }}>
+                  <div className="top">
+                    <Link to={`/habit/${habit.id}`} state={streakCount}>
+                      <div className="title">
+                        <div
+                          className="font-bold leading-snug tracking-tight mb-1"
+                          style={{ width: "150px" }}
                         >
-                          Delete
-                        </button>
-                      </div> */}
-                      </div>
-                      </div>
-                      <div className="bottom">
-                        { 
-                          logCount >= habit.frequency ? 
-
-                          <div className="text-gray-600" style={{color: "green", width:"100%"}}>{logCount}/{habit.frequency} Times {habit.period}</div>
-                          :
-                          <div className="text-gray-600">{logCount}/{habit.frequency} {habit.period}</div>
-                        }
-                        <div className="buttons">
-                          { localStorage.getItem("toggleOn") == "false" ?
-                            <>
-                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
-                              <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={updateLog}>Log</button>
-                            </>
-                            :
-                            <></>
-                          }
-                          
+                          {habit.habit_name}
                         </div>
-                      {/* <div className="buttons">
-                        <button
-                          className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setFormModalOpen(true);
-                            setVideoModalOpen(true);
-                          }}
-                          aria-controls="modal"
+                      </div>
+                    </Link>
+                    <div className="buttons">
+                      {localStorage.getItem("toggleOn") == "false" ? (
+                        <HabitMenu
+                          deleteHabit={deleteHabit}
+                          updateLog={updateLog}
+                          setVideoModalOpen={setVideoModalOpen}
+                          setReminderModalOpen={setReminderModalOpen}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </div>
+                  <Link to={`/habit/${habit.id}`} state={streakCount}>
+                    <div className="bottom">
+                      {logCount >= habit.frequency ? (
+                        <div
+                          className="text-gray-600"
+                          style={{ color: "green", marginTop: "5px" }}
                         >
-                          Edit
-                        </button>
-                        <button
-                          className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
-                          onClick={updateLog}
+                          {logCount}/{habit.frequency} Times {habit.period}
+                        </div>
+                      ) : (
+                        <div
+                          className="text-gray-600"
+                          style={{ marginTop: "5px" }}
                         >
-                          Log
-                        </button>
-                      </div> */}
+                          {logCount}/{habit.frequency} {habit.period}
+                        </div>
+                      )}
                     </div>
                   </Link>
                 </div>
@@ -551,21 +541,36 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                 </div>
               </div>
             </Modal>
-
+            <Modal
+              id="habit-reminder-modal"
+              ariaLabel="modal-headline"
+              show={reminderModalOpen}
+              handleClose={handleClose}
+            >
+              <div className="relative pb-9/16">
+                <div className="create-habit">
+                  <AddReminder habitId={habit.id} />
+                </div>
+              </div>
+            </Modal>
 
             {/* {
                   formModalOpen ?
+
                   <div className="relative pb-9/16">
                     <div className="create-habit">
                       <EditForm habitId={habit.id} />
                     </div>
                   </div>
+
                 :
+
                   <div className="relative pb-9/16">
                     <div className="hab-detail">
                       <HabitDetails habitId={habit.id} />
                     </div>
                   </div>
+
                 }
               </Modal> */}
           </div>

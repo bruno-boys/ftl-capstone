@@ -5,6 +5,18 @@ import "./HabitForm.css"
 
 export default function HabitForm({ form, setForm, handleClose }) {
 
+  const [checked, setChecked] = React.useState(false);
+  const [remindTime, setRemindTime] = React.useState("")
+  const handleClick = () => {
+    setChecked(!checked)
+  }
+
+  const handleTimeChange = (event) => {
+    console.log(event.target.val)
+    setRemindTime(event.target.value)
+    console.log("remindTime", remindTime)
+  }
+
   const PeriodOptions = [
       { key: 1, label: "Per Day", value: "Per Day" },
       { key: 2, label: "Per Week", value: "Per Week" },
@@ -95,7 +107,6 @@ export default function HabitForm({ form, setForm, handleClose }) {
     
       }
 
-
   const handleOnInputChange = (event) => {
     let targetValue = event.target.value
     let todaysDate = new Date()
@@ -147,6 +158,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
         console.log("target value", targetValue)
     }
     setForm((f) => ({ ...f, [event.target.name]: targetValue }));
+    console.log("form", form)
     };
   console.log("error from form", error)
 
@@ -228,11 +240,18 @@ export default function HabitForm({ form, setForm, handleClose }) {
               </div>
             </div>
 
+
+           
+
             <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
                   <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={handleOnSubmit}>Add Habit</button>
                 </div>
-              </div>
+            </div>
+
+            <div> 
+
+            </div>
         </form>
 
     </div>

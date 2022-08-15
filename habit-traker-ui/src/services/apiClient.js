@@ -1,152 +1,214 @@
-import axios from 'axios'
+import axios from "axios";
 
 class ApiClient {
+  constructor(remoteHostUrl) {
+    this.remoteHostUrl = remoteHostUrl;
+    this.token = localStorage.getItem("habit_traker_token") || null;
+    this.tokenName = "habit_traker_token";
+  }
 
-    constructor(remoteHostUrl) {
-        this.remoteHostUrl = remoteHostUrl
-        this.token = localStorage.getItem("habit_traker_token") || null
-        this.tokenName = "habit_traker_token"
-    }
+  setToken(token) {
+    this.token = token;
+    localStorage.setItem(this.tokenName, token);
+  }
 
-    setToken(token) {
-        this.token = token
-        localStorage.setItem(this.tokenName, token)
-    }
+  async request({ endpoint, method = "GET", data = {} }) {
+    const url = `${this.remoteHostUrl}/${endpoint}`;
 
-    async request({ endpoint, method = 'GET', data = {} }) {
+    const headers = {
+      "Content-Type": "application/json",
+    };
 
-        const url = `${this.remoteHostUrl}/${endpoint}`
-
-        const headers = {
-            "Content-Type": "application/json"
-        }
-
-        if (this.token) {
-            headers["Authorization"] = `Bearer ${this.token}`
-        }
-
-        try {
-            const res = await axios({ url, method, data, headers })
-            return { data: res.data, error: null }
-        }
-        catch(error) {
-            console.error({ errorResponse: error.response })
-            const message = error?.response
-            return { data: null, error: message || String(error) }
-        }
+    if (this.token) {
+      headers["Authorization"] = `Bearer ${this.token}`;
     }
 
-    async fetchUserFromToken() {
-        return await this.request({ endpoint: `auth/me`, method: `GET` })
+    try {
+      const res = await axios({ url, method, data, headers });
+      return { data: res.data, error: null };
+    } catch (error) {
+      console.error({ errorResponse: error.response });
+      const message = error?.response;
+      return { data: null, error: message || String(error) };
     }
+  }
 
-    async loginUser(credentials) {
-        return await this.request({ endpoint: `auth/login`, method: `POST`, data: credentials })
-    }
+  async fetchUserFromToken() {
+    return await this.request({ endpoint: `auth/me`, method: `GET` });
+  }
 
-    async registerUser(credentials) {
-        return await this.request({ endpoint: `auth/register`, method: `POST`, data: credentials })
-    }
+  async loginUser(credentials) {
+    return await this.request({
+      endpoint: `auth/login`,
+      method: `POST`,
+      data: credentials,
+    });
+  }
 
-    async createHabit(credentials){
-        return await this.request({endpoint : `habits/create`, method: `POST`, data: credentials })
-    }
+  async registerUser(credentials) {
+    return await this.request({
+      endpoint: `auth/register`,
+      method: `POST`,
+      data: credentials,
+    });
+  }
 
-    async fetchHabitList() {
-        return await this.request({ endpoint: `habits/`, method: `GET` })
-    }
+  async createReminder({habitId, remindTime}) {
+    return await this.request({ endpoint: `habits/reminder`, method: `POST`, data: {habitId, remindTime} });
+  }
 
-    async fetchHabitById(habitId) {
-        return await this.request({ endpoint: `habits/${habitId}`, method: `GET` })
-    }
+  async createHabit(credentials) {
+    return await this.request({ endpoint: `habits/create`, method: `POST`, data: credentials });
+  }
 
-    async deleteHabit(habitId) {
-        return await this.request({ endpoint: `habits/${habitId}`, method: `DELETE` })
-    }
+  async fetchRemindersList() {
+    return await this.request({ endpoint: `habits/reminders`, method: `GET` });
+  }
 
-    async editHabit(form){
-        return await this.request({endpoint : `habits/edit`, method: `PUT`, data: form})
-    }
+  async fetchHabitList() {
+    return await this.request({ endpoint: `habits/`, method: `GET` });
+  }
 
-    async logHabit(habitId) {
-        return await this.request({ endpoint: `habits/log`, method: `POST`, data: habitId })
-    }
-    
-    async fetchLoggedHabitCount(logData) {
-        //logData = {habitId, startTime, endTime}
-        return await this.request({ endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`, method: `GET` })
-    }
+  async fetchHabitById(habitId) {
+    return await this.request({ endpoint: `habits/${habitId}`, method: `GET` });
+  }
 
-    async recoverAccount(email) {
-        return await this.request({ endpoint: `auth/recover`, method: `POST`, data: email })
-    }
+  async deleteHabit(habitId) {
+    return await this.request({
+      endpoint: `habits/${habitId}`,
+      method: `DELETE`,
+    });
+  }
 
-    async resetPassword({ token, newPassword }) {
-        return await this.request({
-          endpoint: `auth/password-reset?token=${token}`,
-          method: `POST`,
-          data: { newPassword },
-        })
-      }
+  async editHabit(form) {
+    return await this.request({
+      endpoint: `habits/edit`,
+      method: `PUT`,
+      data: form,
+    });
+  }
 
-    async editUser(form){
-        console.log("form in edit user", form)
-        return await this.request({ endpoint: `auth/editUser`, method : `PUT`, data : form })
-    }
+  async logHabit(habitId) {
+    return await this.request({
+      endpoint: `habits/log`,
+      method: `POST`,
+      data: habitId,
+    });
+  }
 
-    async editPhoto(form){
-        console.log("form in edit photo", form)
-        return await this.request({ endpoint: `auth/editPhoto`, method : `PUT`, data : form })
-    }
+  async fetchLoggedHabitCount(logData) {
+    //logData = {habitId, startTime, endTime}
+    return await this.request({
+      endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`,
+      method: `GET`,
+    });
+  }
 
-    async generateURLId() {
-        return await this.request({ endpoint: `buddy`, method: `GET` })
-    }
+  async recoverAccount(email) {
+    return await this.request({
+      endpoint: `auth/recover`,
+      method: `POST`,
+      data: email,
+    });
+  }
 
-    async fetchNameFromLink(link) {
-        return await this.request({ endpoint: `buddy/buddy-name?link=${link}`, method: `GET` })
-    }
+  async resetPassword({ token, newPassword }) {
+    return await this.request({
+      endpoint: `auth/password-reset?token=${token}`,
+      method: `POST`,
+      data: { newPassword },
+    });
+  }
 
-    async acceptBuddyRequest(link) {
-        return await this.request({ endpoint: `buddy/accept`, method: `POST`, data: link })
-    }
-    async logProgress(progressForm){
-        return await this.request({endpoint : `habits/streak`, method : `POST`, data : progressForm})
-    }
-    async fetchStreakCount(logData){
-        return await this.request({ endpoint: `habits/streak?habitId=${logData.habitId}&startDate=${logData.startDate}&endDate=${logData.endDate}`, method: `GET` })
-    }
+  async editUser(form) {
+    console.log("form in edit user", form);
+    return await this.request({
+      endpoint: `auth/editUser`,
+      method: `PUT`,
+      data: form,
+    });
+  }
 
-    async subscribe(subscription) {
-        return await this.request({ endpoint: `subscribe`, method: `POST`, data: subscription })
-    }
-    async declineBuddyRequest(link) {
-        return await this.request({ endpoint: `buddy/decline`, method: `DELETE`, data: link })
-    }
+  async editPhoto(form) {
+    console.log("form in edit photo", form);
+    return await this.request({
+      endpoint: `auth/editPhoto`,
+      method: `PUT`,
+      data: form,
+    });
+  }
 
-    async fetchBuddyData () {
-        return await this.request({ endpoint: `buddy/view`, method: `GET` })
-    } 
+  async generateURLId() {
+    return await this.request({ endpoint: `buddy`, method: `GET` });
+  }
 
-    async createCompleted(completedCount){
-        return await this.request({endpoint : `habits/completed`, method : `POST`, data : completedCount})
-    }
-    async createMissed(missedCount){
-        return await this.request({endpoint : `habits/missed`, method : `POST`, data : missedCount})
-    }
-    async getCompletedCount(habitId){
-        console.log("This is in api client", await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`}))
-        return await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`})
-    }
-    async getMissedCount(habitId){
-        return await this.request({endpoint : `habits/missed/${habitId}`, method : `GET`})
-    }
-    async editCompleted(completedForm){
-        return await this.request({endpoint : `habits/completed`, method : `PUT`, data : completedForm})
-    }
-    async editMissed(missedForm){
-        return await this.request({endpoint : `habits/missed`, method : `PUT`, data : missedForm})
-    }
+  async fetchNameFromLink(link) {
+    return await this.request({
+      endpoint: `buddy/buddy-name?link=${link}`,
+      method: `GET`,
+    });
+  }
+
+  async acceptBuddyRequest(link) {
+    return await this.request({
+      endpoint: `buddy/accept`,
+      method: `POST`,
+      data: link,
+    });
+  }
+  async logProgress(progressForm) {
+    return await this.request({
+      endpoint: `habits/streak`,
+      method: `POST`,
+      data: progressForm,
+    });
+  }
+  async fetchStreakCount(logData) {
+    return await this.request({
+      endpoint: `habits/streak?habitId=${logData.habitId}&startDate=${logData.startDate}&endDate=${logData.endDate}`,
+      method: `GET`,
+    });
+  }
+
+  async subscribe(subscription) {
+    return await this.request({
+      endpoint: `subscribe`,
+      method: `POST`,
+      data: subscription,
+    });
+  }
+  async declineBuddyRequest(link) {
+    return await this.request({
+      endpoint: `buddy/decline`,
+      method: `DELETE`,
+      data: link,
+    });
+  }
+
+  async fetchBuddyData() {
+    return await this.request({ endpoint: `buddy/view`, method: `GET` });
+  }
+
+
+async createCompleted(completedCount){
+    return await this.request({endpoint : `habits/completed`, method : `POST`, data : completedCount})
+}
+async createMissed(missedCount){
+    return await this.request({endpoint : `habits/missed`, method : `POST`, data : missedCount})
+}
+async getCompletedCount(habitId){
+    console.log("This is in api client", await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`}))
+    return await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`})
+}
+async getMissedCount(habitId){
+    return await this.request({endpoint : `habits/missed/${habitId}`, method : `GET`})
+}
+async editCompleted(completedForm){
+    return await this.request({endpoint : `habits/completed`, method : `PUT`, data : completedForm})
+}
+async editMissed(missedForm){
+    return await this.request({endpoint : `habits/missed`, method : `PUT`, data : missedForm})
+}
 }
 
-export default new ApiClient('http://localhost:3001')
+export default new ApiClient("http://localhost:3001");

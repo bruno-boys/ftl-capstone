@@ -2,50 +2,38 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
-import apiClient from './services/apiClient';
-
-const publicVapidKey = "BGCM3ooo1OPVCeWRy0xKLPtiI3c9zqFmo4cUeJv7uu875oA3GEz3S5B3G5CrhisZ5s-udsRgsFj4e1jaP8btoi4";
 
 
-// Check for service worker
-if('serviceWorker' in navigator && Notification.permission == "granted") {
-  send().catch(err => console.error(err));
+function send(habitName, hour, minutes) {
+  console.log('made it to line 48 for notifications!')
+  let year = new Date().getFullYear();
+  let month = new Date().getMonth();
+  let day = new Date().getDate();
+  const etaMs = new Date(year, month, day, hour, minutes).getTime() - Date.now();
+  console.log('made it to line 55 for notifications!')
+  if (etaMs >= 0) {
+    setTimeout(() => createNotification(habitName), etaMs);    
+  }
 }
 
-//new Date(year, monthIndex, day, hours, minutes, seconds, milliseconds)
-
-const etaMs = new Date(2022, 7, 9, 17, 15).getTime() - Date.now();
-
-// setTimeout(send, etaMs);
-
-// register the service worker, register push, send push
-async function send() {
-  // TODO: try making the scope apply to activity page
-  // Register Service Worker
-  console.log('Registering service worker...');
-  const register = await navigator.serviceWorker.register('src/worker.js', {
-    scope: 'src/'
-  });
-  console.log('Service Worker Registered');
-
-  // Register Push
-  console.log('Registering Push...');
-  const subscription = await register?.pushManager?.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: publicVapidKey
-  });
-   console.log('Push Registered');
-   // Send Push Notification
-   console.log('Sending Push');
-   await apiClient.subscribe(subscription)
-   console.log('Push Sent');
+function createNotification(habitName) {
+  if (Notification.permission == "granted") {
+    const notification = new Notification('Time to Log Your Habit!', {
+      body: `This is a reminder to log your ${habitName} habit.`,
+      icon: "src/images/ht-icon.png"
+    });
+    notification.onclick = (e) => {
+      window.location.href = "http://localhost:5173/activity";
+    }
+  }
 }
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
-      <App />
+      <App send={send}/>
     </Router>
   </React.StrictMode>
 );

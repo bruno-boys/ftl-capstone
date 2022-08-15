@@ -11,15 +11,17 @@ import { LitElement, html } from 'lit-element'
 import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
 import ToggleButton from './ToggleButton/ToggleButton';
+import AddReminder from '../AddReminder';
+import axios from 'axios';
 
 
-function Dashboard() {
+
+function Dashboard({ send }) {
 
 
 // useEffect(() => {
 
 //   function showNotifications() {
-
 //     const notification = new Notification("New Message from HabitTraker", {
 //       body: "Welcome to HabitTraker! Let's make your first habit!",
 //       icon: "src/images/ht-icon.png"
@@ -34,14 +36,13 @@ function Dashboard() {
 //   console.log(Notification.permission);
 
 //   if (Notification.permission == 'granted') {
-//     showNotifications();
+//     return;
 //   } 
 //   else if (Notification.permission != 'denied') {
 //     Notification.requestPermission().then(permission => {
 //       if (permission === 'granted') { showNotifications(); }
 //     })
 //   }
-  
 // }, [])
 
 
@@ -50,6 +51,22 @@ function Dashboard() {
   const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
+  const [quotes, setQuotes] = useState([]);
+  
+  useEffect ( ()=> {
+
+    
+    const getQuotes = async() => {
+      await axios.get(`https://motivational-quote-api.herokuapp.com/quotes`).then(resp => {
+            setQuotes(resp.data)
+          })
+        }
+        getQuotes()
+  
+  },[])
+  const randomNumber = Math.floor(Math.random() * 34)
+  console.log("quotes", quotes)
+  const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const [errors, setErrors] = useState();
   const [form, setForm] = useState({
     habitName: "",
@@ -87,13 +104,30 @@ function Dashboard() {
     });
   }
 
+  const fetchRemindersList = async () => {
+    const {data, error} = await apiClient.fetchRemindersList();
+    if (error) {setErrors(error)}
+    if (data?.reminders) {
+      console.log('reminders = ', data.reminders)
+      let reminderList = data.reminders;
+      reminderList.map(async (reminder) => {
+        const {data, error} = await apiClient.fetchHabitById(reminder.habit_id);
+        if (data) { 
+          let habitName = data.habit_name;
+          let hour = parseInt(reminder.time.slice(0,2));
+          let minutes = parseInt(reminder.time.slice(3));
+          send(habitName, hour, minutes);
+          console.log('Notification set!');
+        }
+      })
+    }
+  }
+
+
   function setDate() {
     setDatePicked(localStorage.getItem('datePicked'))
   }
-
   
-
-
   useEffect(() => {
 
       const getHabits = async () => {
@@ -104,7 +138,7 @@ function Dashboard() {
         if (data?.habits) {
           setHabits(data.habits);
         }
-      };
+      }
 
       const getBuddyData = async () => {
         const { data, error } = await apiClient.fetchBuddyData();
@@ -115,11 +149,13 @@ function Dashboard() {
       getHabits();
       getBuddyData();
       askNotificationPermission();
+      fetchRemindersList();
 
     }, []);
 
   const closeModal = () => {
     setVideoModalOpen(false); 
+    setReminderModalOpen(false)
     setForm({
       habitName: "",
       startDate: "",
@@ -169,41 +205,62 @@ function Dashboard() {
                     <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                      
                       <>
-                      <ToggleButton buddy={buddy}/>
+
                       {/* <DateCarousel /> */}
                       <div className="date-slider">
                         <date-carousel on-week-change="onWeekChange($event)" on-day-pick="onDayPick($event)" onClick={setDate}></date-carousel>
                       </div>
-
                       {/* Page Content */}
                         <div className="activity-page">
 
-                            <div className='left'>
+                        <div className="header-buttons">
+
+                          <div className="buddy-button" style={{flexGrow: 1}}>
+                            <ToggleButton buddy={buddy}/>
+                          </div>
+
+                          <div className="create-habit-btn" style={{maxWidth:"100%"}}>
+                              { localStorage.getItem("toggleOn") == "false" ?
+                                <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
+                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                </div>
+                                :
+                                <></>
+                              }
+                            </div>
+                            
+                        </div>
+
+                          <div className="habit-boxes">
+
+                          <div className='left'>
                               <div className="daily-habits-container">
                                 <div className="daily-habits">
-                                  <div className="create-habit-btn">
-                                      { localStorage.getItem("toggleOn") == "false" ?
-                                        <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px", marginBottom:"0.25rem"}}>
-                                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                        </div>
-                                        :
-                                        <></>
-                                      }
-                                  </div>
                                   <div className="activity-habits">
                                     <DashHabits habits={filteredHabits} formModalOpen={formModalOpen} setFormModalOpen={setFormModalOpen} handleClose={closeModal} buddy={buddy} />
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                          </div>
 
-                            <div className='right'>
-                              <div className="daily-habits-container">
-                                  <div className="dashboard-stats">
-                                    Right
-                                  </div>
-                              </div>
+                          <div className='right'>
+                            <div className="daily-habits-container">
+                                <div className="dashboard-stats">
+                                  
+                                  <blockquote className='blockquote blockquote--bordered blockquote--quoted'>
+                                    <p className='blockquote__text'>
+                                      {quotes[(randomNumber)]?.quote}
+                                    </p>
+                                    <p className="blockquote__text blockquote__text--author">
+                                      {quotes[randomNumber]?.person}
+                                    </p>
+                                    
+                                    </blockquote>
+                                </div>
                             </div>
+                          </div>
+
+                          </div>
 
                             {/* Modal */}
                             <Modal id="create-habit-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
@@ -213,6 +270,7 @@ function Dashboard() {
                                 </div>
                               </div>
                             </Modal>
+
                         </div>
                       </>
 
@@ -246,8 +304,7 @@ class DateCarousel extends LitElement {
   // We have to list _days as a property otherwise change detection in the lit template doesn't work. 
   static get properties() {
     return { 
-      _days: { type: Array },
-      useEthiopianCalendar: { type: Boolean }
+      _days: { type: Array }
     };
   }
 
@@ -259,9 +316,6 @@ class DateCarousel extends LitElement {
     super.connectedCallback()
 
     var now = DateTime.local()
-    if (this.useEthiopianCalendar) {
-      now = now.reconfigure({ outputCalendar: 'ethiopic' })
-    }
 
     this.weekInView = now.startOf("week")
     this.weekUnixValue = now.startOf("week").toFormat('X') // unix timestamp in seconds
@@ -271,7 +325,7 @@ class DateCarousel extends LitElement {
   }
 
   _calculateHeaderText() {
-    let firstDayOfWeek = this.weekInView
+    let firstDayOfWeek = this.weekInView 
     let lastDayOfWeek = this.weekInView.plus({days: 6})
 
     const firstDayOfWeekYear = parseInt(firstDayOfWeek.toFormat('yyyy'))
@@ -280,10 +334,10 @@ class DateCarousel extends LitElement {
     let headerText
     if (firstDayOfWeekYear !== lastDayOfWeekYear) {
       // the week stradles a new year --- show year text in both strings
-      headerText = `${firstDayOfWeek.toFormat('dd LLL yyyy')} - ${lastDayOfWeek.toFormat('dd LLL yyyy')}`
+      headerText = `${firstDayOfWeek.toFormat('LLL dd yyyy')} - ${lastDayOfWeek.toFormat('LLL dd yyyy')}`
     } else {
       // the week is in the same year --- only show the year at the end
-      headerText = `${firstDayOfWeek.toFormat('dd LLL')} - ${lastDayOfWeek.toFormat('dd LLL yyyy')}`
+      headerText = `${firstDayOfWeek.toFormat('LLL dd')} - ${lastDayOfWeek.toFormat('LLL dd yyyy')}`
     }
     return headerText
   }
@@ -342,9 +396,6 @@ class DateCarousel extends LitElement {
 
   _today() {
     var now = DateTime.local()
-    if (this.useEthiopianCalendar) {
-      now = now.reconfigure({ outputCalendar: 'ethiopic' })
-    }
 
     this.weekInView = now.startOf("week")
     this.datePicked = now.toFormat(FORMAT_YEAR_MONTH_DAY)
@@ -362,6 +413,7 @@ class DateCarousel extends LitElement {
           display: block;
         }
         table {
+          font-family: Arial, Helvetica, sans-serif;
           width: var(--date-carousel-table-width, 100%);
           font-size: var(--date-carousel-table-font-size, 1em);
           color: var(--date-carousel-table-color, #000);
@@ -401,7 +453,7 @@ class DateCarousel extends LitElement {
           <td id="dc-title">
             <div class="month">${this._headerText}</div>
           </td>
-          <td class="clickable button" @click="${this._today}">
+          <td class="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3 clickable button" @click="${this._today}">
             <button class="today">Today</button>
           </td>
         </tr>
