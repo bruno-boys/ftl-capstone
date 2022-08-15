@@ -315,21 +315,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
               await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
             }
           }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         console.log("they are now equal")
         const {data, error} = await apiClient.getCompletedCount(habit.id)
         console.log("data from completed count", data)

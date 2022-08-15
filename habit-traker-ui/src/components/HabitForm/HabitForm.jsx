@@ -11,16 +11,31 @@ export default function HabitForm({ form, setForm, handleClose }) {
       { key: 3, label: "Per Month", value: "Per Month" },
     ];
   const [error, setError] = useState("")
-    const formatDate = (date) => {
-      console.log("date clicked", date)
-      var d = new Date(date),
-          month = "" + (d.getMonth() + 1),
-          day = "" + (d.getDate() + 1),
-          year = d.getFullYear();
-      if (month.length < 2) month = "0" + month;
-      if (day.length < 2) day = "0" + day;
-      return [year, month, day].join("-");
-      }
+  const formatDate = (date) => {
+    console.log("date clicked", date)
+    date = String(date)
+    let d
+    if (date.length > 10){
+      console.log("is dates length greater than 10?")
+       d = new Date(date)
+    }
+    else {
+      console.log("dates length less than 10?")
+       d = new Date(date.replace(/-/gi, "/"))
+    }
+    
+    console.log("d created out of date", d)
+    let month = "" + (d.getMonth() + 1)
+    console.log("month",month)
+    let day = "" + (d.getDate())
+    console.log("day", day)
+    let year = d.getFullYear()
+    console.log("year ", year)
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    console.log("this will be returned", [year, month, day].join("-"))
+    return [year, month, day].join("-");
+    }
 
       const formattingDate = (date) => {
         console.log("date clicked", date)
@@ -84,7 +99,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
   const handleOnInputChange = (event) => {
     let targetValue = event.target.value
     let todaysDate = new Date()
-    todaysDate = formattingDate(todaysDate)
+    todaysDate = formatDate(todaysDate)
     console.log("todays date before function", todaysDate)
 
     if (event.target.name === "startDate"){
