@@ -138,7 +138,7 @@ class Habits {
     await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6, temp_end_date = $7 where id = $8`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.tempEndDate, form.id])
   }
   static async fetchStreakCount(habitId, startTime, endTime){
-    console.log("streak count reached?")
+    console.log("This is the startTime", startTime, " and end time", endTime, " using to get the streaks")
     const results = await db.query(
       `
       SELECT current_streak FROM habit_progress

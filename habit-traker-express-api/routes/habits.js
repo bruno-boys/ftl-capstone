@@ -30,9 +30,9 @@ router.get("/streak", requireAuthenticatedUser, async (req, res,next) => {
   try{
 
     const {habitId, startDate, endDate} = req.query
-    console.log(req.query)
+    console.log("Query", req.query)
     const streakCount = await Habits.fetchStreakCount(habitId, startDate, endDate)
-    console.log("streak count", streakCount.current_streak)
+    console.log("streak count in get request route", streakCount.current_streak)
     res.status(200).json({streakCount : streakCount.current_streak})
 
   } catch(error){

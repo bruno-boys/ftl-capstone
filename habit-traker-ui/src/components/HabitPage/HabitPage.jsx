@@ -217,7 +217,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate());
+  today.setDate(today.getDate()+ 6);
 
 
 
@@ -282,19 +282,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   const updateLog = async (event) => {
     event.preventDefault();
     console.log("today", today)
-    if (today.getTime() >= endDate.getTime()) {
-      console.log("logCount here?", logCount)
-      console.log("streak here?", streakCount)
-      if ((logCount >= habit.frequency)){
-
-        if (habit.period == "Per Month"){
-          await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
-        }
-        else{
-          await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
-        }
-      }
-    }
     console.log("end date", endDate)
     const anotherDay = new Date(endDate).toISOString();
     console.log("anotherDate", anotherDay)
@@ -319,6 +306,30 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       console.log(" are they equal", today.getTime())
       console.log("are they equal?", endDate.getTime())
       if (today.getTime() >= endDate.getTime()){
+          if ((logCount >= habit.frequency)){
+    
+            if (habit.period == "Per Month"){
+              await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
+            }
+            else{
+              await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
+            }
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         console.log("they are now equal")
         const {data, error} = await apiClient.getCompletedCount(habit.id)
         console.log("data from completed count", data)
