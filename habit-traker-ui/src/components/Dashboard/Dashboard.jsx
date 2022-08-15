@@ -227,13 +227,13 @@ function Dashboard() {
                                 </div>
                               </div>
                             </Modal>
-                            <Modal id="create-reminder-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
+                            {/* <Modal id="create-reminder-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
                               <div className="relative pb-9/16">
                                 <div className="create-habit">
                                   <AddReminder handleClose={closeModal}/>
                                 </div>
                               </div>
-                            </Modal>
+                            </Modal> */}
                         </div>
                       </>
 

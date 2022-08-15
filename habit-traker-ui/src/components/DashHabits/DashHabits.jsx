@@ -277,7 +277,7 @@ function DashHabitCard({
                       <div className="title">
                         <div
                           className="font-bold leading-snug tracking-tight mb-1"
-                          style={{ width: "70px" }}
+                          style={{ width: "150px" }}
                         >
                           {habit.habit_name}
                         </div>

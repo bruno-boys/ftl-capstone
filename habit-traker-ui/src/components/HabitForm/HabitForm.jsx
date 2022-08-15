@@ -156,21 +156,6 @@ export default function HabitForm({ form, setForm, handleClose }) {
               </div>
             </div>
 
-           <div>
-            <label>
-              Would you like to be reminded daily? 
-              <br/>
-              <input name="reminder" type="checkbox" checked={checked} onClick={handleClick} />
-              <br/>
-              { !checked ?
-                <></> 
-                 :  
-                <label for="reminder"> Choose a time for your daily reminders
-                  <input type="time" onChange={handleTimeChange} required/>
-                </label> 
-              }
-            </label>
-           </div>
 
            
 
