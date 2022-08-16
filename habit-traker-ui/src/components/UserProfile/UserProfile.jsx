@@ -11,7 +11,6 @@ export default function ({ user, isAuthenticated }) {
     const [habits, setHabits] = useState([])
     const [profilePhoto, setProfilePhoto] = useState("")
     const [profilePhotoInfo, setProfilePhotoInfo] = useState({})
-    const defaultPhotoURL = "https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg"
 
     useEffect(() => {
         const getUserInfo = async () => {
@@ -34,6 +33,7 @@ export default function ({ user, isAuthenticated }) {
             firstName : userInfo.firstName,
             lastName : userInfo.lastName,
             email : userInfo.email,
+            phoneNumber: userInfo.phone_number,
             createdAt : userInfo.createdAt
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
@@ -84,10 +84,12 @@ export default function ({ user, isAuthenticated }) {
         }
 
         event.preventDefault();
-        reader.readAsDataURL(event.target.files[0])
-
-        
+        reader.readAsDataURL(event.target.files[0])        
     }
+
+    useEffect(() => {
+      console.log('info = ',userInfo)
+    }, [userInfo]);
   
 return (
   <div className="user-profile-wrapper">
@@ -124,7 +126,7 @@ return (
                     <div className="card-profile-image">
                       <a href="#">
                         <img
-                          src={profilePhotoInfo.profilePhoto ? profilePhotoInfo.profilePhoto : defaultPhotoURL}
+                          src={profilePhotoInfo.profilePhoto ? profilePhotoInfo.profilePhoto : "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg"}
                           className="rounded-circle"
                         />
                       </a>
@@ -144,8 +146,8 @@ return (
                     
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">0</span>
-                          <span className="description">Friends</span>
+                          <span className="heading">{}</span>
+                          <span className="description">Buddies</span>
                         </div>
                         <div>
                           <span className="heading">{habits.length}</span>
@@ -201,10 +203,10 @@ return (
                             </label>
                             <input
                               type="text"
-                              id="username"
+                              id="phoneNumber"
                               className="form-control"
-                              placeholder="Username"
-                              value = {form.userName}
+                              placeholder="Phone Number"
+                              value = {form.phoneNumber}
                               onChange = {handleOnInputChange}
                             />
                           </div>
