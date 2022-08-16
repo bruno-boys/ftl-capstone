@@ -33,12 +33,9 @@ router.get('/buddy-name', requireAuthenticatedUser, async (req,res,next) => {
 router.get('/view', requireAuthenticatedUser, async (req,res,next) => {
    try {
       const user = res.locals.user;
-      const name = await Buddy.fetchBuddyName(user);
-      const habits = await Buddy.fetchBuddyHabits(user);
-      const loggedHabits = await Buddy.fetchTrackedBuddyHabits(user)
+      const buddyInfoArr = await Buddy.fetchBuddyInfo(user);
       return res.status(200).json({
-         buddyName: name,
-         buddyHabits: habits,
+         buddyInfo: buddyInfoArr
       })
    }
    catch(error) {

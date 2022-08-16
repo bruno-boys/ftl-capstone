@@ -120,38 +120,35 @@ class Buddy {
     }
 
 
-    static async fetchBuddyId(user) {
+    static async fetchBuddyIds(user) {
        /* takes the logged in user and queries the db in order to find the 
-            user id of buddy that they are matched with. */
+            user ids of buddies that they are matched with. */
         const buddy = await db.query(
             `
             SELECT user_2 FROM buddies WHERE user_1 = (SELECT id FROM users WHERE email = $1);
             `, [user.email]
         )
-        return buddy.rows[0].user_2;
+        const results = buddy.rows.map((buddy) => buddy.user_2)
+        return results;
     }
 
 
-    /*  It then uses the buddy's info to 
-            fetch their habits, progress and other information*/
+    static async fetchBuddyInfo(user) {
 
-    static async fetchBuddyName(user) {
-         /* calls the fetchBuddyId function in order to get 
-                the name of user's buddy*/
-        const buddyId = await Buddy.fetchBuddyId(user)
-
-        const results = await db.query(
+        const idArray = await Buddy.fetchBuddyIds(user);
+        const stringIdArray = `(${idArray.join(",")})`;
+        const buddies = await db.query(
             `
-            SELECT first_name, last_name FROM users WHERE id = $1;
-            `, [buddyId]
-        )
-        return results.rows[0];
+            SELECT first_name, last_name, profile_photo FROM users WHERE id IN ${stringIdArray};
+            `
+        );
+        return buddies.rows
     }
 
     static async fetchBuddyHabits(user) {
-        /* calls the fetchBuddyId function in order to get 
+        /* calls the fetchBuddyIds function in order to get 
                 the list of habits of user's buddy*/
-        const buddyId = await Buddy.fetchBuddyId(user)
+        const buddyId = await Buddy.fetchBuddyIds(user)
 
         const results = await db.query(
             `
@@ -162,11 +159,11 @@ class Buddy {
     }
 
     static async fetchTrackedBuddyHabits(user) {
-        /* calls the fetchBuddyId function in order to get 
+        /* calls the fetchBuddyIds function in order to get 
                 the list of tracked habits of user's buddy*/
 
                 //figure out how to get tracked habits for all and individual habits
-        const buddyId = await Buddy.fetchBuddyId(user)
+        const buddyId = await Buddy.fetchBuddyIds(user)
     }
 
 }
