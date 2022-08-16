@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Header from "../../partials/Header";
 import { Link } from "react-router-dom";
+import Modal from "../../utils/Modal";
+import BuddyGrid from "../BuddyGrid/BuddyGrid";
 
-export default function ({ user, isAuthenticated }) {
+export default function UserProfile ({ user, isAuthenticated }) {
     const [errors, setError] = useState()
     const [userInfo, setUserInfo] = useState({})
     const [form, setForm] = useState({})
@@ -13,6 +15,7 @@ export default function ({ user, isAuthenticated }) {
     const [profilePhoto, setProfilePhoto] = useState("")
     const [buddies, setBuddies] = useState();
     const [profilePhotoInfo, setProfilePhotoInfo] = useState({})
+    const [buddyModalOpen, setBuddyModalOpen] = useState(false);
 
     useEffect(() => {
         const getUserInfo = async () => {
@@ -26,14 +29,11 @@ export default function ({ user, isAuthenticated }) {
           if (error) { setError(error); }
           if (data?.buddyInfo) { setBuddies(data.buddyInfo); }
         }
-
-
         getUserInfo()
         getBuddies();
       }, []);
 
       useEffect(() => {
-
         setForm({
             id : userInfo.id,
             firstName : userInfo.firstName,
@@ -43,7 +43,6 @@ export default function ({ user, isAuthenticated }) {
             createdAt : userInfo.createdAt
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
-
       }, [userInfo])
 
       const handleOnInputChange = (event) => {
@@ -93,13 +92,10 @@ export default function ({ user, isAuthenticated }) {
         reader.readAsDataURL(event.target.files[0])        
     }
 
-    useEffect(() => {
-      console.log('info = ',userInfo)
-    }, [userInfo]);
-
-    useEffect(() => {
-      console.log('buddies = ',buddies)
-    }, [buddies]);
+    const closeModal = () => {
+      setBuddyModalOpen(false)
+      // window.location.reload();
+    }
 
   
 return (
@@ -156,12 +152,14 @@ return (
                     <div className="col">
                     
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">{buddies?.length}</span>
-                          <span className="description">Buddies</span>
+                        <div> 
+                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setBuddyModalOpen(true); }} aria-controls="modal">
+                            <span className="heading">{buddies?.length}</span>
+                            <span className="description">Buddies</span>
+                          </span>
                         </div>
                         <div>
-                          <Link to='/habits'>
+                          <Link to='/habits' style={{color:"black"}}>
                             <span className="heading">{habits.length}</span>
                             <span className="description">Habits</span>
                           </Link>
@@ -371,6 +369,16 @@ return (
                         />
                       </div>
                     </div> */}
+                    {/* Modal */}
+                    <div id="buddy-modal">
+                      <Modal ariaLabel="modal-headline" show={buddyModalOpen} handleClose={closeModal}>
+                        <div className="relative pb-9/16">
+                          <div className="buddy-list">
+                            <BuddyGrid buddies={buddies} handleClose={closeModal} />
+                          </div>
+                        </div>
+                      </Modal>
+                    </div>
                   </form>
                 </div>
               </div>
