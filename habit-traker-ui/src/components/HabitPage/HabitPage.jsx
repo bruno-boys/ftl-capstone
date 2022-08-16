@@ -219,7 +219,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate());
+  today.setDate(today.getDate()+3);
 
 
 
@@ -321,6 +321,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
         const {data, error} = await apiClient.getCompletedCount(habit.id)
         console.log("data from completed count", data)
         const results = await apiClient.getMissedCount(habit.id)
+        console.log("results from missed habits: ", results)
         const missedCount = results.data.missedCount.missed_count
         console.log("missed count :", missedCount)
         console.log("logcount in new function", logCount)

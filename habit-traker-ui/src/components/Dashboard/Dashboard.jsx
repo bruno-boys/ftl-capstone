@@ -57,14 +57,14 @@ function Dashboard({ send }) {
 
     
     const getQuotes = async() => {
-      await axios.get(`https://motivational-quote-api.herokuapp.com/quotes`).then(resp => {
+      await axios.get(`https://type.fit/api/quotes`).then(resp => {
             setQuotes(resp.data)
           })
         }
         getQuotes()
   
   },[])
-  const randomNumber = Math.floor(Math.random() * 34)
+  const randomNumber = Math.floor(Math.random() * 1643)
   console.log("quotes", quotes)
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const [errors, setErrors] = useState();
@@ -249,10 +249,10 @@ function Dashboard({ send }) {
                                   
                                   <blockquote className='blockquote blockquote--bordered blockquote--quoted'>
                                     <p className='blockquote__text'>
-                                      {quotes[(randomNumber)]?.quote}
+                                      {quotes[(randomNumber)]?.text}
                                     </p>
                                     <p className="blockquote__text blockquote__text--author">
-                                      {quotes[randomNumber]?.person}
+                                      {!quotes[randomNumber]?.author ? "Unknown" : quotes[randomNumber]?.author}
                                     </p>
                                     
                                     </blockquote>
