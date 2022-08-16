@@ -8,6 +8,7 @@ import apiClient from '../../services/apiClient';
 import Calendar from 'react-calendar';
 import { useLocation } from 'react-router-dom'
 import './HabitDetails.css'
+import PieChart from './PieChart';
 
 
 export default function HabitDetails() {
@@ -182,7 +183,9 @@ function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount
                     style={{width:"540px", height:"500px", marginTop:"4rem", marginLeft:"1rem", display:"flex", justifyContent:"center"}}
                     >
                         <div>
-                            <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Averages/Stats</div>
+                            <div id="streak" className="font-bold leading-snug tracking-tight mb-1">
+                            <PieChart completed = {completedHabits} missed = {missedHabits} />
+                            </div>
                         </div>
                     </a>
                 </div>
