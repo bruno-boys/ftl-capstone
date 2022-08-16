@@ -12,24 +12,6 @@ class Buddy {
 
     static async populateBuddyRequestTable(user, link) {
         // fills the buddy_request table with the user information and link
-        // if user already has a buddy, and error is returned
-
-        const userInfo = await db.query(
-            `
-            SELECT id FROM users WHERE email = $1;
-            `, [user.email]
-        )
-
-        const userId = userInfo.rows[0].id
-
-        const results = await db.query(
-            `
-            SELECT COUNT(*) FROM buddies
-            WHERE user_1 = $1 OR user_2 = $1;
-            `, [userId]
-        )
-
-        if (results.rows[0].count != 0) { throw new BadRequestError('You are already matched with a Buddy.')}
 
         await db.query(
             `
@@ -60,6 +42,35 @@ class Buddy {
         const expirationDate = results.rows[0].expires_at
 
         if (today < expirationDate) {
+            const userTwo = await db.query(
+                `
+                SELECT users_id FROM buddy_request WHERE link = $1;
+                `, [link]
+            );
+
+            const userTwoId = userTwo.rows[0].users_id;
+
+            const userOne = await db.query(
+                `
+                SELECT id FROM users WHERE email = $1;
+                `, [user.email]
+            )
+
+            const userOneId = userOne.rows[0].id;
+
+            const results = await db.query(
+                `
+                SELECT COUNT(*) FROM buddies 
+                WHERE user_1 = $1 AND user_2 = $2
+                    OR user_1 = $2 AND user_2 = $1;
+                `, [userTwoId, userOneId]
+            )
+
+            const count = parseInt(results.rows[0].count);
+            
+
+            if (count > 0){ throw new BadRequestError('You are already matched with this Buddy.') }
+
             await db.query(
                 `
                 INSERT INTO buddies (user_1, user_2) 
