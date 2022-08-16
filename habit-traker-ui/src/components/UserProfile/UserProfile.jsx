@@ -3,6 +3,7 @@ import apiClient from "../../services/apiClient";
 import { useState } from "react";
 import { useEffect } from "react";
 import Header from "../../partials/Header";
+import { Link } from "react-router-dom";
 
 export default function ({ user, isAuthenticated }) {
     const [errors, setError] = useState()
@@ -10,20 +11,25 @@ export default function ({ user, isAuthenticated }) {
     const [form, setForm] = useState({})
     const [habits, setHabits] = useState([])
     const [profilePhoto, setProfilePhoto] = useState("")
+    const [buddies, setBuddies] = useState();
     const [profilePhotoInfo, setProfilePhotoInfo] = useState({})
 
     useEffect(() => {
         const getUserInfo = async () => {
           const { data, err } = await apiClient.fetchUserFromToken();
-          if (err) {
-            setError(err);
-          }
-          if (data.user) {
-            setUserInfo(data.user);
-    
-          }
+          if (err) { setError(err); }
+          if (data.user) { setUserInfo(data.user); }
         };
+
+        const getBuddies = async () => {
+          const {data, error} = await apiClient.fetchBuddyData();
+          if (error) { setError(error); }
+          if (data?.buddyInfo) { setBuddies(data.buddyInfo); }
+        }
+
+
         getUserInfo()
+        getBuddies();
       }, []);
 
       useEffect(() => {
@@ -90,6 +96,11 @@ export default function ({ user, isAuthenticated }) {
     useEffect(() => {
       console.log('info = ',userInfo)
     }, [userInfo]);
+
+    useEffect(() => {
+      console.log('buddies = ',buddies)
+    }, [buddies]);
+
   
 return (
   <div className="user-profile-wrapper">
@@ -146,12 +157,14 @@ return (
                     
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">0</span>
+                          <span className="heading">{buddies?.length}</span>
                           <span className="description">Buddies</span>
                         </div>
                         <div>
-                          <span className="heading">{habits.length}</span>
-                          <span className="description">Habits</span>
+                          <Link to='/habits'>
+                            <span className="heading">{habits.length}</span>
+                            <span className="description">Habits</span>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -162,12 +175,6 @@ return (
                       {userInfo.lastName}
                     </h3>
                     <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#">Show more</a>
                   </div>
                 </div>
               </div>

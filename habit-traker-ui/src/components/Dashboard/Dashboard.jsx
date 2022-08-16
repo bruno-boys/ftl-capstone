@@ -18,35 +18,6 @@ import axios from 'axios';
 
 function Dashboard({ send }) {
 
-
-// useEffect(() => {
-
-//   function showNotifications() {
-//     const notification = new Notification("New Message from HabitTraker", {
-//       body: "Welcome to HabitTraker! Let's make your first habit!",
-//       icon: "src/images/ht-icon.png"
-//     });
-
-//     notification.onclick = (e) => {
-//       window.location.href = "http://localhost:5173/habits";
-//     }
-//   }
-
-//   // defualt, granted, denied
-//   console.log(Notification.permission);
-
-//   if (Notification.permission == 'granted') {
-//     return;
-//   } 
-//   else if (Notification.permission != 'denied') {
-//     Notification.requestPermission().then(permission => {
-//       if (permission === 'granted') { showNotifications(); }
-//     })
-//   }
-// }, [])
-
-
-
   const [habits, setHabits] = useState([]);
   const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -188,10 +159,6 @@ function Dashboard({ send }) {
 
 
 
-    useEffect(() => {
-      console.log('buddy = ',buddy)
-    }, [buddy])
-
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
 
@@ -215,9 +182,9 @@ function Dashboard({ send }) {
 
                         <div className="header-buttons">
 
-                          <div className="buddy-button" style={{flexGrow: 1}}>
+                          {/* <div className="buddy-button" style={{flexGrow: 1}}>
                             <ToggleButton buddy={buddy}/>
-                          </div>
+                          </div> */}
 
                           <div className="create-habit-btn" style={{maxWidth:"100%"}}>
                               { localStorage.getItem("toggleOn") == "false" ?
