@@ -144,7 +144,7 @@ return (
                     
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">22</span>
+                          <span className="heading">0</span>
                           <span className="description">Friends</span>
                         </div>
                         <div>
