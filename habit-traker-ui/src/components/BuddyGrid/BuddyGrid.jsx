@@ -1,12 +1,20 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import "./BuddyGrid.css"
 
 export default function BuddyGrid ({ buddies, setBuddyModalOpen, handleClose }) {
+    const navigate = useNavigate();
+
     const removeBuddy = async (buddyId) => {
         await apiClient.removeBuddy(buddyId)
         window.location.reload();
+    }
+
+    const selectBuddy = () => {
+        localStorage.setItem("buddyView", "true");
+        navigate('/activity')
     }
 
     console.log('buddies = ', buddies);
@@ -15,7 +23,7 @@ export default function BuddyGrid ({ buddies, setBuddyModalOpen, handleClose }) 
             { buddies ? 
                 <div className="w-full px-3">
                     {buddies?.map((buddy, idx) => {
-                        return <BuddyCard key={idx} buddy={buddy} removeBuddy={removeBuddy}/> 
+                        return <BuddyCard key={idx} buddy={buddy} selectBuddy={selectBuddy} removeBuddy={removeBuddy}/> 
                     })}
                 </div>
                 :
@@ -27,7 +35,7 @@ export default function BuddyGrid ({ buddies, setBuddyModalOpen, handleClose }) 
     )
 }
 
-function BuddyCard({ buddy, removeBuddy }) {
+function BuddyCard({ buddy, removeBuddy, selectBuddy }) {
     const [tab, setTab] = useState(1);
 
     return(
@@ -49,7 +57,7 @@ function BuddyCard({ buddy, removeBuddy }) {
                             setTab(1);
                             }}
                         >
-                            <div id="buddy-card" className="card">
+                            <div id="buddy-card" className="card" onClick={selectBuddy}>
                                 <img id="profile-img" src={buddy.profile_photo ? buddy.profile_photo : "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg" } />
                                 <div className="font-bold leading-snug tracking-tight mb-1" style={{color:"black"}}>{buddy.first_name} {buddy.last_name}</div> 
                             </div>
