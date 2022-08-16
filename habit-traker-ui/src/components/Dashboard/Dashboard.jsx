@@ -18,6 +18,35 @@ import axios from 'axios';
 
 function Dashboard({ send }) {
 
+
+// useEffect(() => {
+
+//   function showNotifications() {
+//     const notification = new Notification("New Message from HabitTraker", {
+//       body: "Welcome to HabitTraker! Let's make your first habit!",
+//       icon: "src/images/ht-icon.png"
+//     });
+
+//     notification.onclick = (e) => {
+//       window.location.href = "http://localhost:5173/habits";
+//     }
+//   }
+
+//   // defualt, granted, denied
+//   console.log(Notification.permission);
+
+//   if (Notification.permission == 'granted') {
+//     return;
+//   } 
+//   else if (Notification.permission != 'denied') {
+//     Notification.requestPermission().then(permission => {
+//       if (permission === 'granted') { showNotifications(); }
+//     })
+//   }
+// }, [])
+
+
+
   const [habits, setHabits] = useState([]);
   const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -159,6 +188,10 @@ function Dashboard({ send }) {
 
 
 
+    useEffect(() => {
+      console.log('buddy = ',buddy)
+    }, [buddy])
+
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">
 
@@ -187,13 +220,16 @@ function Dashboard({ send }) {
                           </div> */}
 
                           <div className="create-habit-btn" style={{maxWidth:"100%"}}>
-                              { localStorage.getItem("toggleOn") == "false" ?
+                              {/* { localStorage.getItem("toggleOn") == "false" ?
                                 <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
                                   <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
                                 </div>
                                 :
                                 <></>
-                              }
+                              } */}
+                               <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
+                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                                </div>
                             </div>
                             
                         </div>

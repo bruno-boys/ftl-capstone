@@ -67,6 +67,18 @@ router.delete('/decline', requireAuthenticatedUser, async (req,res,next) => {
    }
 })
 
+router.delete('/remove', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const user = res.locals.user
+      const buddyId = req.body.id
+      await Buddy.removeBuddy(user, buddyId);
+      return res.status(200).json("Buddy has been removed!")
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
 
 
 

@@ -170,13 +170,6 @@ class ApiClient {
     });
   }
 
-  async subscribe(subscription) {
-    return await this.request({
-      endpoint: `subscribe`,
-      method: `POST`,
-      data: subscription,
-    });
-  }
   async declineBuddyRequest(link) {
     return await this.request({
       endpoint: `buddy/decline`,
@@ -209,6 +202,11 @@ async editCompleted(completedForm){
 async editMissed(missedForm){
     return await this.request({endpoint : `habits/missed`, method : `PUT`, data : missedForm})
 }
+
+async removeBuddy(buddyId) {
+  return await this.request({ endpoint: `buddy/remove`, method: `DELETE`, data: buddyId  });
+}
+
 }
 
 export default new ApiClient("http://localhost:3001");

@@ -169,6 +169,26 @@ class Buddy {
         const buddyId = await Buddy.fetchBuddyIds(user)
     }
 
+    static async removeBuddy(user, buddyId) {
+        /* this function removes a buddy by deleting the row in the buddies table where
+            both users are present */
+        
+        await db.query(
+            `
+            DELETE FROM buddies
+            WHERE user_1 = (SELECT id FROM users WHERE email = $1) AND user_2 = $2;
+            `, [user.email, buddyId]
+        );
+
+        await db.query(
+            `
+            DELETE FROM buddies
+            WHERE user_1 = $1 AND user_2 = (SELECT id FROM users WHERE email = $2);
+            `, [buddyId, user.email]
+        )
+
+    }
+
 }
 
 module.exports = Buddy;

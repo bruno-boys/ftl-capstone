@@ -3,20 +3,31 @@ import { useEffect, useState } from "react";
 import apiClient from "../../services/apiClient";
 import "./BuddyGrid.css"
 
-export default function BuddyGrid ({ buddies, handleClose }) {
+export default function BuddyGrid ({ buddies, setBuddyModalOpen, handleClose }) {
+    const removeBuddy = async (buddyId) => {
+        await apiClient.removeBuddy(buddyId)
+        window.location.reload();
+    }
+
     console.log('buddies = ', buddies);
     return (
         <div className="flex flex-wrap -mx-3 mb-4">
-            <div className="w-full px-3">
-               { buddies?.map((buddy, idx) => {
-               return <BuddyCard key={idx} buddy={buddy} /> 
-               })}
-            </div>
+            { buddies ? 
+                <div className="w-full px-3">
+                    {buddies?.map((buddy, idx) => {
+                        return <BuddyCard key={idx} buddy={buddy} removeBuddy={removeBuddy}/> 
+                    })}
+                </div>
+                :
+                <div  className="w-full px-3" style={{display:"flex", justifyContent:"center", marginTop:"3rem",}}>
+                    <h1>No Buddies Available</h1>
+                </div>
+            }
         </div>
     )
 }
 
-function BuddyCard({ buddy }) {
+function BuddyCard({ buddy, removeBuddy }) {
     const [tab, setTab] = useState(1);
 
     return(
@@ -42,7 +53,8 @@ function BuddyCard({ buddy }) {
                                 <img id="profile-img" src={buddy.profile_photo ? buddy.profile_photo : "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg" } />
                                 <div className="font-bold leading-snug tracking-tight mb-1" style={{color:"black"}}>{buddy.first_name} {buddy.last_name}</div> 
                             </div>
-                            <div  className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" style={{backgroundColor:"red"}}>
+                            <div className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" 
+                                    style={{backgroundColor:"red"}} onClick={() => removeBuddy({id: buddy.id})}>
                                 <span>Remove</span>
                             </div>
                         </a>

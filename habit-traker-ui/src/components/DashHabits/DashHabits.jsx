@@ -16,35 +16,50 @@ export default function DashHabits({
   handleClose,
   buddy,
 }) {
-  return localStorage.getItem("toggleOn") == "false" ? (
+  return ( 
     <div className="gridContent">
-      {habits.map((habit, idx) => {
-        return (
-          <DashHabitCard
-            key={idx}
-            habit={habit}
-            formModalOpen={formModalOpen}
-            setFormModalOpen={setFormModalOpen}
-            handleClose={handleClose}
-          />
-        );
-      })}
-    </div>
-  ) : (
-    <div className="gridContent">
-      {buddy?.buddyHabits.map((habit, idx) => {
-        return (
-          <DashHabitCard
-            key={idx}
-            habit={habit}
-            formModalOpen={formModalOpen}
-            setFormModalOpen={setFormModalOpen}
-            handleClose={handleClose}
-          />
-        );
-      })}
-    </div>
-  );
+    {habits.map((habit, idx) => {
+      return (
+        <DashHabitCard
+          key={idx}
+          habit={habit}
+          formModalOpen={formModalOpen}
+          setFormModalOpen={setFormModalOpen}
+          handleClose={handleClose}
+        />
+      );
+    })}
+  </div>
+  )
+  // return localStorage.getItem("toggleOn") == "false" ? (
+  //   <div className="gridContent">
+  //     {habits.map((habit, idx) => {
+  //       return (
+  //         <DashHabitCard
+  //           key={idx}
+  //           habit={habit}
+  //           formModalOpen={formModalOpen}
+  //           setFormModalOpen={setFormModalOpen}
+  //           handleClose={handleClose}
+  //         />
+  //       );
+  //     })}
+  //   </div>
+  // ) : (
+  //   <div className="gridContent">
+  //     {buddy?.buddyHabits.map((habit, idx) => {
+  //       return (
+  //         <DashHabitCard
+  //           key={idx}
+  //           habit={habit}
+  //           formModalOpen={formModalOpen}
+  //           setFormModalOpen={setFormModalOpen}
+  //           handleClose={handleClose}
+  //         />
+  //       );
+  //     })}
+  //   </div>
+  // );
 }
 
 function DashHabitCard({
@@ -284,7 +299,7 @@ function DashHabitCard({
                       </div>
                     </Link>
                     <div className="buttons">
-                      {localStorage.getItem("toggleOn") == "false" ? (
+                      {/* {localStorage.getItem("toggleOn") == "false" ? (
                         <HabitMenu
                           deleteHabit={deleteHabit}
                           updateLog={updateLog}
@@ -293,7 +308,13 @@ function DashHabitCard({
                         />
                       ) : (
                         <></>
-                      )}
+                      )} */}
+                      <HabitMenu
+                          deleteHabit={deleteHabit}
+                          updateLog={updateLog}
+                          setVideoModalOpen={setVideoModalOpen}
+                          setReminderModalOpen={setReminderModalOpen}
+                        />
                     </div>
                   </div>
                   <Link to={`/habit/${habit.id}`} state={streakCount}>

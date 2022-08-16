@@ -154,7 +154,7 @@ return (
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div> 
                           <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setBuddyModalOpen(true); }} aria-controls="modal">
-                            <span className="heading">{buddies?.length}</span>
+                            <span className="heading">{buddies?.length ? buddies.length : 0}</span>
                             <span className="description">Buddies</span>
                           </span>
                         </div>
@@ -374,7 +374,7 @@ return (
                       <Modal ariaLabel="modal-headline" show={buddyModalOpen} handleClose={closeModal}>
                         <div className="relative pb-9/16">
                           <div className="buddy-list">
-                            <BuddyGrid buddies={buddies} handleClose={closeModal} />
+                            <BuddyGrid buddies={buddies} setBuddyModalOpen={setBuddyModalOpen} handleClose={closeModal} />
                           </div>
                         </div>
                       </Modal>
