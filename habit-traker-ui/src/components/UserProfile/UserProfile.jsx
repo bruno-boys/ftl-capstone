@@ -136,7 +136,7 @@ return (
                 </div>
                 
                 <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <label className="btn btn-sm btn-info mr-5" onChange={imageHandler} >
+                  <label className="btn btn-sm btn-info mr-5" style={{marginLeft: "25px"}} onChange={imageHandler} >
                 <i className="fa fa-image"></i> Edit Photo<input type="file" style={{display: "none"}} name="image"/>
                 </label>
                 </div>
@@ -146,7 +146,7 @@ return (
                     
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">{}</span>
+                          <span className="heading">0</span>
                           <span className="description">Buddies</span>
                         </div>
                         <div>
@@ -199,7 +199,7 @@ return (
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Username
+                              Phone Number
                             </label>
                             <input
                               type="text"
