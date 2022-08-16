@@ -139,7 +139,7 @@ class Buddy {
         const stringIdArray = `(${idArray.join(",")})`;
         const buddies = await db.query(
             `
-            SELECT first_name, last_name, profile_photo FROM users WHERE id IN ${stringIdArray};
+            SELECT id, first_name, last_name, profile_photo FROM users WHERE id IN ${stringIdArray};
             `
         );
         return buddies.rows
@@ -148,14 +148,17 @@ class Buddy {
     static async fetchBuddyHabits(user) {
         /* calls the fetchBuddyIds function in order to get 
                 the list of habits of user's buddy*/
-        const buddyId = await Buddy.fetchBuddyIds(user)
+        const idArray = await Buddy.fetchBuddyIds(user);
+        const stringIdArray = `(${idArray.join(",")})`;
 
-        const results = await db.query(
+        /* [2,3] */
+
+        const buddyHabits = await db.query(
             `
-            SELECT * FROM habits WHERE users_id = $1; 
-            `, [buddyId]
+            SELECT * FROM habits WHERE users_id IN ${stringIdArray}; 
+            `
         );
-        return results.rows
+        return buddyHabits.rows
     }
 
     static async fetchTrackedBuddyHabits(user) {
