@@ -16,35 +16,7 @@ import axios from 'axios';
 
 
 
-function Dashboard({ send }) {
-
-
-// useEffect(() => {
-
-//   function showNotifications() {
-//     const notification = new Notification("New Message from HabitTraker", {
-//       body: "Welcome to HabitTraker! Let's make your first habit!",
-//       icon: "src/images/ht-icon.png"
-//     });
-
-//     notification.onclick = (e) => {
-//       window.location.href = "http://localhost:5173/habits";
-//     }
-//   }
-
-//   // defualt, granted, denied
-//   console.log(Notification.permission);
-
-//   if (Notification.permission == 'granted') {
-//     return;
-//   } 
-//   else if (Notification.permission != 'denied') {
-//     Notification.requestPermission().then(permission => {
-//       if (permission === 'granted') { showNotifications(); }
-//     })
-//   }
-// }, [])
-
+function Dashboard({ send, buddy, setBuddy }) {
 
 
   const [habits, setHabits] = useState([]);
@@ -86,7 +58,6 @@ function Dashboard({ send }) {
     return [year, month, day].join("-");
     }
   const [datePicked, setDatePicked] = useState(formatDate(new Date()))
-  const [buddy, setBuddy] = useState()
 
   async function askNotificationPermission() {
     return new Promise(function (resolve, reject) {
@@ -140,14 +111,14 @@ function Dashboard({ send }) {
         }
       }
 
-      const getBuddyData = async () => {
-        const { data, error } = await apiClient.fetchBuddyData();
-        if (error) {setErrors(error)}
-        if (data) {setBuddy(data)}
-      }
+      // const getBuddyData = async () => {
+      //   const { data, error } = await apiClient.fetchBuddyData();
+      //   if (error) {setErrors(error)}
+      //   if (data) {setBuddy(data)}
+      // }
 
       getHabits();
-      getBuddyData();
+      // getBuddyData();
       askNotificationPermission();
       fetchRemindersList();
 

@@ -4,16 +4,20 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import "./BuddyGrid.css"
 
-export default function BuddyGrid ({ buddies, setBuddyModalOpen, handleClose }) {
+export default function BuddyGrid ({ buddies, setBuddies }) {
     const navigate = useNavigate();
+    const [errors, setErrors] = useState();
 
     const removeBuddy = async (buddyId) => {
-        await apiClient.removeBuddy(buddyId)
+        await apiClient.removeBuddy(buddyId);
         window.location.reload();
     }
 
-    const selectBuddy = () => {
+    const selectBuddy = async (buddyId) => {
         localStorage.setItem("buddyView", "true");
+        const {data, error} = await apiClient.fetchBuddyHabits(buddyId);
+        if (error) { setErrors(error) }
+        if (data) { setBuddies(data) }
         navigate('/activity')
     }
 
@@ -57,7 +61,7 @@ function BuddyCard({ buddy, removeBuddy, selectBuddy }) {
                             setTab(1);
                             }}
                         >
-                            <div id="buddy-card" className="card" onClick={selectBuddy}>
+                            <div id="buddy-card" className="card" onClick={() => selectBuddy(buddy.id)}>
                                 <img id="profile-img" src={buddy.profile_photo ? buddy.profile_photo : "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg" } />
                                 <div className="font-bold leading-snug tracking-tight mb-1" style={{color:"black"}}>{buddy.first_name} {buddy.last_name}</div> 
                             </div>

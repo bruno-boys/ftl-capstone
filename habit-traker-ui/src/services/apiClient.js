@@ -182,6 +182,10 @@ class ApiClient {
     return await this.request({ endpoint: `buddy/view`, method: `GET` });
   }
 
+  async fetchBuddyHabits(buddyId) {
+    return await this.request({ endpoint: `buddy/habits?buddyId=${buddyId}`, method: `GET` });
+  }
+
 
 async createCompleted(completedCount){
     return await this.request({endpoint : `habits/completed`, method : `POST`, data : completedCount})

@@ -16,50 +16,51 @@ export default function DashHabits({
   handleClose,
   buddy,
 }) {
-  return ( 
+  // return ( 
+  //   <div className="gridContent">
+  //   {habits.map((habit, idx) => {
+  //     return (
+  //       <DashHabitCard
+  //         key={idx}
+  //         habit={habit}
+  //         formModalOpen={formModalOpen}
+  //         setFormModalOpen={setFormModalOpen}
+  //         handleClose={handleClose}
+  //       />
+  //     );
+  //   })}
+  // </div>
+  // )
+
+  return localStorage.getItem("buddyView") == "false" ? (
     <div className="gridContent">
-    {habits.map((habit, idx) => {
-      return (
-        <DashHabitCard
-          key={idx}
-          habit={habit}
-          formModalOpen={formModalOpen}
-          setFormModalOpen={setFormModalOpen}
-          handleClose={handleClose}
-        />
-      );
-    })}
-  </div>
-  )
-  // return localStorage.getItem("toggleOn") == "false" ? (
-  //   <div className="gridContent">
-  //     {habits.map((habit, idx) => {
-  //       return (
-  //         <DashHabitCard
-  //           key={idx}
-  //           habit={habit}
-  //           formModalOpen={formModalOpen}
-  //           setFormModalOpen={setFormModalOpen}
-  //           handleClose={handleClose}
-  //         />
-  //       );
-  //     })}
-  //   </div>
-  // ) : (
-  //   <div className="gridContent">
-  //     {buddy?.buddyHabits.map((habit, idx) => {
-  //       return (
-  //         <DashHabitCard
-  //           key={idx}
-  //           habit={habit}
-  //           formModalOpen={formModalOpen}
-  //           setFormModalOpen={setFormModalOpen}
-  //           handleClose={handleClose}
-  //         />
-  //       );
-  //     })}
-  //   </div>
-  // );
+      {habits.map((habit, idx) => {
+        return (
+          <DashHabitCard
+            key={idx}
+            habit={habit}
+            formModalOpen={formModalOpen}
+            setFormModalOpen={setFormModalOpen}
+            handleClose={handleClose}
+          />
+        );
+      })}
+    </div>
+  ) : (
+    <div className="gridContent">
+      {buddy.map((habit, idx) => {
+        return (
+          <DashHabitCard
+            key={idx}
+            habit={habit}
+            formModalOpen={formModalOpen}
+            setFormModalOpen={setFormModalOpen}
+            handleClose={handleClose}
+          />
+        );
+      })}
+    </div>
+  );
 }
 
 function DashHabitCard({

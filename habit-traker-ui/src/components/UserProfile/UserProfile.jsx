@@ -7,13 +7,12 @@ import { Link } from "react-router-dom";
 import Modal from "../../utils/Modal";
 import BuddyGrid from "../BuddyGrid/BuddyGrid";
 
-export default function UserProfile ({ user, isAuthenticated }) {
+export default function UserProfile ({ buddies, setBuddies }) {
     const [errors, setError] = useState()
     const [userInfo, setUserInfo] = useState({})
     const [form, setForm] = useState({})
     const [habits, setHabits] = useState([])
     const [profilePhoto, setProfilePhoto] = useState("")
-    const [buddies, setBuddies] = useState();
     const [profilePhotoInfo, setProfilePhotoInfo] = useState({})
     const [buddyModalOpen, setBuddyModalOpen] = useState(false);
 
@@ -27,7 +26,7 @@ export default function UserProfile ({ user, isAuthenticated }) {
         const getBuddies = async () => {
           const {data, error} = await apiClient.fetchBuddyData();
           if (error) { setError(error); }
-          if (data?.buddyInfo) { setBuddies(data.buddyInfo); }
+          if (data) { setBuddies(data); }
         }
         getUserInfo()
         getBuddies();
@@ -160,7 +159,7 @@ return (
                         </div>
                         <div>
                           <Link to='/habits' style={{color:"black"}}>
-                            <span className="heading">{habits.length}</span>
+                            <span className="heading">{habits?.length ? habits.length : 0}</span>
                             <span className="description">Habits</span>
                           </Link>
                         </div>
@@ -278,103 +277,12 @@ return (
                       </div>
                     </div>
                     <hr className="my-4" />
-                    {/* <h6 className="heading-small text-muted mb-4">
-                      Contact information
-                    </h6>
-                    <div className="pl-lg-4">
-                      <div className="row">
-                        <div className="col-md-12">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-address"
-                            >
-                              Address
-                            </label>
-                            <input
-                              id="input-address"
-                              className="form-control form-control-alternative"
-                              placeholder="Home Address"
-                              type="text"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-4">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-city"
-                            >
-                              City
-                            </label>
-                            <input
-                              type="text"
-                              id="input-city"
-                              className="form-control form-control-alternative"
-                              placeholder="City"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-4">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Country
-                            </label>
-                            <input
-                              type="text"
-                              id="input-country"
-                              className="form-control form-control-alternative"
-                              placeholder="Country"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-4">
-                          <div className="form-group">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Postal code
-                            </label>
-                            <input
-                              type="number"
-                              id="input-postal-code"
-                              className="form-control form-control-alternative"
-                              placeholder="Postal code"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-                    {/* <hr className="my-4" />
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <div className="form-group focused">
-                        <label
-                          className="form-control-label"
-                          htmlFor="input-bio"
-                        >
-                          Bio
-                        </label>
-                        <input
-                          type="text"
-                          id="input-bio"
-                          className="form-control form-control-alternative"
-                          placeholder="Bio"
-                        />
-                      </div>
-                    </div> */}
                     {/* Modal */}
                     <div id="buddy-modal">
                       <Modal ariaLabel="modal-headline" show={buddyModalOpen} handleClose={closeModal}>
                         <div className="relative pb-9/16">
                           <div className="buddy-list">
-                            <BuddyGrid buddies={buddies} setBuddyModalOpen={setBuddyModalOpen} handleClose={closeModal} />
+                            <BuddyGrid buddies={buddies} setBuddies={setBuddies} setBuddyModalOpen={setBuddyModalOpen} handleClose={closeModal} />
                           </div>
                         </div>
                       </Modal>
