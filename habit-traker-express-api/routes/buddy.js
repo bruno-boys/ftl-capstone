@@ -34,15 +34,25 @@ router.get('/view', requireAuthenticatedUser, async (req,res,next) => {
    try {
       const user = res.locals.user;
       const buddyInfoArr = await Buddy.fetchBuddyInfo(user);
-      const buddyHabitsArr = await Buddy.fetchBuddyHabits(user);
-      return res.status(200).json({
-         buddyInfo: buddyInfoArr,
-         buddyHabits: buddyHabitsArr});
+      return res.status(200).json(buddyInfoArr);
    }
    catch(error) {
       next(error)
    }
 })
+
+
+router.get('/habits', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const {buddyId} = req.query
+      const buddyHabits = await Buddy.fetchBuddyHabits(buddyId)
+      return res.status(200).json(buddyHabits);
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
 
 router.post('/accept', requireAuthenticatedUser, async (req,res,next) => {
    try {

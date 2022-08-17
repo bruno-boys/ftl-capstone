@@ -145,28 +145,21 @@ class Buddy {
         return buddies.rows
     }
 
-    static async fetchBuddyHabits(user) {
+    static async fetchBuddyHabits(buddyId) {
         /* calls the fetchBuddyIds function in order to get 
                 the list of habits of user's buddy*/
-        const idArray = await Buddy.fetchBuddyIds(user);
-        const stringIdArray = `(${idArray.join(",")})`;
+
+        // const idArray = await Buddy.fetchBuddyIds(user);
+        // const stringIdArray = `(${idArray.join(",")})`;
 
         /* [2,3] */
 
         const buddyHabits = await db.query(
             `
-            SELECT * FROM habits WHERE users_id IN ${stringIdArray}; 
-            `
+            SELECT * FROM habits WHERE users_id = $1; 
+            `, [buddyId]
         );
         return buddyHabits.rows
-    }
-
-    static async fetchTrackedBuddyHabits(user) {
-        /* calls the fetchBuddyIds function in order to get 
-                the list of tracked habits of user's buddy*/
-
-                //figure out how to get tracked habits for all and individual habits
-        const buddyId = await Buddy.fetchBuddyIds(user)
     }
 
     static async removeBuddy(user, buddyId) {
