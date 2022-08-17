@@ -21,6 +21,7 @@ export default function HabitDetails() {
     const location = useLocation()
     const [completedHabits, setCompletedHabits] = useState(0)
     const [missedHabits, setMissedHabits] = useState(0)
+    const [buddyHabit, setBuddyHabit] = useState();
     const streakCount = location.state
 
     useEffect(() => {
@@ -30,7 +31,16 @@ export default function HabitDetails() {
             if (data) {setHabit(data);}
         }
         getHabitById();
+        getBuddyHabits();
     }, [])
+
+
+    const getBuddyHabits = async () => {
+        const buddyId = parseInt(localStorage.getItem("buddyId"));
+        const { data, error } = await apiClient.fetchBuddyHabitById(buddyId, habitId);
+        if (error) {setError(error)}
+        if (data) {setBuddyHabit(data)}
+      }
 
 
     useEffect(() => {
@@ -49,6 +59,7 @@ export default function HabitDetails() {
     getCompletedHabitsCount()
     getMissedHabitsCount()
 
+
     }, [])
 
     const deleteHabit = async () => {
@@ -59,7 +70,10 @@ export default function HabitDetails() {
         }
     }
 
-    // console.log("streak count", from)
+    useEffect(() => {
+        console.log('buddyhabit =',buddyHabit)
+    }, [buddyHabit]);
+
     return (
         <div className="flex flex-col min-h-screen overflow-hidden">
             <Header />
@@ -68,21 +82,22 @@ export default function HabitDetails() {
                     <div className="max-w-6xl mx-auto px-4 sm:px-6">
                         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                             <div className='detail-buttons'>
-                                <h1>{habit.habit_name}</h1>
-                                { localStorage.getItem("toggleOn") == "false" ? 
-
+                                { localStorage.getItem("buddyView") == "false" ?
                                     <>
-                                      <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                                        <h1>{habit.habit_name}</h1>
+                                        <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
                                         <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit} style={{backgroundColor:"red"}}>Delete</button>
                                     </>
                                     :
-                                    <></>
+                                    <>
+                                    <h1>{buddyHabit?.habit_name}</h1>
+                                    </>
                                 
                                 }
                                 
                             </div>
                             <div className="habit-detail-page">
-                                <HabitDetailContainer missedHabits={missedHabits} completedHabits = {completedHabits} habit={habit} streakCount = {streakCount}/>
+                                <HabitDetailContainer missedHabits={missedHabits} completedHabits = {completedHabits} buddyHabit={buddyHabit} habit={habit} streakCount = {streakCount}/>
                             </div>
                         </div> 
                          {/* Modal */}
@@ -102,7 +117,7 @@ export default function HabitDetails() {
 }
 
 
-function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount }) {
+function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount, buddyHabit }) {
 
     const options = {  
         year: "numeric", month: "short",  
@@ -110,13 +125,14 @@ function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount
     };  
     const startDate = new Date(habit.start_date).toLocaleDateString("en-us", options)
     const endDate = new Date(habit.end_date).toLocaleDateString("en-us", options)
-    const periodLabel = getPeriod(habit.period)
+    let periodLabel;
+    {localStorage.getItem("buddyView") == "false" ? periodLabel = getPeriod(habit?.period) : periodLabel = getPeriod(buddyHabit?.period)}
     const [tab, setTab] = useState(1);
 
     function getPeriod(period) {
-        if (period == 'daily') {return "Every day"}
-        else if (period == 'weekly') {return "Every week"}
-        else if (period == 'monthly') {return "Every month"}
+        if (period == 'Per Day') {return "Every day"}
+        else if (period == 'Per Week') {return "Every week"}
+        else if (period == 'Per Month') {return "Every month"}
         else {return "Every year"}
     }
 
@@ -125,7 +141,11 @@ function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount
             <div className="habit-details">
                 <div className="left">
                     <div className="periodLabel">{periodLabel}</div>
-                    <div className="habit-frequency">{habit.frequency} times {habit.period}</div>
+                    { localStorage.getItem("buddyView") == "false" ?
+                        <div className="habit-frequency">{habit.frequency} times {habit.period}</div>
+                        :
+                        <div className="habit-frequency">{buddyHabit?.frequency} times {buddyHabit?.period}</div>
+                    }
                     <div className="mb-8 md:mb-0">
                         <a
                         className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}

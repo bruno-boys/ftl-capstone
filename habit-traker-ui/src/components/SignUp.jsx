@@ -65,6 +65,7 @@ function SignUp() {
     if (data?.user) {
       localStorage.setItem("name", data.user.name);
       localStorage.setItem("email", data.user.email);
+      localStorage.setItem("buddyView", "false");
       apiClient.setToken(data.token);
       if (localStorage.getItem("fromLink") == "true") {
         navigate(`/buddy/${localStorage.getItem("buddyId")}`)

@@ -33,24 +33,44 @@ router.get('/buddy-name', requireAuthenticatedUser, async (req,res,next) => {
 router.get('/view', requireAuthenticatedUser, async (req,res,next) => {
    try {
       const user = res.locals.user;
-      const name = await Buddy.fetchBuddyName(user);
-      const habits = await Buddy.fetchBuddyHabits(user);
-      const loggedHabits = await Buddy.fetchTrackedBuddyHabits(user)
-      return res.status(200).json({
-         buddyName: name,
-         buddyHabits: habits,
-      })
+      const buddyInfoArr = await Buddy.fetchBuddyInfo(user);
+      return res.status(200).json(buddyInfoArr);
    }
    catch(error) {
       next(error)
    }
 })
 
+
+router.get('/habits', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const {buddyId} = req.query
+      const buddyHabits = await Buddy.fetchBuddyHabits(buddyId)
+      return res.status(200).json(buddyHabits);
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
+router.get('/habits/:id', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const {buddyId} = req.query;
+      const habitId = req.params.id;
+      const buddyHabit = await Buddy.fetchBuddyHabitById(buddyId, habitId)
+      return res.status(200).json(buddyHabit);
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
+
 router.post('/accept', requireAuthenticatedUser, async (req,res,next) => {
    try {
       const user = res.locals.user
       const link = req.body.link
-      const hi = await Buddy.acceptBuddyRequest(user, link)
+      await Buddy.acceptBuddyRequest(user, link)
       return res.status(201).json("Buddies have been matched!")
    }
    catch(error) {
@@ -63,6 +83,18 @@ router.delete('/decline', requireAuthenticatedUser, async (req,res,next) => {
       const link = req.body.link
       await Buddy.deleteBuddyRequest(link)
       return res.status(201).json("Buddies Request has been declined!")
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
+router.delete('/remove', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const user = res.locals.user
+      const buddyId = req.body.id
+      await Buddy.removeBuddy(user, buddyId);
+      return res.status(200).json("Buddy has been removed!")
    }
    catch(error) {
       next(error)

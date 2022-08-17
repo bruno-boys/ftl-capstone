@@ -1,7 +1,7 @@
 // const { config } = require("dotenv");
 const nodemailer = require("nodemailer");
 const nodemailerSendgrid = require("nodemailer-sendgrid");
-const SendEmail = require("../test.js");
+const SendEmail = require("../email-template.js");
 const { SENDGRID_API_KEY, EMAIL_SERVICE_ACTIVE, EMAIL_FROM_ADDRESS, CLIENT_URL, APPLICATION_NAME } = require("../config");
 
 class EmailService {

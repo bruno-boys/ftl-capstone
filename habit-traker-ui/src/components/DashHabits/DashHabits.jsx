@@ -16,7 +16,8 @@ export default function DashHabits({
   handleClose,
   buddy,
 }) {
-  return localStorage.getItem("toggleOn") == "false" ? (
+
+  return localStorage.getItem("buddyView") == "false" ? (
     <div className="gridContent">
       {habits.map((habit, idx) => {
         return (
@@ -32,7 +33,7 @@ export default function DashHabits({
     </div>
   ) : (
     <div className="gridContent">
-      {buddy?.buddyHabits.map((habit, idx) => {
+      {buddy?.map((habit, idx) => {
         return (
           <DashHabitCard
             key={idx}
@@ -239,7 +240,7 @@ function DashHabitCard({
     }
     if (data?.logCount) {
       localStorage.setItem(`log_count_${habit.id}`, data.logCount.count);
-      await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
+      setLogCount(localStorage.getItem(`log_count_${habit.id}`));
     }
   };
 
@@ -344,16 +345,16 @@ function DashHabitCard({
                       </div>
                     </Link>
                     <div className="buttons">
-                      {localStorage.getItem("toggleOn") == "false" ? (
-                        <HabitMenu
+                      { localStorage.getItem("buddyView") == "false" ?
+                          <HabitMenu
                           deleteHabit={deleteHabit}
                           updateLog={updateLog}
                           setVideoModalOpen={setVideoModalOpen}
                           setReminderModalOpen={setReminderModalOpen}
-                        />
-                      ) : (
-                        <></>
-                      )}
+                          />
+                          :
+                          <></>
+                    }
                     </div>
                   </div>
                   <Link to={`/habit/${habit.id}`} state={streakCount}>

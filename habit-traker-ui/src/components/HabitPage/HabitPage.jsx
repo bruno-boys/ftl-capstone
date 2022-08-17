@@ -142,23 +142,27 @@ export default function HabitPage() {
                 </div>
               </div>
               <div className="hp-top">
-              <ToggleButton buddy={buddy} habits={filteredHabits} setHabits={setHabits} />
+              {/* <ToggleButton buddy={buddy} habits={filteredHabits} setHabits={setHabits} /> */}
                 <h1 className="hp-title">All Habits</h1>
-                { localStorage.getItem("toggleOn") == "false" ?
+                {/* { localStorage.getItem("toggleOn") == "false" ?
                   <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
                     <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
                   </div>
                   :
                   <></>
-                }
+                } */}
+                 <div id="hp-create-btn-wrapper" className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginRight:"20px", marginBottom:"0.25rem"}}>
+                    <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                  </div>
               </div>
-              { localStorage.getItem("toggleOn") == "false" ?
+              {/* { localStorage.getItem("toggleOn") == "false" ?
 
                   <HabitGrid setFormModalOpen={setFormModalOpen} habits={filteredHabits} errors = {errors} setErrors = {setErrors} /> 
                   :
                   <HabitGrid setFormModalOpen={setFormModalOpen} habits={buddy?.buddyHabits} errors = {errors} setErrors = {setErrors} /> 
 
-              }
+              } */}
+              <HabitGrid setFormModalOpen={setFormModalOpen} habits={filteredHabits} errors = {errors} setErrors = {setErrors} /> 
             </div>
           </div>
           ``
@@ -219,7 +223,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate()+3);
+  today.setDate(today.getDate());
 
 
 
@@ -494,7 +498,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                       </div>
                     </Link>
                     <div className="buttons">
-                      {localStorage.getItem("toggleOn") == "false" ? (
+                      {/* {localStorage.getItem("toggleOn") == "false" ? (
                         <HabitMenu
                           deleteHabit={deleteHabit}
                           updateLog={updateLog}
@@ -503,7 +507,13 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
                         />
                       ) : (
                         <></>
-                      )}
+                      )} */}
+                      <HabitMenu
+                          deleteHabit={deleteHabit}
+                          updateLog={updateLog}
+                          setVideoModalOpen={setVideoModalOpen}
+                          setReminderModalOpen={setReminderModalOpen}
+                        />
                     </div>
                   </div>
                   <Link to={`/habit/${habit.id}`} state={streakCount}>

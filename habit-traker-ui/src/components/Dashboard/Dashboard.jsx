@@ -16,35 +16,7 @@ import axios from 'axios';
 
 
 
-function Dashboard({ send }) {
-
-
-// useEffect(() => {
-
-//   function showNotifications() {
-//     const notification = new Notification("New Message from HabitTraker", {
-//       body: "Welcome to HabitTraker! Let's make your first habit!",
-//       icon: "src/images/ht-icon.png"
-//     });
-
-//     notification.onclick = (e) => {
-//       window.location.href = "http://localhost:5173/habits";
-//     }
-//   }
-
-//   // defualt, granted, denied
-//   console.log(Notification.permission);
-
-//   if (Notification.permission == 'granted') {
-//     return;
-//   } 
-//   else if (Notification.permission != 'denied') {
-//     Notification.requestPermission().then(permission => {
-//       if (permission === 'granted') { showNotifications(); }
-//     })
-//   }
-// }, [])
-
+function Dashboard({ send, buddy, setBuddy }) {
 
 
   const [habits, setHabits] = useState([]);
@@ -86,7 +58,6 @@ function Dashboard({ send }) {
     return [year, month, day].join("-");
     }
   const [datePicked, setDatePicked] = useState(formatDate(new Date()))
-  const [buddy, setBuddy] = useState()
 
   async function askNotificationPermission() {
     return new Promise(function (resolve, reject) {
@@ -140,18 +111,24 @@ function Dashboard({ send }) {
         }
       }
 
-      const getBuddyData = async () => {
-        const { data, error } = await apiClient.fetchBuddyData();
+      const getBuddyHabits = async () => {
+        const buddyId = parseInt(localStorage.getItem("buddyId"));
+        console.log('buddyId = ',buddyId)
+        const { data, error } = await apiClient.fetchBuddyHabits(buddyId);
         if (error) {setErrors(error)}
         if (data) {setBuddy(data)}
       }
 
       getHabits();
-      getBuddyData();
+      getBuddyHabits();
       askNotificationPermission();
       fetchRemindersList();
 
     }, []);
+
+    useEffect(() => {
+      console.log('buddy = ',buddy)
+    }, [buddy])
 
   const closeModal = () => {
     setVideoModalOpen(false); 
@@ -215,18 +192,20 @@ function Dashboard({ send }) {
 
                         <div className="header-buttons">
 
-                          <div className="buddy-button" style={{flexGrow: 1}}>
+                          {/* <div className="buddy-button" style={{flexGrow: 1}}>
                             <ToggleButton buddy={buddy}/>
-                          </div>
+                          </div> */}
 
                           <div className="create-habit-btn" style={{maxWidth:"100%"}}>
-                              { localStorage.getItem("toggleOn") == "false" ?
-                                <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
-                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                </div>
-                                :
-                                <></>
-                              }
+                          { localStorage.getItem("buddyView") == "false" ?
+
+                            <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
+                              <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                            </div>
+                            :
+                            <></>
+
+                            }
                             </div>
                             
                         </div>

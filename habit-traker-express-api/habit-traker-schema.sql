@@ -65,7 +65,7 @@ CREATE TABLE buddy_request (
 
 
 CREATE TABLE buddies (
-    user_1          INTEGER NOT NULL UNIQUE REFERENCES users (id) ON DELETE CASCADE,
-    user_2          INTEGER NOT NULL UNIQUE REFERENCES users (id) ON DELETE CASCADE,
+    user_1          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    user_2          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW()
 );
