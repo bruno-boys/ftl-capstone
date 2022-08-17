@@ -242,6 +242,7 @@ function Dashboard({ send, buddy, setBuddy }) {
                           </div>
 
                             {/* Modal */}
+                            <div className="create-modal">
                             <Modal id="create-habit-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
                               <div className="relative pb-9/16">
                                 <div className="create-habit">
@@ -249,6 +250,7 @@ function Dashboard({ send, buddy, setBuddy }) {
                                 </div>
                               </div>
                             </Modal>
+                            </div>
 
                         </div>
                       </>
