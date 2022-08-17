@@ -59,14 +59,15 @@ class EmailService {
   }
 
   // Figure out what I need to pass through it
-  async sendReminderEmail ({reminder}) {
+  async sendReminderEmail ({reminder, user}) {
     console.log("Reminder in email service", reminder)
+    console.log("User in email service", user)
     let habitName = reminder.habit.habit_name
     let frequency = reminder.habit.frequency
     let time = reminder.reminder.time
-
+    let email = user.email
     
-    await SendEmail.scheduleReminder(habitName, frequency, time,  APPLICATION_NAME, EMAIL_FROM_ADDRESS);
+    await SendEmail.scheduleReminder(habitName, frequency, time,  APPLICATION_NAME, EMAIL_FROM_ADDRESS, email);
   }
 
 

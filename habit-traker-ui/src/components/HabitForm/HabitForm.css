@@ -6,3 +6,8 @@
 .habit-form {
     margin-top: 1rem;
 }
+
+.title-hf {
+    font-weight: bold;
+    font-size: 30px;
+}

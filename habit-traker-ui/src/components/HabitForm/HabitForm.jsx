@@ -187,7 +187,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
 
   return (
     <div>
-        <h2>New Habit</h2>
+        <h2 id="title-hf">New Habit</h2>
 
         <form className="habit-form" onSubmit={handleOnSubmit}>
         {error.message && <span className="error" style={{color:"red",fontSize:"13px"}}>{error.message}</span>}

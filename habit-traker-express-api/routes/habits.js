@@ -29,7 +29,7 @@ router.post("/reminder", requireAuthenticatedUser , async (req, res, next) => {
     await Reminders.createReminder(user, req.body);
     let reminder = await Reminders.fetchReminderById(user, req.body.habitId);
     console.log("Reminder + Habit Info:", reminder)
-    await emailService.sendReminderEmail({reminder})
+    await emailService.sendReminderEmail({reminder, user})
     res.status(201).json({ status: "Reminder Created!" });
   } catch (error) {
     next(error);
