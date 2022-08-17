@@ -12,6 +12,8 @@ import '@material/mwc-icon/mwc-icon.js'
 import { DateTime } from 'luxon'
 import ToggleButton from './ToggleButton/ToggleButton';
 import AddReminder from '../AddReminder';
+import axios from 'axios';
+
 
 
 function Dashboard({ send }) {
@@ -49,6 +51,21 @@ function Dashboard({ send }) {
   const [filteredHabits, setFilteredHabits] = useState([])
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [formModalOpen, setFormModalOpen] = useState(false);
+  const [quotes, setQuotes] = useState([]);
+  
+  useEffect ( ()=> {
+
+    
+    const getQuotes = async() => {
+      await axios.get(`https://type.fit/api/quotes`).then(resp => {
+            setQuotes(resp.data)
+          })
+        }
+        getQuotes()
+  
+  },[])
+  const randomNumber = Math.floor(Math.random() * 1643)
+  console.log("quotes", quotes)
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const [errors, setErrors] = useState();
   const [form, setForm] = useState({
@@ -147,6 +164,7 @@ function Dashboard({ send }) {
     });
     window.location.reload();
   }
+
   useEffect(()=> {
 
     const filterHabits = (date) => {
@@ -228,7 +246,16 @@ function Dashboard({ send }) {
                           <div className='right'>
                             <div className="daily-habits-container">
                                 <div className="dashboard-stats">
-                                  Right
+                                  
+                                  <blockquote className='blockquote blockquote--bordered blockquote--quoted'>
+                                    <p className='blockquote__text'>
+                                      {quotes[(randomNumber)]?.text}
+                                    </p>
+                                    <p className="blockquote__text blockquote__text--author">
+                                      {!quotes[randomNumber]?.author ? "Unknown" : quotes[randomNumber]?.author}
+                                    </p>
+                                    
+                                    </blockquote>
                                 </div>
                             </div>
                           </div>
@@ -243,13 +270,7 @@ function Dashboard({ send }) {
                                 </div>
                               </div>
                             </Modal>
-                            {/* <Modal id="create-reminder-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
-                              <div className="relative pb-9/16">
-                                <div className="create-habit">
-                                  <AddReminder handleClose={closeModal}/>
-                                </div>
-                              </div>
-                            </Modal> */}
+
                         </div>
                       </>
 

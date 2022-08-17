@@ -69,6 +69,41 @@ class Habits {
     );
   }
 
+  static async logComplete(completedForm){
+
+    await db.query(
+      `insert into completed_habits (habit_id, completed_count) values ($1, $2);`, [completedForm.id, completedForm.completedCount]
+    )
+  }
+
+  static async fetchCompletedCount(habitId){
+    const results = await db.query(`select completed_count from completed_habits where habit_id = $1`, [habitId])
+    return results.rows[0]
+    
+  }
+
+  static async fetchMissedCount(habitId){
+    const results = await db.query(`select missed_count from missed_habits where habit_id = $1`, [habitId])
+    return results.rows[0]
+  }
+
+  static async editCompleted(completedForm){
+  
+      await db.query(`update completed_habits set completed_count = $1 where habit_id = $2`, [completedForm.completedCount, completedForm.id])
+  }
+
+  static async logMissed(missedForm){
+
+    await db.query(
+      `insert into missed_habits (habit_id, missed_count) values ($1, $2);`, [missedForm.id, missedForm.missedCount]
+    )
+  }
+
+  static async editMissed(missedForm){
+  
+    await db.query(`update missed_habits set missed_count = $1 where habit_id = $2`, [missedForm.missedCount, missedForm.id])
+}
+
   
 
 
@@ -103,7 +138,7 @@ class Habits {
     await db.query(`update habits set habit_name = $1, frequency = $2, period = $3, start_date = $4, end_date = $5, temp_start_date = $6, temp_end_date = $7 where id = $8`, [form.habitName, form.frequency, form.period, form.startDate, form.endDate, form.tempStartDate, form.tempEndDate, form.id])
   }
   static async fetchStreakCount(habitId, startTime, endTime){
-    console.log("streak count reached?")
+    console.log("This is the startTime", startTime, " and end time", endTime, " using to get the streaks")
     const results = await db.query(
       `
       SELECT current_streak FROM habit_progress

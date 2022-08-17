@@ -60,7 +60,7 @@ function SignUp() {
     }
     const { data, error } = await apiClient.registerUser(newUser);
     if (error) {
-      setError(error);
+      setError({message: "Habit Traker account already exist. Try logging in instead. "});
     }
     if (data?.user) {
       localStorage.setItem("name", data.user.name);
@@ -92,10 +92,13 @@ function SignUp() {
                 <h1 className="h1">Welcome.</h1>
               </div>
 
+
               {/* Form */}
               <div className="max-w-sm mx-auto">
                 <form onSubmit={handleOnSubmit}>
-
+                {error.message && <span className="error" style={{color:"red",textAlign:"center",fontSize:"16px"}}>{error.message}</span>}
+                <br/>
+                <br/>
                 <div className="name-inputs" style={{display:"flex", gap:"0.5rem"}}>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
