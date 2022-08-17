@@ -37,7 +37,6 @@ export default function UserProfile ({ buddies, setBuddies }) {
             firstName : userInfo.firstName,
             lastName : userInfo.lastName,
             email : userInfo.email,
-            phoneNumber: userInfo.phone_number,
             createdAt : userInfo.createdAt
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})

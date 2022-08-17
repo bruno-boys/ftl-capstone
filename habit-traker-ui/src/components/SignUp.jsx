@@ -40,13 +40,6 @@ function SignUp() {
         setError((e) => ({ ...e, email: null }));
       }
     }
-    if (event.target.name === "phoneNumber") {
-      if (event.target.value.length != 10) {
-        setError((e) => ({ ...e, phoneNumber: "Please enter a valid phone number." }));
-      } else {
-        setError((e) => ({ ...e, phoneNumber: null }));
-      }
-    }
     setNewUser({
       ...newUser,
       [event.target.name]: event.target.value,
