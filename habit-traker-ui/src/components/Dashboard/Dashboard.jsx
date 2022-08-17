@@ -28,14 +28,14 @@ function Dashboard({ send, buddy, setBuddy }) {
   useEffect ( ()=> {
 
     
-    const getQuotes = async() => {
+  const getQuotes = async() => {
       await axios.get(`https://type.fit/api/quotes`).then(resp => {
             setQuotes(resp.data)
           })
         }
         getQuotes()
-  
   },[])
+  
   const randomNumber = Math.floor(Math.random() * 1643)
   console.log("quotes", quotes)
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
