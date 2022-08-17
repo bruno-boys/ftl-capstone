@@ -69,7 +69,7 @@ function DashHabitCard({
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate()+2);
+  today.setDate(today.getDate());
 
 
 
@@ -326,7 +326,6 @@ function DashHabitCard({
                     ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                     : "bg-gray-200 border-transparent"
                 }`}
-                href="#0"
                 onClick={(e) => {
                   e.preventDefault();
                   setTab(1);
@@ -334,11 +333,11 @@ function DashHabitCard({
               >
                 <div className="card" style={{ width: "100%" }}>
                   <div className="top">
-                    <Link to={`/habit/${habit.id}`} state={streakCount}>
+                    <Link style={{width:"100%"}} to={`/habit/${habit.id}`} state={streakCount}>
                       <div className="title">
                         <div
                           className="font-bold leading-snug tracking-tight mb-1"
-                          style={{ width: "150px" }}
+                          style={{ width: "100%" }}
                         >
                           {habit.habit_name}
                         </div>

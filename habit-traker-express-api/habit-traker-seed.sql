@@ -22,36 +22,46 @@ VALUES (
 
 
 INSERT INTO habits (users_id, habit_name, frequency, period, start_date, temp_start_date, temp_end_date, end_date)
-VALUES (
-
-)
-
-
-INSERT INTO tracked_habits (habit_id, logged_time, start_date, end_date)
-VALUES (
-
-)
-
-
-INSERT INTO completed_habits (habit_id, completed_count)
-VALUES (
-
-)
+VALUES 
+(1, 'Aloye - Drink Water', 4, 'Per Day', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-18 00:00:00', '2022-08-31 07:00:00'),
+(1, 'Aloye - Meditate', 1, 'Per Day', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-18 00:00:00', '2022-08-31 07:00:00'),
+(1, 'Aloye - Run a Mile', 4, 'Per Week', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-24 00:00:00', '2022-11-17 07:00:00'),
+(2, 'Yaw - Exercise', 5, 'Per Week', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-24 00:00:00', '2022-11-17 07:00:00'),
+(2, 'Yaw - Music Practice', 2, 'Per Day', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-18 00:00:00', '2022-08-31 07:00:00'),
+(2, 'Yaw - Pay Credit Card Bill', 1, 'Per Month', '2022-08-01 07:00:00', '2022-08-01 00:00:00', '2022-09-01 00:00:00', '2023-08-01 07:00:00'),
+(3, 'Abdul - Get 8hrs of Sleep', 1, 'Per Day', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-18 00:00:00', '2022-08-31 07:00:00'),
+(3, 'Abdul - Read Poetry', 2, 'Per Day', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-18 00:00:00', '2022-08-31 07:00:00'),
+(3, 'Abdul - Do Laundry', 1, 'Per Week', '2022-08-17 07:00:00', '2022-08-17 00:00:00', '2022-08-24 00:00:00', '2022-11-17 07:00:00');
 
 
-INSERT INTO missed_habits (habit_id, missed_count)
-VALUES (
-
-)
 
 
-INSERT INTO habit_progress (habit_id, start_date, end_date, current_streak)
-VALUES (
 
-)
+-- INSERT INTO tracked_habits (habit_id, logged_time, start_date, end_date)
+-- VALUES (
+
+-- )
 
 
-INSERT INTO buddies (user_1, user_2)
-VALUES (
+-- INSERT INTO completed_habits (habit_id, completed_count)
+-- VALUES (
 
-)
+-- )
+
+
+-- INSERT INTO missed_habits (habit_id, missed_count)
+-- VALUES (
+
+-- )
+
+
+-- INSERT INTO habit_progress (habit_id, start_date, end_date, current_streak)
+-- VALUES (
+
+-- )
+
+
+-- INSERT INTO buddies (user_1, user_2)
+-- VALUES (
+
+-- )
