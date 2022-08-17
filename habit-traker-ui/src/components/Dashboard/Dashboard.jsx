@@ -28,14 +28,14 @@ function Dashboard({ send, buddy, setBuddy }) {
   useEffect ( ()=> {
 
     
-    const getQuotes = async() => {
+  const getQuotes = async() => {
       await axios.get(`https://type.fit/api/quotes`).then(resp => {
             setQuotes(resp.data)
           })
         }
         getQuotes()
-  
   },[])
+  
   const randomNumber = Math.floor(Math.random() * 1643)
   console.log("quotes", quotes)
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
@@ -226,7 +226,7 @@ function Dashboard({ send, buddy, setBuddy }) {
                             <div className="daily-habits-container">
                                 <div className="dashboard-stats">
                                   
-                                  <blockquote className='blockquote blockquote--bordered blockquote--quoted'>
+                                  <blockquote className='blockquote blockquote--quoted'>
                                     <p className='blockquote__text'>
                                       {quotes[(randomNumber)]?.text}
                                     </p>
@@ -242,6 +242,7 @@ function Dashboard({ send, buddy, setBuddy }) {
                           </div>
 
                             {/* Modal */}
+                            <div className="create-modal">
                             <Modal id="create-habit-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={closeModal}>
                               <div className="relative pb-9/16">
                                 <div className="create-habit">
@@ -249,6 +250,7 @@ function Dashboard({ send, buddy, setBuddy }) {
                                 </div>
                               </div>
                             </Modal>
+                            </div>
 
                         </div>
                       </>

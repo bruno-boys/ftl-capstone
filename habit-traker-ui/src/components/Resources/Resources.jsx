@@ -157,10 +157,10 @@ function ResourceCard({ resource }) {
         <div className="content">
           {resource.content.map((resource) => {
             return (
-              <>
+              <div className="resource-links">
                 <a href={resource.link}> {resource.title}</a>
                 <br />
-              </>
+              </div>
             );
           })}
         </div>

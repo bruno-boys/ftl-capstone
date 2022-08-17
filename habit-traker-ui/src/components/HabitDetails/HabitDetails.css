@@ -29,8 +29,9 @@
     flex-direction: row;
 }
 
-.left {
+.habit-details .left {
     width: fit-content;
+    margin-top: 80px;
 }
 
 .habit-details .right {
@@ -39,6 +40,13 @@
 
 .right .mb-8 {
     width: fit-content;
+}
+
+#habit-details-modal .bg-white {
+    width: 30%;
+    max-height: 75%;
+    border-radius: 10px;
+    padding: 5rem;
 }
 
 /* Calendar CSS */

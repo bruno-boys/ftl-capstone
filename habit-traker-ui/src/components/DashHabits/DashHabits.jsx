@@ -69,7 +69,7 @@ function DashHabitCard({
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate()+2);
+  today.setDate(today.getDate());
 
 
 
@@ -174,8 +174,6 @@ function DashHabitCard({
         const missedCount = results.data.missedCount.missed_count
         console.log("missed count :", missedCount)
         console.log("logcount in new function", logCount)
-        
-        
         const completedCount = data.completedCount.completed_count
         console.log("completedCount in new function", completedCount)
         if (completedCount < 1){
@@ -326,7 +324,6 @@ function DashHabitCard({
                     ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                     : "bg-gray-200 border-transparent"
                 }`}
-                href="#0"
                 onClick={(e) => {
                   e.preventDefault();
                   setTab(1);
@@ -334,11 +331,11 @@ function DashHabitCard({
               >
                 <div className="card" style={{ width: "100%" }}>
                   <div className="top">
-                    <Link to={`/habit/${habit.id}`} state={streakCount}>
+                    <Link style={{width:"100%"}} to={`/habit/${habit.id}`} state={streakCount}>
                       <div className="title">
                         <div
                           className="font-bold leading-snug tracking-tight mb-1"
-                          style={{ width: "150px" }}
+                          style={{ width: "100%" }}
                         >
                           {habit.habit_name}
                         </div>
@@ -380,6 +377,7 @@ function DashHabitCard({
               </a>
             </div>
             {/* Modal */}
+            <div className="dashhabit-modal">
             <Modal
               id="habit-detail-modal"
               ariaLabel="modal-headline"
@@ -392,6 +390,8 @@ function DashHabitCard({
                 </div>
               </div>
             </Modal>
+            </div>
+            <div className="reminder-modal">
             <Modal
               id="habit-reminder-modal"
               ariaLabel="modal-headline"
@@ -404,7 +404,8 @@ function DashHabitCard({
                 </div>
               </div>
             </Modal>
-
+            </div>
+            
             {/* {
                   formModalOpen ?
 

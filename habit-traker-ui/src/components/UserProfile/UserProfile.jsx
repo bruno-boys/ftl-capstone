@@ -37,7 +37,6 @@ export default function UserProfile ({ buddies, setBuddies }) {
             firstName : userInfo.firstName,
             lastName : userInfo.lastName,
             email : userInfo.email,
-            phoneNumber: userInfo.phone_number,
             createdAt : userInfo.createdAt
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
@@ -181,11 +180,6 @@ return (
                     <div className="col-8">
                       <h3 className="mb-0">My account</h3>
                     </div>
-                    <div className="col-4 text-right">
-                      <a href="#!" className="btn btn-sm btn-primary">
-                        Settings
-                      </a>
-                    </div>
                   </div>
                 </div>
                 <div className="card-body">
@@ -196,46 +190,7 @@ return (
                     <div className="pl-lg-4">
                       <div className="row">
                         <div className="col-lg-6">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-username"
-                            >
-                              Phone Number
-                            </label>
-                            <input
-                              type="text"
-                              id="phoneNumber"
-                              className="form-control"
-                              placeholder="Phone Number"
-                              value = {form.phoneNumber}
-                              onChange = {handleOnInputChange}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-6">
-                          <div className="form-group">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-email"
-                            >
-                              Email address
-                            </label>
-                            <input
-                              type="email"
-                              id="input-email"
-                              className="form-control form-control-alternative"
-                              placeholder="jesse@example.com"
-                              name = "email"
-                              value={form.email}
-                              onChange = {handleOnInputChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-6">
-                          <div className="form-group focused">
+                        <div className="form-group focused">
                             <label
                               className="form-control-label"
                               htmlFor="input-first-name"
@@ -254,8 +209,8 @@ return (
                           </div>
                         </div>
                         <div className="col-lg-6">
-                          <div className="form-group focused">
-                            <label
+                          <div className="form-group">
+                          <label
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
@@ -273,12 +228,33 @@ return (
                           </div>
                         </div>
                       </div>
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <div className="form-group focused">
+                          <label
+                              className="form-control-label"
+                              htmlFor="input-email"
+                            >
+                              Email address
+                            </label>
+                            <input
+                              type="email"
+                              id="input-email"
+                              className="form-control form-control-alternative"
+                              placeholder="jesse@example.com"
+                              name = "email"
+                              value={form.email}
+                              onChange = {handleOnInputChange}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <hr className="my-4" />
                     {/* Modal */}
                     <div id="buddy-modal">
                       <Modal ariaLabel="modal-headline" show={buddyModalOpen} handleClose={closeModal}>
-                        <div className="relative pb-9/16">
+                        <div className="relative pb-9/16" style={{paddingBottom:"20%"}}>
                           <div className="buddy-list">
                             <BuddyGrid buddies={buddies} setBuddies={setBuddies} setBuddyModalOpen={setBuddyModalOpen} handleClose={closeModal} />
                           </div>

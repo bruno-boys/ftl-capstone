@@ -5,7 +5,6 @@ import Header from '../../partials/Header';
 import Modal from '../../utils/Modal';
 import EditForm from '../EditForm/EditForm';
 import apiClient from '../../services/apiClient';
-import Calendar from 'react-calendar';
 import { useLocation } from 'react-router-dom'
 import './HabitDetails.css'
 import PieChart from './PieChart';
@@ -85,7 +84,7 @@ export default function HabitDetails() {
                                 { localStorage.getItem("buddyView") == "false" ?
                                     <>
                                         <h1>{habit.habit_name}</h1>
-                                        <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                                        <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
                                         <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit} style={{backgroundColor:"red"}}>Delete</button>
                                     </>
                                     :
@@ -101,13 +100,15 @@ export default function HabitDetails() {
                             </div>
                         </div> 
                          {/* Modal */}
-                        <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => {setVideoModalOpen(false);}}>
-                            <div className="relative pb-9/16">
-                                <div className="create-habit">
-                                    <EditForm habitId={habitId} />
+                        <div id="habit-details-modal">
+                            <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => {setVideoModalOpen(false);}}>
+                                <div className="relative pb-9/16">
+                                    <div className="create-habit">
+                                        <EditForm habitId={habitId} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Modal>                       
+                            </Modal>         
+                        </div>              
                     </div>                        
                 </section>                        
             </main>
@@ -138,14 +139,16 @@ function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount
 
     return (
         <div className="habit-detail-container">
+            <div className="subtitle">
+                <div className="periodLabel">{periodLabel}</div>
+                { localStorage.getItem("buddyView") == "false" ?
+                    <div className="habit-frequency">{habit.frequency} times {habit.period}</div>
+                    :
+                    <div className="habit-frequency">{buddyHabit?.frequency} times {buddyHabit?.period}</div>
+                }
+            </div>
             <div className="habit-details">
                 <div className="left">
-                    <div className="periodLabel">{periodLabel}</div>
-                    { localStorage.getItem("buddyView") == "false" ?
-                        <div className="habit-frequency">{habit.frequency} times {habit.period}</div>
-                        :
-                        <div className="habit-frequency">{buddyHabit?.frequency} times {buddyHabit?.period}</div>
-                    }
                     <div className="mb-8 md:mb-0">
                         <a
                         className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
@@ -163,36 +166,36 @@ function HabitDetailContainer({missedHabits, completedHabits, habit, streakCount
                             <a
                             className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
                             onClick={(e) => { e.preventDefault(); setTab(1); }}
-                            style={{width:"170px", display:"flex", justifyContent:"center"}}
+                            style={{width:"170px", display:"flex", flexDirection:"column", justifyContent:"center"}}
                             >
                                 <div>
                                     <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Complete</div>
                                 </div>
-                                {completedHabits}
+                                <div>{completedHabits}</div>
                             </a>
 
                             <a
                             className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
                             onClick={(e) => { e.preventDefault(); setTab(1); }}
-                            style={{width:"170px", display:"flex", justifyContent:"center"}}
+                            style={{width:"170px", display:"flex", flexDirection:"column", justifyContent:"center"}}
                             >
                                 <div>
                                     <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Missed</div>
                                 </div>
-                                {missedHabits}
+                                <div>{missedHabits}</div>
                             </a>
 
                             <a
                             className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
                             onClick={(e) => { e.preventDefault(); setTab(1); }}
-                            style={{width:"170px", display:"flex", justifyContent:"center"}}
+                            style={{width:"170px", display:"flex", flexDirection:"column", justifyContent:"center"}}
                             >
                                 <div>
                                     <div id="streak" className="font-bold leading-snug tracking-tight mb-1">Total</div>
                                 </div>
+                                <div>{completedHabits + missedHabits}</div>
                             </a>
                         </div>
-                        <Calendar />
                     </div>
                 </div>
                 <div className="right">
