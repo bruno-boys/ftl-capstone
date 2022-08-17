@@ -35,7 +35,7 @@ export default function BuddyGrid ({ buddies, setBuddies }) {
                 </div>
                 :
                 <div  className="gridContent" style={{display:"flex", justifyContent:"center", marginTop:"3rem",}}>
-                    <h1>No Buddies Available</h1>
+                    <h1 style={{textAlign:"center"}}>No Buddies Available</h1>
                 </div>
             }
         </div>
@@ -60,10 +60,9 @@ function BuddyCard({ buddy, removeBuddy, selectBuddy }) {
             }}
             >
                 <div id="buddy-card" className="card" onClick={() => selectBuddy(buddy.id)}>
-                    <img id="profile-img" src={buddy.profile_photo ? buddy.profile_photo : "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg" } />
-                    <div className="font-bold leading-snug tracking-tight mb-1" style={{color:"black"}}>{buddy.first_name} {buddy.last_name}</div> 
+                    <div className="font-bold leading-snug tracking-tight mb-1" style={{color:"white"}}>{buddy.first_name} {buddy.last_name}</div> 
                 </div>
-                <div className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" 
+                <div id="remove-buddy" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" 
                         style={{backgroundColor:"red"}} onClick={() => removeBuddy({id: buddy.id})}>
                     <span>Remove</span>
                 </div>

@@ -36,9 +36,10 @@
 }
 
 #buddy-modal .bg-white {
-  max-width: 50%;
+  max-width: 30%;
   max-height: 40%;
   border-radius: 10px;
+  padding: 2rem;
 }
 
 .user-profile-wrapper .header pb-8 pt-5 pt-lg-8 d-flex align-items-center{

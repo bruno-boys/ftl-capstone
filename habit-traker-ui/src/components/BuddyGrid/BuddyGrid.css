@@ -2,6 +2,12 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    background-color: #338CF5;
+    padding: 0.5rem;
+}
+
+#remove-buddy {
+    padding: 0.5rem;
 }
 
 #profile-img {
