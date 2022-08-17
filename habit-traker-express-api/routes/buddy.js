@@ -53,6 +53,18 @@ router.get('/habits', requireAuthenticatedUser, async (req,res,next) => {
    }
 })
 
+router.get('/habits/:id', requireAuthenticatedUser, async (req,res,next) => {
+   try {
+      const {buddyId} = req.query;
+      const habitId = req.params.id;
+      const buddyHabit = await Buddy.fetchBuddyHabitById(buddyId, habitId)
+      return res.status(200).json(buddyHabit);
+   }
+   catch(error) {
+      next(error)
+   }
+})
+
 
 router.post('/accept', requireAuthenticatedUser, async (req,res,next) => {
    try {

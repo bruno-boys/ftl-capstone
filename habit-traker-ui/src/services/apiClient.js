@@ -211,6 +211,9 @@ async removeBuddy(buddyId) {
   return await this.request({ endpoint: `buddy/remove`, method: `DELETE`, data: buddyId  });
 }
 
+async fetchBuddyHabitById(buddyId, habitId) {
+  return await this.request({ endpoint: `buddy/habits/${habitId}?buddyId=${buddyId}`, method: `GET` });
+}
 }
 
 export default new ApiClient("http://localhost:3001");

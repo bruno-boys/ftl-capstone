@@ -179,7 +179,18 @@ class Buddy {
             WHERE user_1 = $1 AND user_2 = (SELECT id FROM users WHERE email = $2);
             `, [buddyId, user.email]
         )
+    }
 
+    static async fetchBuddyHabitById (buddyId, habitId) {
+        console.log("bId =",buddyId);
+        // console.log("hId =", habitId)
+        const buddyHabit = await db.query(
+            `
+            SELECT * FROM habits
+            WHERE users_id = $1 AND id = $2;
+            `, [buddyId, habitId]
+        )
+       return buddyHabit.rows[0]
     }
 
 }
