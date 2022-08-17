@@ -6,6 +6,7 @@ CREATE DATABASE habit_traker;
 \connect habit_traker;
 
 \i habit-traker-schema.sql
+\i habit-traker-seed.sql
 
 \echo 'Delete and recreate habit_tracker_test database?'
 \prompt 'Return for yes or Control + C to cancel > ' answer
