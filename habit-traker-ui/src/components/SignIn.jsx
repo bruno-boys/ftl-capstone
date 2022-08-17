@@ -67,12 +67,12 @@ function SignIn({ fromLink }) {
               <div className="max-w-sm mx-auto">
                 <form onSubmit={handleOnSubmit}>
                 <div style={{display:"flex", justifyContent:"center"}}>
-                  {error.message && <span className="error" style={{color:"red",textAlign:"center",fontSize:"16px"}}>{error.message}</span>}
+                  {error?.message && <span className="error" style={{color:"red",textAlign:"center",fontSize:"16px"}}>{error?.message}</span>}
                 </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="email">Email</label>
-                      {error.email && <span className="error" style={{color:"red",fontSize:"13px"}}>{error.email}</span>}
+                      {error?.email && <span className="error" style={{color:"red",fontSize:"13px"}}>{error?.email}</span>}
                       <input name="email" type="email" className="form-input w-full text-gray-800" placeholder="Enter your email address" onChange={handleOnFormChange} required />
                     </div>
                   </div>
