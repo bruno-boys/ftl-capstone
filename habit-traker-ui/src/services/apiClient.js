@@ -170,13 +170,6 @@ class ApiClient {
     });
   }
 
-  async subscribe(subscription) {
-    return await this.request({
-      endpoint: `subscribe`,
-      method: `POST`,
-      data: subscription,
-    });
-  }
   async declineBuddyRequest(link) {
     return await this.request({
       endpoint: `buddy/decline`,
@@ -187,6 +180,10 @@ class ApiClient {
 
   async fetchBuddyData() {
     return await this.request({ endpoint: `buddy/view`, method: `GET` });
+  }
+
+  async fetchBuddyHabits(buddyId) {
+    return await this.request({ endpoint: `buddy/habits?buddyId=${buddyId}`, method: `GET` });
   }
 
 
@@ -208,6 +205,14 @@ async editCompleted(completedForm){
 }
 async editMissed(missedForm){
     return await this.request({endpoint : `habits/missed`, method : `PUT`, data : missedForm})
+}
+
+async removeBuddy(buddyId) {
+  return await this.request({ endpoint: `buddy/remove`, method: `DELETE`, data: buddyId  });
+}
+
+async fetchBuddyHabitById(buddyId, habitId) {
+  return await this.request({ endpoint: `buddy/habits/${habitId}?buddyId=${buddyId}`, method: `GET` });
 }
 }
 

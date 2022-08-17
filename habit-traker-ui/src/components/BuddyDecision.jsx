@@ -28,17 +28,13 @@ export default function BuddyDecision() {
         getBuddyName()
     }, [])
 
-    // function redirect() {
-    //     if (nullPage) {
-    //         navigate('/*')
-    //     }
-    // }
 
 
     const acceptInvitation = async (event) => {
         event.preventDefault()
         const { data, error } = await apiClient.acceptBuddyRequest(url)
-        if (error) {setErrors(error)}
+        console.log(data)
+        if (error) {setErrors(error.data.error.message)}
         if (data) {
             setMessage("You and your Buddy have been matched!")
             setAccepted(true)
@@ -58,6 +54,10 @@ export default function BuddyDecision() {
             localStorage.removeItem("fromLink")
         }
     }
+
+    useEffect(()=> {
+        console.log('error = ', errors)
+    }, [errors])
 
 
     return(
@@ -81,7 +81,7 @@ export default function BuddyDecision() {
                                     <h1 className="h1">{buddy?.first_name} {buddy?.last_name} has invited you to become Buddies</h1>
                                 }
 
-                                { accepted == undefined ?
+                                { accepted == undefined && !errors ?
 
                                     <>
                                         <p className="text-xl text-gray-600">
@@ -105,7 +105,7 @@ export default function BuddyDecision() {
 
                                     : 
 
-                                    accepted == true ?
+                                    accepted == true && !errors ?
 
                                     <>
                                         <p className="text-xl text-gray-600">
@@ -122,6 +122,8 @@ export default function BuddyDecision() {
 
                                     :
 
+                                    accepted == false && !errors ?
+
                                     <>
                                         <p className="text-xl text-gray-600">
                                             Return to HabitTraker
@@ -134,6 +136,23 @@ export default function BuddyDecision() {
                                             </button>
                                         </div>
                                     </>
+
+                                    :
+
+
+                                    <>
+                                        <p className="text-xl text-gray-600" style={{color:'red'}}>
+                                            {errors} Return to Dashboard.
+                                        </p>
+                                        <div className="buddy-decision-btns" style={{marginTop:"3rem",display:"flex",justifyContent:"center", gap:"1.5rem"}}>
+                                            <button className="btn text-white bg-gray-600 hover:bg-gray-700 w-half" 
+                                                    style={{maxHeight:"50px", width:"fit-content"}}
+                                                    onClick={() => {navigate('/activity')}}>
+                                                My Dashboard
+                                            </button>
+                                        </div>
+                                    </>
+
                                 }
                             </div>
                         </div>

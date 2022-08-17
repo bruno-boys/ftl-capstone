@@ -28,6 +28,7 @@ function App({ send }) {
 
   const location = useLocation();
   const [fromLink, setFromLink] = useState(true)
+  const [buddies, setBuddies] = useState();
 
   useEffect(() => {
     AOS.init({
@@ -51,10 +52,10 @@ function App({ send }) {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/recover" element={<Recover />} />
-        <Route path="/activity" element={<Dashboard send={send} />} />
+        <Route path="/activity" element={<Dashboard buddy={buddies} setBuddy={setBuddies} send={send} />} />
         <Route path="/habits" element={<HabitPage />} />
-        <Route path="/habit/:habitId" element={<HabitDetails />} />
-        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/habit/:habitId" element={<HabitDetails buddy={buddies} setBuddy={setBuddies} />} />
+        <Route path="/user-profile" element={<UserProfile buddies={buddies} setBuddies={setBuddies} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path='/buddy-link' element={<BuddyLink />} />
         <Route path='/buddy/:buddyId' element={ !localStorage.getItem("habit_traker_token") ? <SignIn fromLink={fromLink} /> : <BuddyDecision />} />

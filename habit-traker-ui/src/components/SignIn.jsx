@@ -32,6 +32,7 @@ function SignIn({ fromLink }) {
       apiClient.setToken(data.token)
       localStorage.setItem("name", data.user.name);
       localStorage.setItem("email", data.user.email);
+      localStorage.setItem("buddyView", "false");
       if (localStorage.getItem("fromLink") == "true") {
         navigate(`/buddy/${localStorage.getItem("buddyId")}`)
       }

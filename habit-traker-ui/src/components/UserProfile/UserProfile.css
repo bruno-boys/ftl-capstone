@@ -35,6 +35,12 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
+#buddy-modal .bg-white {
+  max-width: 30%;
+  max-height: 40%;
+  border-radius: 10px;
+}
+
 .user-profile-wrapper .header pb-8 pt-5 pt-lg-8 d-flex align-items-center{
   min-height: 600px;
   background-size: cover;

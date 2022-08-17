@@ -3,31 +3,36 @@ import apiClient from "../../services/apiClient";
 import { useState } from "react";
 import { useEffect } from "react";
 import Header from "../../partials/Header";
+import { Link } from "react-router-dom";
+import Modal from "../../utils/Modal";
+import BuddyGrid from "../BuddyGrid/BuddyGrid";
 
-export default function ({ user, isAuthenticated }) {
+export default function UserProfile ({ buddies, setBuddies }) {
     const [errors, setError] = useState()
     const [userInfo, setUserInfo] = useState({})
     const [form, setForm] = useState({})
     const [habits, setHabits] = useState([])
     const [profilePhoto, setProfilePhoto] = useState("")
     const [profilePhotoInfo, setProfilePhotoInfo] = useState({})
+    const [buddyModalOpen, setBuddyModalOpen] = useState(false);
 
     useEffect(() => {
         const getUserInfo = async () => {
           const { data, err } = await apiClient.fetchUserFromToken();
-          if (err) {
-            setError(err);
-          }
-          if (data.user) {
-            setUserInfo(data.user);
-    
-          }
+          if (err) { setError(err); }
+          if (data.user) { setUserInfo(data.user); }
         };
+
+        const getBuddies = async () => {
+          const {data, error} = await apiClient.fetchBuddyData();
+          if (error) { setError(error); }
+          if (data) { setBuddies(data); }
+        }
         getUserInfo()
+        getBuddies();
       }, []);
 
       useEffect(() => {
-
         setForm({
             id : userInfo.id,
             firstName : userInfo.firstName,
@@ -37,7 +42,6 @@ export default function ({ user, isAuthenticated }) {
             createdAt : userInfo.createdAt
         })
         setProfilePhotoInfo({id : userInfo.id, profilePhoto : userInfo.profilePhoto})
-
       }, [userInfo])
 
       const handleOnInputChange = (event) => {
@@ -87,9 +91,11 @@ export default function ({ user, isAuthenticated }) {
         reader.readAsDataURL(event.target.files[0])        
     }
 
-    useEffect(() => {
-      console.log('info = ',userInfo)
-    }, [userInfo]);
+    const closeModal = () => {
+      setBuddyModalOpen(false)
+      // window.location.reload();
+    }
+
   
 return (
   <div className="user-profile-wrapper">
@@ -145,13 +151,17 @@ return (
                     <div className="col">
                     
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">0</span>
-                          <span className="description">Buddies</span>
+                        <div> 
+                          <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setBuddyModalOpen(true); }} aria-controls="modal">
+                            <span className="heading">{buddies?.length ? buddies.length : 0}</span>
+                            <span className="description">Buddies</span>
+                          </span>
                         </div>
                         <div>
-                          <span className="heading">{habits.length}</span>
-                          <span className="description">Habits</span>
+                          <Link to='/habits' style={{color:"black"}}>
+                            <span className="heading">{habits?.length ? habits.length : 0}</span>
+                            <span className="description">Habits</span>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -162,12 +172,6 @@ return (
                       {userInfo.lastName}
                     </h3>
                     <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#">Show more</a>
                   </div>
                 </div>
               </div>
@@ -273,97 +277,16 @@ return (
                       </div>
                     </div>
                     <hr className="my-4" />
-                    {/* <h6 className="heading-small text-muted mb-4">
-                      Contact information
-                    </h6>
-                    <div className="pl-lg-4">
-                      <div className="row">
-                        <div className="col-md-12">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-address"
-                            >
-                              Address
-                            </label>
-                            <input
-                              id="input-address"
-                              className="form-control form-control-alternative"
-                              placeholder="Home Address"
-                              type="text"
-                            />
+                    {/* Modal */}
+                    <div id="buddy-modal">
+                      <Modal ariaLabel="modal-headline" show={buddyModalOpen} handleClose={closeModal}>
+                        <div className="relative pb-9/16">
+                          <div className="buddy-list">
+                            <BuddyGrid buddies={buddies} setBuddies={setBuddies} setBuddyModalOpen={setBuddyModalOpen} handleClose={closeModal} />
                           </div>
                         </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-4">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-city"
-                            >
-                              City
-                            </label>
-                            <input
-                              type="text"
-                              id="input-city"
-                              className="form-control form-control-alternative"
-                              placeholder="City"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-4">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Country
-                            </label>
-                            <input
-                              type="text"
-                              id="input-country"
-                              className="form-control form-control-alternative"
-                              placeholder="Country"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-4">
-                          <div className="form-group">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Postal code
-                            </label>
-                            <input
-                              type="number"
-                              id="input-postal-code"
-                              className="form-control form-control-alternative"
-                              placeholder="Postal code"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-                    {/* <hr className="my-4" />
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <div className="form-group focused">
-                        <label
-                          className="form-control-label"
-                          htmlFor="input-bio"
-                        >
-                          Bio
-                        </label>
-                        <input
-                          type="text"
-                          id="input-bio"
-                          className="form-control form-control-alternative"
-                          placeholder="Bio"
-                        />
-                      </div>
-                    </div> */}
+                      </Modal>
+                    </div>
                   </form>
                 </div>
               </div>

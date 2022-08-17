@@ -12,24 +12,6 @@ class Buddy {
 
     static async populateBuddyRequestTable(user, link) {
         // fills the buddy_request table with the user information and link
-        // if user already has a buddy, and error is returned
-
-        const userInfo = await db.query(
-            `
-            SELECT id FROM users WHERE email = $1;
-            `, [user.email]
-        )
-
-        const userId = userInfo.rows[0].id
-
-        const results = await db.query(
-            `
-            SELECT COUNT(*) FROM buddies
-            WHERE user_1 = $1 OR user_2 = $1;
-            `, [userId]
-        )
-
-        if (results.rows[0].count != 0) { throw new BadRequestError('You are already matched with a Buddy.')}
 
         await db.query(
             `
@@ -60,6 +42,35 @@ class Buddy {
         const expirationDate = results.rows[0].expires_at
 
         if (today < expirationDate) {
+            const userTwo = await db.query(
+                `
+                SELECT users_id FROM buddy_request WHERE link = $1;
+                `, [link]
+            );
+
+            const userTwoId = userTwo.rows[0].users_id;
+
+            const userOne = await db.query(
+                `
+                SELECT id FROM users WHERE email = $1;
+                `, [user.email]
+            )
+
+            const userOneId = userOne.rows[0].id;
+
+            const results = await db.query(
+                `
+                SELECT COUNT(*) FROM buddies 
+                WHERE user_1 = $1 AND user_2 = $2
+                    OR user_1 = $2 AND user_2 = $1;
+                `, [userTwoId, userOneId]
+            )
+
+            const count = parseInt(results.rows[0].count);
+            
+
+            if (count > 0){ throw new BadRequestError('You are already matched with this Buddy.') }
+
             await db.query(
                 `
                 INSERT INTO buddies (user_1, user_2) 
@@ -109,53 +120,77 @@ class Buddy {
     }
 
 
-    static async fetchBuddyId(user) {
+    static async fetchBuddyIds(user) {
        /* takes the logged in user and queries the db in order to find the 
-            user id of buddy that they are matched with. */
+            user ids of buddies that they are matched with. */
         const buddy = await db.query(
             `
             SELECT user_2 FROM buddies WHERE user_1 = (SELECT id FROM users WHERE email = $1);
             `, [user.email]
         )
-        return buddy.rows[0].user_2;
+        const results = buddy.rows.map((buddy) => buddy.user_2)
+        return results;
     }
 
 
-    /*  It then uses the buddy's info to 
-            fetch their habits, progress and other information*/
+    static async fetchBuddyInfo(user) {
 
-    static async fetchBuddyName(user) {
-         /* calls the fetchBuddyId function in order to get 
-                the name of user's buddy*/
-        const buddyId = await Buddy.fetchBuddyId(user)
-
-        const results = await db.query(
+        const idArray = await Buddy.fetchBuddyIds(user);
+        const stringIdArray = `(${idArray.join(",")})`;
+        const buddies = await db.query(
             `
-            SELECT first_name, last_name FROM users WHERE id = $1;
-            `, [buddyId]
-        )
-        return results.rows[0];
+            SELECT id, first_name, last_name, profile_photo FROM users WHERE id IN ${stringIdArray};
+            `
+        );
+        return buddies.rows
     }
 
-    static async fetchBuddyHabits(user) {
-        /* calls the fetchBuddyId function in order to get 
+    static async fetchBuddyHabits(buddyId) {
+        /* calls the fetchBuddyIds function in order to get 
                 the list of habits of user's buddy*/
-        const buddyId = await Buddy.fetchBuddyId(user)
 
-        const results = await db.query(
+        // const idArray = await Buddy.fetchBuddyIds(user);
+        // const stringIdArray = `(${idArray.join(",")})`;
+
+        /* [2,3] */
+
+        const buddyHabits = await db.query(
             `
             SELECT * FROM habits WHERE users_id = $1; 
             `, [buddyId]
         );
-        return results.rows
+        return buddyHabits.rows
     }
 
-    static async fetchTrackedBuddyHabits(user) {
-        /* calls the fetchBuddyId function in order to get 
-                the list of tracked habits of user's buddy*/
+    static async removeBuddy(user, buddyId) {
+        /* this function removes a buddy by deleting the row in the buddies table where
+            both users are present */
+        
+        await db.query(
+            `
+            DELETE FROM buddies
+            WHERE user_1 = (SELECT id FROM users WHERE email = $1) AND user_2 = $2;
+            `, [user.email, buddyId]
+        );
 
-                //figure out how to get tracked habits for all and individual habits
-        const buddyId = await Buddy.fetchBuddyId(user)
+        await db.query(
+            `
+            DELETE FROM buddies
+            WHERE user_1 = $1 AND user_2 = (SELECT id FROM users WHERE email = $2);
+            `, [buddyId, user.email]
+        )
+    }
+
+    static async fetchBuddyHabitById (buddyId, habitId) {
+        console.log("bId =",buddyId);
+        // console.log("hId =", habitId)
+        const buddyHabit = await db.query(
+            `
+            SELECT * FROM habits
+            WHERE users_id = $1 AND id = $2;
+            `, [buddyId, habitId]
+        )
+       return buddyHabit.rows[0]
     }
 
 }

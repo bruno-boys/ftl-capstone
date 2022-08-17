@@ -1,0 +1,15 @@
+#buddy-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#profile-img {
+    max-width: 40px;
+    max-height: auto;
+}
+
+#buddy-card .-mx-3 {
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
+}
