@@ -226,7 +226,7 @@ function Dashboard({ send, buddy, setBuddy }) {
                             <div className="daily-habits-container">
                                 <div className="dashboard-stats">
                                   
-                                  <blockquote className='blockquote blockquote--bordered blockquote--quoted'>
+                                  <blockquote className='blockquote blockquote--quoted'>
                                     <p className='blockquote__text'>
                                       {quotes[(randomNumber)]?.text}
                                     </p>

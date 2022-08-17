@@ -180,9 +180,11 @@ abbr[title] {
   padding: 25px;
   background: #338CF5;
   border: 1px solid;
-  color: black;
+  color: white;
   box-sizing: border-box;
   border-radius: 10px;
+  font-style: italic;
+  font-size: 20px;
 }
 
 .blockquote--quote::before {
