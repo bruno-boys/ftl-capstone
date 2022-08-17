@@ -278,7 +278,7 @@ return (
                     {/* Modal */}
                     <div id="buddy-modal">
                       <Modal ariaLabel="modal-headline" show={buddyModalOpen} handleClose={closeModal}>
-                        <div className="relative pb-9/16">
+                        <div className="relative pb-9/16" style={{paddingBottom:"20%"}}>
                           <div className="buddy-list">
                             <BuddyGrid buddies={buddies} setBuddies={setBuddies} setBuddyModalOpen={setBuddyModalOpen} handleClose={closeModal} />
                           </div>

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    /* margin-top: -70px; */
 }
 
 #profile-img {
@@ -9,7 +10,13 @@
     max-height: auto;
 }
 
-#buddy-card .-mx-3 {
+.buddy-list .-mx-3 {
     margin-left: 0rem !important;
     margin-right: 0rem !important;
+}
+
+#buddy-list .gridContent {
+    width: 100%;
+    margin-top: 20px;
+    gap: 0rem !important;
 }
