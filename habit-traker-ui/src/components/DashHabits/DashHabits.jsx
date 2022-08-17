@@ -56,10 +56,11 @@ function DashHabitCard({
   const [logCount, setLogCount] = useState(0);
   const [streakCount, setStreakCount] = useState(0);
   const [errors, setErrors] = useState();
-  const [startDate, setStartDate] = useState(new Date(habit.temp_start_date));
-  const [endDate, setEndDate] = useState(new Date(habit.temp_end_date));
+  const [startDate, setStartDate] = useState(new Date(habit.temp_start_date))
+  const [endDate, setEndDate] = useState(new Date(habit.temp_end_date))
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [tab, setTab] = useState(1);
   // let start_date = new Date(habit.temp_start_date);
@@ -67,37 +68,43 @@ function DashHabitCard({
 
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate());
+  today.setDate(today.getDate()+2);
+
+
+
+
+  
 
   const formatDate = (date) => {
+
     var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
+        month = "" + (d.getMonth() + 1),
+        day = "" + (d.getDate()),
+        year = d.getFullYear();
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
     return [year, month, day].join("-");
-  };
+    }
 
   const formatLogProgressDate = (date) => {
     var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + 1,
-      year = d.getFullYear();
+    month = "" + (d.getMonth() + 1),
+    day = "" + (1),
+    year = d.getFullYear();
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
     return [year, month, day].join("-");
-  };
+}
   const setPeriodEndDate = (start, date, period) => {
     if (period == "Per Day") {
-      start.setFullYear(today.getFullYear());
-      start.setMonth(today.getMonth());
-      start.setDate(today.getDate());
-      date.setFullYear(today.getFullYear());
-      date.setMonth(today.getMonth());
-      date.setDate(today.getDate() + 1);
-      setEndDate(date);
-      setStartDate(start);
+      start.setFullYear(today.getFullYear())
+      start.setMonth(today.getMonth())
+      start.setDate(today.getDate())
+      date.setFullYear(today.getFullYear())
+      date.setMonth(today.getMonth())
+      date.setDate(today.getDate() + 1)
+      setEndDate(date)
+      setStartDate(start)
     }
 
     if (period == "Per Week") {
@@ -106,61 +113,29 @@ function DashHabitCard({
       let daysAfterNextStartDate = daysAfterEndDate - (daysAfterEndDate % 7);
       start.setDate(new Date(date).getDate() + daysAfterNextStartDate);
       date.setDate(date.getDate() + (7 + daysAfterNextStartDate));
-      setEndDate(date);
-      setStartDate(start);
+      setEndDate(date)
+      setStartDate(start)
+
     }
 
     if (period == "Per Month") {
-      start.setMonth(start.getMonth() + 1);
-      setStartDate(start);
-      date.setMonth(date.getMonth() + 1);
-      setEndDate(date);
+      start.setMonth(start.getMonth() + 1)
+      setStartDate(start)
+      date.setMonth(date.getMonth() + 1)
+      setEndDate(date)
+
     }
   };
 
+
+
+  
   const updateLog = async (event) => {
     event.preventDefault();
-    console.log("today", today);
-    if (today.getTime() >= endDate.getTime()) {
-      const obj = {
-        id: habit.id,
-        habitName: habit.habit_name,
-        frequency: habit.frequency,
-        period: habit.period,
-        startDate: habit.start_date,
-        endDate: habit.end_date,
-      };
-      fetchstreakCount();
-      console.log("logCount here?", logCount);
-      console.log("streak here?", streakCount);
-      if (logCount >= habit.frequency) {
-        if (habit.period == "Per Month") {
-          await apiClient.logProgress({
-            habitId: habit.id,
-            startDate: formatLogProgressDate(startDate),
-            endDate: formatLogProgressDate(endDate),
-            current_streak: streakCount + 1,
-          });
-        } else {
-          await apiClient.logProgress({
-            habitId: habit.id,
-            startDate: formatDate(startDate),
-            endDate: formatDate(endDate),
-            current_streak: streakCount + 1,
-          });
-        }
-      }
-      setPeriodEndDate(startDate, endDate, habit.period);
-      const tempObj = {
-        tempStartDate: formatDate(startDate),
-        tempEndDate: formatDate(endDate),
-      };
-      const { data, error } = await apiClient.editHabit({ ...obj, ...tempObj });
-      location.reload();
-    }
-    console.log("end date", endDate);
+    console.log("today", today)
+    console.log("end date", endDate)
     const anotherDay = new Date(endDate).toISOString();
-    console.log("anotherDate", anotherDay);
+    console.log("anotherDate", anotherDay)
     const { data, error } = await apiClient.logHabit({
       id: habit.id,
       startDate: formatDate(startDate),
@@ -170,7 +145,84 @@ function DashHabitCard({
       setErrors(error);
     }
     fetchLogCount();
+    
   };
+
+  
+
+    const logCompletedAndMissedHabits = async() => {
+      console.log("habit.id", habit.id)
+      console.log("today in new function", today)
+      console.log("endDate in new function", endDate)
+      console.log(" are they equal", today.getTime())
+      console.log("are they equal?", endDate.getTime())
+      if (today.getTime() >= endDate.getTime()){
+          if ((logCount >= habit.frequency)){
+    
+            if (habit.period == "Per Month"){
+              await apiClient.logProgress({habitId : habit.id, startDate : formatLogProgressDate(startDate), endDate : formatLogProgressDate(endDate), current_streak : (streakCount + 1)})
+            }
+            else{
+              await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
+            }
+          }
+        console.log("they are now equal")
+        const {data, error} = await apiClient.getCompletedCount(habit.id)
+        console.log("data from completed count", data)
+        const results = await apiClient.getMissedCount(habit.id)
+        const missedCount = results.data.missedCount.missed_count
+        console.log("missed count :", missedCount)
+        console.log("logcount in new function", logCount)
+        
+        
+        const completedCount = data.completedCount.completed_count
+        console.log("completedCount in new function", completedCount)
+        if (completedCount < 1){
+          if (logCount >= habit.frequency){
+            console.log("there is currently no completed log for this habit")
+            const {results, errors} = await apiClient.createCompleted({id : habit.id, completedCount : 1})
+          }
+        }
+        else if (completedCount >= 1){
+          console.log("we are editing the completed count")
+          if (logCount >= habit.frequency){
+            console.log("we are editing the completed count")
+            const {results, errors} = await apiClient.editCompleted({id : habit.id, completedCount : (completedCount + 1)})
+          }
+        }
+        if (missedCount < 1){
+          if (logCount < habit.frequency){
+            const {results, errors} = await apiClient.createMissed({id : habit.id, missedCount : 1})
+          }
+        }
+
+        else if (missedCount >= 1) {
+          if (logCount < habit.frequency){
+            const {results, errors} = await apiClient.editMissed({id : habit.id, missedCount : (missedCount + 1)})
+          }
+          
+        }
+
+        const obj = {
+          id: habit.id,
+          habitName: habit.habit_name,
+          frequency: habit.frequency,
+          period: habit.period,
+          startDate: habit.start_date,
+          endDate: habit.end_date,
+        }
+
+
+      console.log("set period dates parameters. start date", startDate, "endDate" , endDate )
+      setPeriodEndDate(startDate, endDate, habit.period);
+      console.log("set period parameters after calling a functoin on it to change them. Start", startDate, "end date", endDate)
+      const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
+      const result = await apiClient.editHabit({ ...obj, ...tempObj })
+      location.reload()
+    }
+
+    
+  }
 
   const fetchLogCount = async () => {
     const anotherDay = new Date(endDate).toISOString();
@@ -203,16 +255,16 @@ function DashHabitCard({
       previousEndDate.setDate(previousEndDate.getDate() - 7);
       previousStartDate.setDate(previousStartDate.getDate() - 7);
     }
-
-    if (habit.period == "Per Month") {
-      previousEndDate.setMonth(previousEndDate.getMonth() - 1);
-      previousEndDate.setDate(1);
-      previousStartDate.setMonth(previousStartDate.getMonth() - 1);
-      previousStartDate.setDate(1);
+    
+    if (habit.period == "Per Month"){
+      previousEndDate.setMonth(previousEndDate.getMonth() - 1)
+      previousEndDate.setDate(1)
+      previousStartDate.setMonth(previousStartDate.getMonth() - 1)
+      previousStartDate.setDate(1)
     }
 
-    console.log("previous start date", previousStartDate);
-    console.log("previous end date", previousEndDate);
+    console.log("previous start date", previousStartDate)
+    console.log("previous end date", previousEndDate)
 
     const logData = {
       habitId: habit.id,
@@ -221,8 +273,8 @@ function DashHabitCard({
     };
 
     const { data, error } = await apiClient.fetchStreakCount(logData);
-    console.log("streak count returned from API", data.streakCount);
-    setStreakCount(data.streakCount);
+    console.log("streak count returned from API", data.streakCount)
+      setStreakCount(data.streakCount);
   };
   const closeModal = async () => {
     window.location.reload();
@@ -235,16 +287,24 @@ function DashHabitCard({
     if (err) {
       setErrors(err);
     }
-    window.location.reload();
+    if (data) {
+      window.location.reload();
+    }
   };
 
   useEffect(() => {
     fetchLogCount();
   }, []);
 
+  useEffect(() =>{
+    fetchstreakCount()
+  },[])
+
   useEffect(() => {
-    fetchstreakCount();
-  }, []);
+    console.log("logCount", logCount)
+    logCompletedAndMissedHabits()
+  }, [])
+
 
   return (
     <div className="habit-card">
