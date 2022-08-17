@@ -181,11 +181,6 @@ return (
                     <div className="col-8">
                       <h3 className="mb-0">My account</h3>
                     </div>
-                    <div className="col-4 text-right">
-                      <a href="#!" className="btn btn-sm btn-primary">
-                        Settings
-                      </a>
-                    </div>
                   </div>
                 </div>
                 <div className="card-body">
@@ -196,46 +191,7 @@ return (
                     <div className="pl-lg-4">
                       <div className="row">
                         <div className="col-lg-6">
-                          <div className="form-group focused">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-username"
-                            >
-                              Phone Number
-                            </label>
-                            <input
-                              type="text"
-                              id="phoneNumber"
-                              className="form-control"
-                              placeholder="Phone Number"
-                              value = {form.phoneNumber}
-                              onChange = {handleOnInputChange}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-6">
-                          <div className="form-group">
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-email"
-                            >
-                              Email address
-                            </label>
-                            <input
-                              type="email"
-                              id="input-email"
-                              className="form-control form-control-alternative"
-                              placeholder="jesse@example.com"
-                              name = "email"
-                              value={form.email}
-                              onChange = {handleOnInputChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-6">
-                          <div className="form-group focused">
+                        <div className="form-group focused">
                             <label
                               className="form-control-label"
                               htmlFor="input-first-name"
@@ -254,8 +210,8 @@ return (
                           </div>
                         </div>
                         <div className="col-lg-6">
-                          <div className="form-group focused">
-                            <label
+                          <div className="form-group">
+                          <label
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
@@ -268,6 +224,27 @@ return (
                               placeholder="Last name"
                               name = "lastName"
                               value={form.lastName}
+                              onChange = {handleOnInputChange}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <div className="form-group focused">
+                          <label
+                              className="form-control-label"
+                              htmlFor="input-email"
+                            >
+                              Email address
+                            </label>
+                            <input
+                              type="email"
+                              id="input-email"
+                              className="form-control form-control-alternative"
+                              placeholder="jesse@example.com"
+                              name = "email"
+                              value={form.email}
                               onChange = {handleOnInputChange}
                             />
                           </div>
