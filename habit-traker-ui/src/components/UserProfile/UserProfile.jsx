@@ -2,7 +2,6 @@ import "../UserProfile/UserProfile.css";
 import apiClient from "../../services/apiClient";
 import { useState } from "react";
 import { useEffect } from "react";
-import Header from "../../partials/Header";
 import { Link } from "react-router-dom";
 import Modal from "../../utils/Modal";
 import BuddyGrid from "../BuddyGrid/BuddyGrid";
