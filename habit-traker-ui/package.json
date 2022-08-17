@@ -19,6 +19,8 @@
     "date-carousel": "^5.2.1",
     "react": "^18.2.0",
     "react-calendar": "^3.7.0",
+    "react-collapsed": "^3.3.2",
+    "react-collapsible": "^2.10.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-flatpickr": "^3.10.13",

@@ -86,6 +86,9 @@ function Header() {
                   <Link to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}>Dashboard</Link>
                 </li>
                 <li>
+                  <Link to = "/resources" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}> Resources </Link>
+                </li>
+                <li>
                   <Avatar handleLogout={handleLogout}/>
                 </li>
               </ul>
@@ -102,6 +105,9 @@ function Header() {
                   <Link to="/habits" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}>Habits</Link>
                 </li>
                 <li>
+                  <Link to = "/resources" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}> Resources </Link>
+                </li>
+                <li>
                   <Avatar handleLogout={handleLogout}/>
                 </li>
               </ul>
@@ -113,6 +119,6 @@ function Header() {
 
     </header>
   );
-}
 
+        }
 export default Header;

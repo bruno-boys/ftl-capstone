@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
+import Header from './partials/Header';
 
 
 function send(habitName, hour, minutes) {
@@ -33,6 +34,7 @@ function createNotification(habitName) {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
+      <Header />
       <App send={send}/>
     </Router>
   </React.StrictMode>

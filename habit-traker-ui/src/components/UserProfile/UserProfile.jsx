@@ -2,7 +2,6 @@ import "../UserProfile/UserProfile.css";
 import apiClient from "../../services/apiClient";
 import { useState } from "react";
 import { useEffect } from "react";
-import Header from "../../partials/Header";
 import { Link } from "react-router-dom";
 import Modal from "../../utils/Modal";
 import BuddyGrid from "../BuddyGrid/BuddyGrid";
@@ -100,7 +99,6 @@ export default function UserProfile ({ buddies, setBuddies }) {
 return (
   <div className="user-profile-wrapper">
         {/*  Site header */}
-        <Header />
         <main className="flex-grow">
         <section className="bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
