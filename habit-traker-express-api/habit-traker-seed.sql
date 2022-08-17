@@ -1,6 +1,6 @@
 -- SEED File
 -- Create mock users
--- Create mock listings
+-- Create mock habits
 
 INSERT INTO users (first_name, last_name, email, password)
 VALUES (
@@ -20,3 +20,38 @@ VALUES (
   '$2b$10$mkaQdh1IRrHwMlYhuCFLXepvWhp0woPT5.VmGU9goQc86Xy4.Lcum' 
 );
 
+
+INSERT INTO habits (users_id, habit_name, frequency, period, start_date, temp_start_date, temp_end_date, end_date)
+VALUES (
+
+)
+
+
+INSERT INTO tracked_habits (habit_id, logged_time, start_date, end_date)
+VALUES (
+
+)
+
+
+INSERT INTO completed_habits (habit_id, completed_count)
+VALUES (
+
+)
+
+
+INSERT INTO missed_habits (habit_id, missed_count)
+VALUES (
+
+)
+
+
+INSERT INTO habit_progress (habit_id, start_date, end_date, current_streak)
+VALUES (
+
+)
+
+
+INSERT INTO buddies (user_1, user_2)
+VALUES (
+
+)
