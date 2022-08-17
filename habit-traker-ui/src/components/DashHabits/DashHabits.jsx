@@ -174,8 +174,6 @@ function DashHabitCard({
         const missedCount = results.data.missedCount.missed_count
         console.log("missed count :", missedCount)
         console.log("logcount in new function", logCount)
-        
-        
         const completedCount = data.completedCount.completed_count
         console.log("completedCount in new function", completedCount)
         if (completedCount < 1){
