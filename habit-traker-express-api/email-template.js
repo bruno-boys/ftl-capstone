@@ -41,7 +41,7 @@ class SendEmail {
       });
   }
 
-  static async scheduleReminder(habitName, frequency, time, APPLICATION_NAME, EMAIL_FROM_ADDRESS) {
+  static async scheduleReminder(habitName, frequency, time, APPLICATION_NAME, EMAIL_FROM_ADDRESS, email) {
     let result = time.split(":")
     let hour = result[0]
     let minute = result[1]
@@ -49,7 +49,7 @@ class SendEmail {
 
     const job = schedule.scheduleJob(`${minute} ${hour} * * *`, function(){
       const msg = {
-        to: "yawkesseyankomah@gmail.com",
+        to: email,
         from: EMAIL_FROM_ADDRESS,
         subject: "Habit Reminder",
         html: 
