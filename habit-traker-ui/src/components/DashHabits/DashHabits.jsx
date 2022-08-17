@@ -188,7 +188,7 @@ function DashHabitCard({
     }
     if (data?.logCount) {
       localStorage.setItem(`log_count_${habit.id}`, data.logCount.count);
-      await setLogCount(localStorage.getItem(`log_count_${habit.id}`));
+      setLogCount(localStorage.getItem(`log_count_${habit.id}`));
     }
   };
 

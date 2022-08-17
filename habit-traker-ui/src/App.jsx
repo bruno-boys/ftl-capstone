@@ -54,7 +54,7 @@ function App({ send }) {
         <Route path="/recover" element={<Recover />} />
         <Route path="/activity" element={<Dashboard buddy={buddies} setBuddy={setBuddies} send={send} />} />
         <Route path="/habits" element={<HabitPage />} />
-        <Route path="/habit/:habitId" element={<HabitDetails />} />
+        <Route path="/habit/:habitId" element={<HabitDetails buddy={buddies} setBuddy={setBuddies} />} />
         <Route path="/user-profile" element={<UserProfile buddies={buddies} setBuddies={setBuddies} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path='/buddy-link' element={<BuddyLink />} />
