@@ -89,11 +89,8 @@ function Header() {
 
                   <Link to = "/resources" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}> Resources </Link>
                 </li>
-                {/* <li>
-                  <Link to="/buddy-link" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Buddies</Link>
-
+                <li>
                   <Avatar handleLogout={handleLogout}/>
-
                 </li>
               </ul>
             </nav>
@@ -104,6 +101,9 @@ function Header() {
               <ul className="flex flex-grow justify-end flex-wrap items-center" style={{width:"100%"}}>
                 <li>
                   <Link to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}>Dashboard</Link>
+                </li>
+                <li>
+                  <Link to = "/resources" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}> Resources </Link>
                 </li>
                 <li>
                   <Link to="/habits" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{color:"#338CF5"}}>Habits</Link>
@@ -120,6 +120,6 @@ function Header() {
 
     </header>
   );
-}
 
+        }
 export default Header;

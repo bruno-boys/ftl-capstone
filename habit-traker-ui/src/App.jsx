@@ -62,7 +62,7 @@ function App({ send }) {
         <Route path="/user-profile" element={<UserProfile buddies={buddies} setBuddies={setBuddies} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path='/buddy-link' element={<BuddyLink />} />
-        <Route path = "/dummy" element = {<Resources />} />
+        <Route path = "/resources" element = {<Resources />} />
         <Route path='/buddy/:buddyId' element={ !localStorage.getItem("habit_traker_token") ? <SignIn fromLink={fromLink} /> : <BuddyDecision />} />
         <Route path="/*" element={<ErrorPage/>} />
       </Routes>
