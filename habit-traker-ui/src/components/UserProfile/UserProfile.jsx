@@ -100,7 +100,6 @@ export default function UserProfile ({ buddies, setBuddies }) {
 return (
   <div className="user-profile-wrapper">
         {/*  Site header */}
-        <Header />
         <main className="flex-grow">
         <section className="bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
