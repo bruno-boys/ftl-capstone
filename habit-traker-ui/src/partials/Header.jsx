@@ -78,7 +78,7 @@ function Header() {
                 <li>
                   <div to="/activity" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" 
                     style={{color:"#338CF5"}}
-                    onClick={() => {localStorage.setItem('buddyView', "false"); navigate('/activity')}}>
+                    onClick={() => {localStorage.setItem('buddyView', "false"); localStorage.removeItem('buddyId'); navigate('/activity')}}>
                     Exit Buddy Mode
                   </div>
                 </li>

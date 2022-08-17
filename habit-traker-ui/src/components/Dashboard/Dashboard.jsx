@@ -111,18 +111,24 @@ function Dashboard({ send, buddy, setBuddy }) {
         }
       }
 
-      // const getBuddyData = async () => {
-      //   const { data, error } = await apiClient.fetchBuddyData();
-      //   if (error) {setErrors(error)}
-      //   if (data) {setBuddy(data)}
-      // }
+      const getBuddyHabits = async () => {
+        const buddyId = parseInt(localStorage.getItem("buddyId"));
+        console.log('buddyId = ',buddyId)
+        const { data, error } = await apiClient.fetchBuddyHabits(buddyId);
+        if (error) {setErrors(error)}
+        if (data) {setBuddy(data)}
+      }
 
       getHabits();
-      // getBuddyData();
+      getBuddyHabits();
       askNotificationPermission();
       fetchRemindersList();
 
     }, []);
+
+    useEffect(() => {
+      console.log('buddy = ',buddy)
+    }, [buddy])
 
   const closeModal = () => {
     setVideoModalOpen(false); 
@@ -191,16 +197,15 @@ function Dashboard({ send, buddy, setBuddy }) {
                           </div> */}
 
                           <div className="create-habit-btn" style={{maxWidth:"100%"}}>
-                              {/* { localStorage.getItem("toggleOn") == "false" ?
-                                <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
-                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                </div>
-                                :
-                                <></>
-                              } */}
-                               <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
-                                  <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
-                                </div>
+                          { localStorage.getItem("buddyView") == "false" ?
+
+                            <div className="btn-sm text-white bg-blue-600 hover:bg-blue-700 ml-3" style={{marginLeft:"0px"}}>
+                              <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true); }} aria-controls="modal">Create Habit</span>
+                            </div>
+                            :
+                            <></>
+
+                            }
                             </div>
                             
                         </div>

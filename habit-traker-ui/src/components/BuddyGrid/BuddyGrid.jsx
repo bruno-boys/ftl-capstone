@@ -17,7 +17,10 @@ export default function BuddyGrid ({ buddies, setBuddies }) {
         localStorage.setItem("buddyView", "true");
         const {data, error} = await apiClient.fetchBuddyHabits(buddyId);
         if (error) { setErrors(error) }
-        if (data) { setBuddies(data) }
+        if (data) { 
+            setBuddies(data) 
+            localStorage.setItem("buddyId", buddyId);
+        }
         navigate('/activity')
     }
 

@@ -16,21 +16,6 @@ export default function DashHabits({
   handleClose,
   buddy,
 }) {
-  // return ( 
-  //   <div className="gridContent">
-  //   {habits.map((habit, idx) => {
-  //     return (
-  //       <DashHabitCard
-  //         key={idx}
-  //         habit={habit}
-  //         formModalOpen={formModalOpen}
-  //         setFormModalOpen={setFormModalOpen}
-  //         handleClose={handleClose}
-  //       />
-  //     );
-  //   })}
-  // </div>
-  // )
 
   return localStorage.getItem("buddyView") == "false" ? (
     <div className="gridContent">
@@ -48,7 +33,7 @@ export default function DashHabits({
     </div>
   ) : (
     <div className="gridContent">
-      {buddy.map((habit, idx) => {
+      {buddy?.map((habit, idx) => {
         return (
           <DashHabitCard
             key={idx}
@@ -300,22 +285,16 @@ function DashHabitCard({
                       </div>
                     </Link>
                     <div className="buttons">
-                      {/* {localStorage.getItem("toggleOn") == "false" ? (
-                        <HabitMenu
+                      { localStorage.getItem("buddyView") == "false" ?
+                          <HabitMenu
                           deleteHabit={deleteHabit}
                           updateLog={updateLog}
                           setVideoModalOpen={setVideoModalOpen}
                           setReminderModalOpen={setReminderModalOpen}
-                        />
-                      ) : (
-                        <></>
-                      )} */}
-                      <HabitMenu
-                          deleteHabit={deleteHabit}
-                          updateLog={updateLog}
-                          setVideoModalOpen={setVideoModalOpen}
-                          setReminderModalOpen={setReminderModalOpen}
-                        />
+                          />
+                          :
+                          <></>
+                    }
                     </div>
                   </div>
                   <Link to={`/habit/${habit.id}`} state={streakCount}>
