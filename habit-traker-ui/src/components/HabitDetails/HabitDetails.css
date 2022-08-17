@@ -29,8 +29,9 @@
     flex-direction: row;
 }
 
-.left {
+.habit-details .left {
     width: fit-content;
+    margin-top: 80px;
 }
 
 .habit-details .right {
