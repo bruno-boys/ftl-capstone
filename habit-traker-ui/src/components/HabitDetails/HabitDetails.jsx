@@ -84,7 +84,7 @@ export default function HabitDetails() {
                                 { localStorage.getItem("buddyView") == "false" ?
                                     <>
                                         <h1>{habit.habit_name}</h1>
-                                        <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFormModalOpen(true); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
+                                        <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setVideoModalOpen(true)}} aria-controls="modal">Edit</button>
                                         <button className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3" onClick={deleteHabit} style={{backgroundColor:"red"}}>Delete</button>
                                     </>
                                     :
@@ -100,13 +100,15 @@ export default function HabitDetails() {
                             </div>
                         </div> 
                          {/* Modal */}
-                        <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => {setVideoModalOpen(false);}}>
-                            <div className="relative pb-9/16">
-                                <div className="create-habit">
-                                    <EditForm habitId={habitId} />
+                        <div id="habit-details-modal">
+                            <Modal id="habit-detail-modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => {setVideoModalOpen(false);}}>
+                                <div className="relative pb-9/16">
+                                    <div className="create-habit">
+                                        <EditForm habitId={habitId} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Modal>                       
+                            </Modal>         
+                        </div>              
                     </div>                        
                 </section>                        
             </main>

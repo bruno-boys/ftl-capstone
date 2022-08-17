@@ -380,6 +380,7 @@ function DashHabitCard({
               </a>
             </div>
             {/* Modal */}
+            <div className="dashhabit-modal">
             <Modal
               id="habit-detail-modal"
               ariaLabel="modal-headline"
@@ -392,6 +393,8 @@ function DashHabitCard({
                 </div>
               </div>
             </Modal>
+            </div>
+            <div className="reminder-modal">
             <Modal
               id="habit-reminder-modal"
               ariaLabel="modal-headline"
@@ -404,7 +407,8 @@ function DashHabitCard({
                 </div>
               </div>
             </Modal>
-
+            </div>
+            
             {/* {
                   formModalOpen ?
 

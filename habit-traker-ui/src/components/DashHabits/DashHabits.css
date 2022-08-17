@@ -53,3 +53,17 @@ margin-right: 5px;
 width: 100%;
 justify-content: flex-end;
 } 
+
+.dashhabit-modal .bg-white {
+    width: 30%;
+    max-height: 75%;
+    border-radius: 10px;
+    padding: 5rem;
+}
+
+.reminder-modal .bg-white {
+    width: 30%;
+    max-height: 40%;
+    border-radius: 10px;
+    padding: 5rem;
+}
