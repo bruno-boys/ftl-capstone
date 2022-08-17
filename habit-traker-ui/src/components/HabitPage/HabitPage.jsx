@@ -112,7 +112,7 @@ export default function HabitPage() {
 
   return (
     <div className="habit-page">
-      <Header />
+      {/* <Header /> */}
       <main className="flex-grow">
         <section className="bg-gradient-to-b from-gray-100 to-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -270,7 +270,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       date.setDate(date.getDate() + (7 + daysAfterNextStartDate));
       setEndDate(date)
       setStartDate(start)
-
     }
 
     if (period == "Per Month") {

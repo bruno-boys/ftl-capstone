@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Routes,
   Route,
-  useLocation
+  useLocation,
+  BrowserRouter
 } from 'react-router-dom';
 
 
@@ -23,6 +24,9 @@ import ResetPassword from '../src/components/ResetPassword'
 import BuddyLink from './components/BuddyLink';
 import BuddyDecision from './components/BuddyDecision';
 import ErrorPage from './ErrorPage';
+import Resources from './components/Resources/Resources';
+import Header from './partials/Header';
+import Dummy from './components/Dummy/Dummy';
 
 function App({ send }) {
 
@@ -58,6 +62,7 @@ function App({ send }) {
         <Route path="/user-profile" element={<UserProfile buddies={buddies} setBuddies={setBuddies} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path='/buddy-link' element={<BuddyLink />} />
+        <Route path = "/dummy" element = {<Resources />} />
         <Route path='/buddy/:buddyId' element={ !localStorage.getItem("habit_traker_token") ? <SignIn fromLink={fromLink} /> : <BuddyDecision />} />
         <Route path="/*" element={<ErrorPage/>} />
       </Routes>
