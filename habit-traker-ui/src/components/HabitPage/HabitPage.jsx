@@ -487,11 +487,11 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
               >
                 <div className="card" style={{ width: "100%" }}>
                   <div className="top">
-                    <Link to={`/habit/${habit.id}`} state={streakCount}>
+                    <Link style={{width:"100%"}} to={`/habit/${habit.id}`} state={streakCount}>
                       <div className="title">
                         <div
                           className="font-bold leading-snug tracking-tight mb-1"
-                          style={{ width: "150px" }}
+                          style={{ width: "100%" }}
                         >
                           {habit.habit_name}
                         </div>
