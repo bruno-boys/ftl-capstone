@@ -1,0 +1,13 @@
+.habit-goals {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.habit-form {
+    margin-top: 1rem;
+}
+
+.title-hf {
+    font-weight: bold;
+    font-size: 30px;
+}

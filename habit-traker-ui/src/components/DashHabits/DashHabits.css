@@ -1,0 +1,69 @@
+.activity-page .habit-card .max-w-6xl {
+padding: 1rem;
+display: flex;
+/* position: relative;
+top: -95px; */
+}
+
+.top {
+display: flex;
+flex-direction: row;
+width: 100%;
+height: 15px;
+}
+
+.top .title {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+#delete {
+background-color: red;
+}
+
+.gridContent {
+display: flex;
+gap: 1.5rem;
+flex-direction: column;
+}
+
+.habit-card .pt-12 {
+width: 100%;
+}
+
+.bottom {
+display: flex;
+flex-direction: row;
+width: 100%;
+}
+
+.bottom .buttons {
+display: flex;
+margin-top: 20px;
+margin-right: 5px;
+height: 40px;
+width: 100%;
+gap: 10px;
+justify-content: flex-end;
+} 
+
+.top .buttons {
+display: flex;
+margin-right: 5px;
+width: 100%;
+justify-content: flex-end;
+} 
+
+.dashhabit-modal .bg-white {
+    width: 30%;
+    max-height: 75%;
+    border-radius: 10px;
+    padding: 5rem;
+}
+
+.reminder-modal .bg-white {
+    width: 30%;
+    max-height: 40%;
+    border-radius: 10px;
+    padding: 5rem;
+}

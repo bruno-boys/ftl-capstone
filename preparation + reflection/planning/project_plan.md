@@ -55,7 +55,7 @@ user —> has the basic features in the app
 
 ## Pages/Screens
 
-https://www.figma.com/file/HYFxKJDL4sryMDqsLx1xp7/Habit-Tracker?node-id=0%3A1
+https://www.figma.com/file/HYFxKJDL4sryMDqsLx1xp7/Habit-traker?node-id=0%3A1
 
 **List of Pages:**
 
