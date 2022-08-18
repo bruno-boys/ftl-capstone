@@ -7,112 +7,99 @@ const { emailService } = require("../services");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  try {
-    res.status(200).json("main auth route works");
-  } catch (err) {
-    res.status(400).send(err);
-    next(err);
-  }
+	try {
+		res.status(200).json("main auth route works");
+	} catch (err) {
+		res.status(400).send(err);
+		next(err);
+	}
 });
 
 router.post("/register", async (req, res, next) => {
-  try {
-    /*take user first name, last name, email, 
+	try {
+		/*take user first name, last name, email, 
         and password and creates a new user in database */
-    const user = await User.register(req.body);
-    const token = createUserJwt(user);
-    return res.status(201).json({ user, token });
-  } catch (err) {
-    next(err);
-  }
+		const user = await User.register(req.body);
+		const token = createUserJwt(user);
+		return res.status(201).json({ user, token });
+	} catch (err) {
+		next(err);
+	}
 });
 
 router.post("/login", async (req, res, next) => {
-  try {
-    //take username and passwords and attempt to authenticate
-    const user = await User.login(req.body);
-    const token = createUserJwt(user);
-    return res.status(200).json({ user, token });
-  } catch (err) {
-    next(err);
-  }
+	try {
+		//take username and passwords and attempt to authenticate
+		const user = await User.login(req.body);
+		const token = createUserJwt(user);
+		return res.status(200).json({ user, token });
+	} catch (err) {
+		next(err);
+	}
 });
 
 router.get("/me", requireAuthenticatedUser, async (req, res, next) => {
-  try {
-    const { email } = res.locals.user;
-    const user = await User.fetchUserByEmail(email);
-   
-    //function to list activity stuff
-    const publicUser = await User.makePublicUser(user);
-    return res.status(200).json({ user: publicUser });
-  } catch (error) {
-    next(error);
-  }
+	try {
+		const { email } = res.locals.user;
+		const user = await User.fetchUserByEmail(email);
+
+		//function to list activity stuff
+		const publicUser = await User.makePublicUser(user);
+		return res.status(200).json({ user: publicUser });
+	} catch (error) {
+		next(error);
+	}
 });
 
 router.post("/recover", async (req, res, next) => {
-  try {
-    const {email} = req.body;
-    const resetToken = generatePasswordResetToken()
-    const user = await User.savePasswordResetToken(email, resetToken);
+	try {
+		const { email } = req.body;
+		const resetToken = generatePasswordResetToken();
+		const user = await User.savePasswordResetToken(email, resetToken);
 
-    if (user) {
-      await emailService.sendPasswordResetEmail(user, resetToken);
-    }
-    return res.status(200).json({ message: "If your account exists in our system, you should receive an email shortly." });
-
-  }
-  catch (error) {
-    next(error);
-  }
-})
+		if (user) {
+			await emailService.sendPasswordResetEmail(user, resetToken);
+		}
+		return res.status(200).json({ message: "If your account exists in our system, you should receive an email shortly." });
+	} catch (error) {
+		next(error);
+	}
+});
 
 router.post("/password-reset", async (req, res, next) => {
-  try {
-    const { token } = req.query
-    const { newPassword } = req.body;
-   
-    const user = await User.resetPassword( token, newPassword);
+	try {
+		const { token } = req.query;
+		const { newPassword } = req.body;
 
-    return res.status(200).json({ message: "Password Successfuly reset" });
+		const user = await User.resetPassword(token, newPassword);
 
-  }
-  catch (error) {
-    next(error);
-  }
-})
-
-
+		return res.status(200).json({ message: "Password Successfuly reset" });
+	} catch (error) {
+		next(error);
+	}
+});
 
 router.put("/editUser", requireAuthenticatedUser, async (req, res, next) => {
-  try{
+	try {
+		const userInformation = req.body;
 
-    const userInformation = req.body
-    
-    const finalResults = await User.editUser(userInformation)
+		const finalResults = await User.editUser(userInformation);
 
-     res.status(200).json({status : finalResults})
+		res.status(200).json({ status: finalResults });
+	} catch (error) {
+		next(error);
+	}
+});
 
+router.put("/editPhoto", requireAuthenticatedUser, async (req, res, next) => {
+	try {
+		const userPhoto = req.body;
+		const profilePhoto = await User.editPhoto(userPhoto);
 
-  }
-  catch(error){
-    next(error)
-  }
-})
-
-router.put("/editPhoto", requireAuthenticatedUser, async(req, res, next) => {
-  try {
-    const userPhoto = req.body
-    const profilePhoto = await User.editPhoto(userPhoto)
-
-    res.status(200).json({profilePhoto : profilePhoto})
-
-    
-  } catch (error) {
-    next (error)
-    
-  }
-})
+		res.status(200).json({ profilePhoto: profilePhoto });
+	} catch (error) {
+		next(error);
+	}
+});
 
 module.exports = router;

@@ -4,18 +4,12 @@ const { SENDGRID_API_KEY } = require("./config");
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 class SendEmail {
-  static async emailSend(
-    user,
-    resetPasswordUrl,
-    APPLICATION_NAME,
-    EMAIL_FROM_ADDRESS
-  ) {
-
-    const msg = {
-      to: user.email,
-      from: EMAIL_FROM_ADDRESS,
-      subject: `${APPLICATION_NAME} Password Reset`,
-      html: `
+	static async emailSend(user, resetPasswordUrl, APPLICATION_NAME, EMAIL_FROM_ADDRESS) {
+		const msg = {
+			to: user.email,
+			from: EMAIL_FROM_ADDRESS,
+			subject: `${APPLICATION_NAME} Password Reset`,
+			html: `
     <html>
       <body>
         <p>Hi ${user.firstName},</p>
@@ -30,29 +24,28 @@ class SendEmail {
       </body>
     </html>
     `,
-    };
-    sgMail
-      .send(msg)
-      .then(() => {
-        console.log("Email sent");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+		};
+		sgMail
+			.send(msg)
+			.then(() => {
+				console.log("Email sent");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}
 
-  static async scheduleReminder(habitName, frequency, time, APPLICATION_NAME, EMAIL_FROM_ADDRESS, email) {
-    let result = time.split(":")
-    let hour = result[0]
-    let minute = result[1]
+	static async scheduleReminder(habitName, time, EMAIL_FROM_ADDRESS, email) {
+		let result = time.split(":");
+		let hour = result[0];
+		let minute = result[1];
 
-    const job = schedule.scheduleJob(`${minute} ${hour} * * *`, function(){
-      const msg = {
-        to: email,
-        from: EMAIL_FROM_ADDRESS,
-        subject: "Habit Reminder",
-        html: 
-        `
+		const job = schedule.scheduleJob(`${minute} ${hour} * * *`, function () {
+			const msg = {
+				to: email,
+				from: EMAIL_FROM_ADDRESS,
+				subject: "Habit Reminder",
+				html: `
         <html>
         <body>
           <p> Hello! </p>
@@ -66,14 +59,11 @@ class SendEmail {
         </body>
       </html>
       `,
-      };
-      sgMail.send(msg);
-      console.log("Email sent");
-    });
-   
-  
-  }
+			};
+			sgMail.send(msg);
+			console.log("Email sent");
+		});
+	}
 }
 
-// Don't forget to log your completion for your
 module.exports = SendEmail;
