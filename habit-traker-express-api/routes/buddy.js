@@ -9,7 +9,7 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
 	try {
 		const user = res.locals.user;
 		let buddyId = await Buddy.generateURLId();
-		const url = `http://localhost:5173/buddy/${buddyId}`;
+		const url = `https://habit-traker.surge.sh/buddy/${buddyId}`;
 		await Buddy.populateBuddyRequestTable(user, url);
 		return res.status(201).json({ url });
 	} catch (error) {

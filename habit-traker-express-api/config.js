@@ -13,7 +13,9 @@ const EMAIL_SERVICE_ACTIVE = IS_TESTING ? false : process.env.EMAIL_SERVICE_STAT
 
 const EMAIL_FROM_ADDRESS = process.env.EMAIL_FROM_ADDRESS;
 
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+// const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const CLIENT_URL = process.env.CLIENT_URL || "https://habit-traker.surge.sh";
+
 
 function getDatabaseURI() {
 	const dbUser = process.env.DATABASE_USER || "postgres";

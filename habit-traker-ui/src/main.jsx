@@ -21,7 +21,7 @@ function createNotification(habitName) {
 			icon: "src/images/ht-icon.png",
 		});
 		notification.onclick = (e) => {
-			window.location.href = "http://localhost:5173/activity";
+			window.location.href = "https://habit-traker.surge.sh/activity";
 		};
 	}
 }

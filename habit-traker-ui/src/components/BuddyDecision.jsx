@@ -13,7 +13,7 @@ export default function BuddyDecision() {
 	const navigate = useNavigate();
 	const { buddyId } = useParams();
 	const url = {
-		link: `http://localhost:5173/buddy/${buddyId}`,
+		link: `https://habit-traker.surge.sh/buddy/${buddyId}`,
 	};
 
 	useEffect(() => {
