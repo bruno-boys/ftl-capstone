@@ -25,8 +25,6 @@ import BuddyLink from './components/BuddyLink';
 import BuddyDecision from './components/BuddyDecision';
 import ErrorPage from './ErrorPage';
 import Resources from './components/Resources/Resources';
-import Header from './partials/Header';
-import Dummy from './components/Dummy/Dummy';
 
 function App({ send }) {
 
