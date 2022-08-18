@@ -1,5 +1,3 @@
-📝 `NOTE` Use this template repo to initialize the contents of your group's capstone repo project. As you work on your assignment over the course of the week, update the appropriate repo deliverables. All project planning should be included in the planning directory. (🚫 Remove this paragraph before submitting your assignment.)
-
 # SITE Capstone Project
 
 SITE Course Year: **2022**
@@ -8,19 +6,27 @@ Cohort: **CodePath x Salesforce Futureforce Tech LaunchPad**
 
 Team Member Names: **Aloye Oshotse, Yaw Kessey, Abdul Rauf**
 
-Mentors Names: **Seth Holloway, Mitch Mikusek, Jonathan Mar **
+Mentors Names: **Seth Holloway, Mitch Mikusek, Jonathan Mar**
 
-Project Code Repository Links
-
-* [Frontend Repo Link]()
-* [Backend Repo Link]()
 
 ## Project Overview
 
-Add a quick summary of what your project theme and objectives are. 
+Many desire to form habits, but struggle to stay consistent because of everyday life. Our HabitTraker app remedies this problem by providing our users with a way to help users stay consistent with their habits and track their progress along the way. Our target audience are individuals who struggle to stay consistent with their goals. 
 
-Deployment Website: **Add Link to Deployed Project**
+**Key Features**:
+ - Habit Logging and Tracking
+ - Daily reminders via desktop notifications and email
+ - Habit Statistics
+ - Motivation Quotes 
+ - Resources
+ - Buddy System 
+ - Password Reset
+
+Deployment Website: **https://habit-traker.surge.sh/**
 
 ### Open-source libraries used
+- [https://github.com/cruip/tailwind-landing-page-template](https://github.com/cruip/tailwind-landing-page-template)
+- [https://github.com/ICTatRTI/date-carousel](https://github.com/ICTatRTI/date-carousel)
+- https://mui.com/
+- https://github.com/creativetimofficial/argon-dashboard#demo
 
-- Add any links to open-source libraries used in your project.
