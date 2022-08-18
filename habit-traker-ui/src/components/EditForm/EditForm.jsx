@@ -141,7 +141,6 @@ export default function EditForm({ habitId, handleClose }) {
 		event.preventDefault();
 		const tempEndDate = getEndDate(form.startDate, form.period);
 		const tempObj = { tempStartDate: form.startDate, tempEndDate: tempEndDate };
-		// setForm((f) => ({ ...f}))
 		if (error.startDate || error.endDate) {
 			setError((e) => ({ ...e, message: "Error with your start and end date" }));
 		} else if (error.frequency) {

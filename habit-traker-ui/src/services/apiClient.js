@@ -97,7 +97,6 @@ class ApiClient {
 	}
 
 	async fetchLoggedHabitCount(logData) {
-		//logData = {habitId, startTime, endTime}
 		return await this.request({
 			endpoint: `habits/log?habitId=${logData.habitId}&startTime=${logData.startTime}&endTime=${logData.endTime}`,
 			method: `GET`,
