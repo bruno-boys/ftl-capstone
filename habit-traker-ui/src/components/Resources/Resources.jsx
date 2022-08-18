@@ -146,14 +146,12 @@ export default function Resources() {
 }
 
 function ResourceCard({ resource }) {
-  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
 
   return (
     <div className="collapsible">
-      <div className="header" {...getToggleProps()}>
-        {isExpanded ? resource.category : resource.category}
+      <div className="header" >
+       { resource.category}
       </div>
-      <div {...getCollapseProps()}>
         <div className="content">
           {resource.content.map((resource) => {
             return (
@@ -164,7 +162,6 @@ function ResourceCard({ resource }) {
             );
           })}
         </div>
-      </div>
     </div>
   );
 }

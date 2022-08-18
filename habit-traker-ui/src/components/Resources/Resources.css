@@ -1,17 +1,21 @@
 .resource-text{
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bolder;
 }
 
 .collapsible {
-    border: 1px solid;
-    background: lightblue;
     height: 200px;
     font-size: 20px;
-
 }
 
 .resource-links a {
-    color: blue;
+    color: #338CF5;
+    margin-left: 20px;
+    text-decoration: underline;
+}
+
+.header {
+    font-weight: bold;
+    margin-top: 30px;
 }
 
