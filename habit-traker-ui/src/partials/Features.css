@@ -1,33 +1,33 @@
 #slideshowDot {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin: 15px 7px 0px;
-    padding: 0.25rem;
-    background-color: #c4c4c4;
-  }
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	border-radius: 50%;
+	cursor: pointer;
+	margin: 15px 7px 0px;
+	padding: 0.25rem;
+	background-color: #c4c4c4;
+}
 
-  #md-grid {
-    grid-template-columns: 0;
-  }
+#md-grid {
+	grid-template-columns: 0;
+}
 
-  #tab-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
+#tab-grid {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
 
-  #slideshow-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+#slideshow-wrapper {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-  #image-slider-container {
-    padding-bottom: 0rem !important;
-  }
+#image-slider-container {
+	padding-bottom: 0rem !important;
+}
