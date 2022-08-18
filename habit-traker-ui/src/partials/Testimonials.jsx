@@ -47,9 +47,6 @@ function Testimonials() {
                   “ I love HabitTraker and would recommend it to anyone. Could not be easier to use, and has many amazing features that keep my consistent with my goals. I feel as if I finally have control over my life. “
                 </blockquote>
                 <cite className="block font-bold text-lg not-italic mb-1">Darya Finger</cite>
-                <div className="text-gray-600">
-                  <span>(Place something here)</span> <a className="text-blue-600 hover:underline"></a>
-                </div>
               </div>
 
             </div>
