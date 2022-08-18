@@ -20,12 +20,17 @@ function Dashboard({ send, buddy, setBuddy }) {
 
 	useEffect(() => {
 		const getQuotes = async () => {
-			await axios.get(`https://type.fit/api/quotes`).then((resp) => {
-				setQuotes(resp.data);
+			await axios.get(`https://quotes.rest/qod?language=en`).then((resp) => {
+				setQuotes(resp.data?.contents?.quotes[0])
+				.then(console.log("data = ",data));
 			});
 		};
 		getQuotes();
 	}, []);
+
+	useEffect(() => {
+		console.log('quotes =',quotes)
+	}, [quotes]);
 
 	const randomNumber = Math.floor(Math.random() * 1643);
 	const [reminderModalOpen, setReminderModalOpen] = useState(false);
@@ -196,9 +201,9 @@ function Dashboard({ send, buddy, setBuddy }) {
 											<div className='daily-habits-container'>
 												<div className='dashboard-stats'>
 													<blockquote className='blockquote blockquote--quoted'>
-														<p className='blockquote__text'>{quotes[randomNumber]?.text}</p>
+														<p className='blockquote__text'>{quotes.quote}</p>
 														<p className='blockquote__text blockquote__text--author'>
-															{!quotes[randomNumber]?.author ? "Unknown" : quotes[randomNumber]?.author}
+															{!quotes?.author ? "Unknown" : quotes?.author}
 														</p>
 													</blockquote>
 												</div>

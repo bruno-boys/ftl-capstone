@@ -211,4 +211,5 @@ class ApiClient {
 	}
 }
 
-export default new ApiClient("https://habit-traker.herokuapp.com");
+// export default new ApiClient("https://habit-traker.herokuapp.com");
+export default new ApiClient("http://localhost:3001");

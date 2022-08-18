@@ -3,6 +3,10 @@ padding: 1rem;
 display: flex;
 }
 
+#habit-cards {
+    margin-bottom: 1rem;
+}
+
 .top {
 display: flex;
 flex-direction: row;
