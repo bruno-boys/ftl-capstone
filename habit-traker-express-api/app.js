@@ -23,7 +23,7 @@ app.use('/buddy', buddyRoutes)
 
 
 app.get('/', (req,res) => {
-    res.status(200).json("main habit traker route works!")
+    res.status(200).json("main habit traker route works!!!!")
 })
 
 //error handling
