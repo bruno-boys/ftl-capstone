@@ -121,7 +121,6 @@ class ApiClient {
   }
 
   async editUser(form) {
-    console.log("form in edit user", form);
     return await this.request({
       endpoint: `auth/editUser`,
       method: `PUT`,
@@ -130,7 +129,6 @@ class ApiClient {
   }
 
   async editPhoto(form) {
-    console.log("form in edit photo", form);
     return await this.request({
       endpoint: `auth/editPhoto`,
       method: `PUT`,
@@ -194,7 +192,6 @@ async createMissed(missedCount){
     return await this.request({endpoint : `habits/missed`, method : `POST`, data : missedCount})
 }
 async getCompletedCount(habitId){
-    console.log("This is in api client", await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`}))
     return await this.request({endpoint : `habits/completed/${habitId}`, method : `GET`})
 }
 async getMissedCount(habitId){

@@ -37,7 +37,6 @@ function Dashboard({ send, buddy, setBuddy }) {
   },[])
   
   const randomNumber = Math.floor(Math.random() * 1643)
-  console.log("quotes", quotes)
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const [errors, setErrors] = useState();
   const [form, setForm] = useState({
@@ -79,7 +78,6 @@ function Dashboard({ send, buddy, setBuddy }) {
     const {data, error} = await apiClient.fetchRemindersList();
     if (error) {setErrors(error)}
     if (data?.reminders) {
-      console.log('reminders = ', data.reminders)
       let reminderList = data.reminders;
       reminderList.map(async (reminder) => {
         const {data, error} = await apiClient.fetchHabitById(reminder.habit_id);
@@ -88,7 +86,6 @@ function Dashboard({ send, buddy, setBuddy }) {
           let hour = parseInt(reminder.time.slice(0,2));
           let minutes = parseInt(reminder.time.slice(3));
           send(habitName, hour, minutes);
-          console.log('Notification set!');
         }
       })
     }
@@ -113,7 +110,6 @@ function Dashboard({ send, buddy, setBuddy }) {
 
       const getBuddyHabits = async () => {
         const buddyId = parseInt(localStorage.getItem("buddyId"));
-        console.log('buddyId = ',buddyId)
         const { data, error } = await apiClient.fetchBuddyHabits(buddyId);
         if (error) {setErrors(error)}
         if (data) {setBuddy(data)}
@@ -126,9 +122,6 @@ function Dashboard({ send, buddy, setBuddy }) {
 
     }, []);
 
-    useEffect(() => {
-      console.log('buddy = ',buddy)
-    }, [buddy])
 
   const closeModal = () => {
     setVideoModalOpen(false); 
@@ -158,16 +151,7 @@ function Dashboard({ send, buddy, setBuddy }) {
   },  [datePicked, habits])
 
 
-  useEffect(() => {
-    console.log("date picked", datePicked)
-    console.log("start date get time", habits[0]?.start_date)
-  }, [datePicked])
 
-
-
-    useEffect(() => {
-      console.log('buddy = ',buddy)
-    }, [buddy])
 
   return (
       <div className="flex flex-col min-h-screen overflow-hidden">

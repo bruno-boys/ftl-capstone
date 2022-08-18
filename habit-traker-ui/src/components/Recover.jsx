@@ -18,7 +18,6 @@ function Recover() {
     if (!email) {
       setErrors({ email: "Please enter an email address." });
       setIsProcessing(false);
-      console.log("No Email entered");
       return;
     }
 

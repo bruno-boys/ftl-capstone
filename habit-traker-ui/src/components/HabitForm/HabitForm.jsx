@@ -12,9 +12,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
   }
 
   const handleTimeChange = (event) => {
-    console.log(event.target.val)
     setRemindTime(event.target.value)
-    console.log("remindTime", remindTime)
   }
 
   const PeriodOptions = [
@@ -24,33 +22,24 @@ export default function HabitForm({ form, setForm, handleClose }) {
     ];
   const [error, setError] = useState("")
   const formatDate = (date) => {
-    console.log("date clicked", date)
     date = String(date)
     let d
     if (date.length > 10){
-      console.log("is dates length greater than 10?")
        d = new Date(date)
     }
     else {
-      console.log("dates length less than 10?")
        d = new Date(date.replace(/-/gi, "/"))
     }
     
-    console.log("d created out of date", d)
     let month = "" + (d.getMonth() + 1)
-    console.log("month",month)
     let day = "" + (d.getDate())
-    console.log("day", day)
     let year = d.getFullYear()
-    console.log("year ", year)
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
-    console.log("this will be returned", [year, month, day].join("-"))
     return [year, month, day].join("-");
     }
 
       const formattingDate = (date) => {
-        console.log("date clicked", date)
         var d = new Date(date),
             month = "" + (d.getMonth() + 1),
             day = "" + (d.getDate()),
@@ -64,17 +53,13 @@ export default function HabitForm({ form, setForm, handleClose }) {
 
         if (period == "Per Day") {
           let endDate = new Date(date)
-          console.log("end date after reset", endDate)
           endDate.setDate(endDate.getDate() + 1);
-          console.log("date return after function", endDate)
           return endDate
         }
     
         if (period == "Per Week") {
           let endDate = new Date(date)
-          console.log("end date after reset", endDate)
           endDate.setDate(endDate.getDate() + 7);
-          console.log("date return after function", endDate)
           return endDate
         }
     
@@ -111,13 +96,9 @@ export default function HabitForm({ form, setForm, handleClose }) {
     let targetValue = event.target.value
     let todaysDate = new Date()
     todaysDate = formatDate(todaysDate)
-    console.log("todays date before function", todaysDate)
 
     if (event.target.name === "startDate"){
 
-      console.log("is start date really before today?", (new Date(event.target.value)).getTime() < (new Date(todaysDate).getTime())) 
-      console.log("event target", event.target.value)
-      console.log("todays date", todaysDate)
       if ((new Date(event.target.value)).getTime() < (new Date(todaysDate).getTime())){
         setError((e) => ({...e, startDate : "Start Date cannot be before today."}))
       }
@@ -132,11 +113,7 @@ export default function HabitForm({ form, setForm, handleClose }) {
     }
 
     if (event.target.name == "endDate"){
-      console.log("start date on form", form.startDate)
-      console.log("end date on form", form.endDate)
-      console.log("is this true?", (new Date(form.startDate)).getTime() >= (new Date((event.target.value))).getTime())
       if ((new Date(form.startDate)).getTime() >= (new Date((event.target.value))).getTime()){
-        console.log("we are setting the errors end date")
         setError((e) => ({ ...e, endDate: "End Date must be be at least a day after the Start Date" }));
       } else {
         setError((e) => ({ ...e, endDate: null }));
@@ -153,20 +130,14 @@ export default function HabitForm({ form, setForm, handleClose }) {
     }
    
     if (event.target.name == "startDate" || event.target.name == "endDate"){
-        console.log("date change here")
         targetValue = formatDate(event.target.value)
-        console.log("target value", targetValue)
     }
     setForm((f) => ({ ...f, [event.target.name]: targetValue }));
-    console.log("form", form)
     };
-  console.log("error from form", error)
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    console.log("forms start date", form.startDate)
     const tempEndDate =  getEndDate(form.startDate, form.period)
-    console.log("end date after function", tempEndDate)
     const tempObj = {tempStartDate : form.startDate, tempEndDate : tempEndDate}
     // setForm((f) => ({ ...f}))
     if (error.startDate || error.endDate) {

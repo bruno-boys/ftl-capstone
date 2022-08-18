@@ -30,7 +30,6 @@ class EmailService {
           error: [{ field: `to`, message: "Missing to field." }],
         };
 
-      console.log(`Sending email to ${email.to} from ${email.from}`);
       return { status: 202, email, error: null };
     }
 
@@ -60,8 +59,6 @@ class EmailService {
 
   // Figure out what I need to pass through it
   async sendReminderEmail ({reminder, user}) {
-    console.log("Reminder in email service", reminder)
-    console.log("User in email service", user)
     let habitName = reminder.habit.habit_name
     let frequency = reminder.habit.frequency
     let time = reminder.reminder.time

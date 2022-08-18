@@ -54,13 +54,6 @@ function ResetPassword() {
     setIsProcessing(false);
   };
 
-  useEffect(() => {
-    console.log('error = ',errors)
-  }, [errors])
-
-  useEffect(() => {
-    console.log('form = ',form)
-  }, [form])
 
 
   

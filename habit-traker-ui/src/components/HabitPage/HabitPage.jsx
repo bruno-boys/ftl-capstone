@@ -286,10 +286,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   
   const updateLog = async (event) => {
     event.preventDefault();
-    console.log("today", today)
-    console.log("end date", endDate)
     const anotherDay = new Date(endDate).toISOString();
-    console.log("anotherDate", anotherDay)
     const { data, error } = await apiClient.logHabit({
       id: habit.id,
       startDate: formatDate(startDate),
@@ -305,11 +302,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   
 
     const logCompletedAndMissedHabits = async() => {
-      console.log("habit.id", habit.id)
-      console.log("today in new function", today)
-      console.log("endDate in new function", endDate)
-      console.log(" are they equal", today.getTime())
-      console.log("are they equal?", endDate.getTime())
       if (today.getTime() >= endDate.getTime()){
           if ((logCount >= habit.frequency)){
     
@@ -320,28 +312,20 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
               await apiClient.logProgress({habitId : habit.id, startDate : formatDate(startDate), endDate : formatDate(endDate), current_streak : (streakCount + 1)})
             }
           }
-        console.log("they are now equal")
+
         const {data, error} = await apiClient.getCompletedCount(habit.id)
-        console.log("data from completed count", data)
         const results = await apiClient.getMissedCount(habit.id)
-        console.log("results from missed habits: ", results)
         const missedCount = results.data.missedCount.missed_count
-        console.log("missed count :", missedCount)
-        console.log("logcount in new function", logCount)
         
         
         const completedCount = data.completedCount.completed_count
-        console.log("completedCount in new function", completedCount)
         if (completedCount < 1){
           if (logCount >= habit.frequency){
-            console.log("there is currently no completed log for this habit")
             const {results, errors} = await apiClient.createCompleted({id : habit.id, completedCount : 1})
           }
         }
         else if (completedCount >= 1){
-          console.log("we are editing the completed count")
           if (logCount >= habit.frequency){
-            console.log("we are editing the completed count")
             const {results, errors} = await apiClient.editCompleted({id : habit.id, completedCount : (completedCount + 1)})
           }
         }
@@ -368,9 +352,7 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
         }
 
 
-      console.log("set period dates parameters. start date", startDate, "endDate" , endDate )
       setPeriodEndDate(startDate, endDate, habit.period);
-      console.log("set period parameters after calling a functoin on it to change them. Start", startDate, "end date", endDate)
       const tempObj = { tempStartDate: formatDate(startDate), tempEndDate : formatDate(endDate) };
       const result = await apiClient.editHabit({ ...obj, ...tempObj })
       location.reload()
@@ -418,8 +400,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
       previousStartDate.setDate(1)
     }
 
-    console.log("previous start date", previousStartDate)
-    console.log("previous end date", previousEndDate)
 
     const logData = {
       habitId: habit.id,
@@ -428,7 +408,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
     };
 
     const { data, error } = await apiClient.fetchStreakCount(logData);
-    console.log("streak count returned from API", data.streakCount)
       setStreakCount(data.streakCount);
   };
   const closeModal = async () => {
@@ -456,7 +435,6 @@ function HabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) {
   },[])
 
   useEffect(() => {
-    console.log("logCount", logCount)
     logCompletedAndMissedHabits()
   }, [])
 

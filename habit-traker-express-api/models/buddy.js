@@ -182,8 +182,6 @@ class Buddy {
     }
 
     static async fetchBuddyHabitById (buddyId, habitId) {
-        console.log("bId =",buddyId);
-        // console.log("hId =", habitId)
         const buddyHabit = await db.query(
             `
             SELECT * FROM habits

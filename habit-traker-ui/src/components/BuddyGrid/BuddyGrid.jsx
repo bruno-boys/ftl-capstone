@@ -24,7 +24,6 @@ export default function BuddyGrid ({ buddies, setBuddies }) {
         navigate('/activity')
     }
 
-    console.log('buddies = ', buddies);
     return (
         <div id="buddy-list" className="flex flex-wrap -mx-3 mb-4">
             { buddies ? 

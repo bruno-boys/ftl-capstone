@@ -69,9 +69,6 @@ export default function HabitDetails() {
         }
     }
 
-    useEffect(() => {
-        console.log('buddyhabit =',buddyHabit)
-    }, [buddyHabit]);
 
     return (
         <div className="flex flex-col min-h-screen overflow-hidden">

@@ -7,7 +7,6 @@ export default function ToggleButton({ buddy }) {
   const label = "Buddy View"
 
   const buddyToggleStatus = () => { 
-    console.log("toggleOn = ", localStorage.getItem("toggleOn"))
     if (localStorage.getItem("toggleOn") == "true"){ 
       localStorage.setItem("toggleOn", "false");
     }

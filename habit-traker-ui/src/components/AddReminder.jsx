@@ -24,16 +24,9 @@ export default function AddReminder({habitId , handleClose}) {
     } else {
       location.reload()
     }
-
-
-    console.log("remind time", remindTime)
-    console.log("data", data)
-    console.log("error", error)
-    console.log("habitId",)
     
   }
 
-  console.log("Remind time", remindTime)
 
   return (
     <div>

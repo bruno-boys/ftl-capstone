@@ -139,7 +139,6 @@ class Habits {
   }
   
   static async fetchStreakCount(habitId, startTime, endTime){
-    console.log("This is the startTime", startTime, " and end time", endTime, " using to get the streaks")
     const results = await db.query(
       `
       SELECT current_streak FROM habit_progress
@@ -149,10 +148,7 @@ class Habits {
       `, [habitId, startTime, endTime]
     )
     const streakCount = results.rows[0];
-    console.log("streakCount", streakCount)
-    console.log(Boolean(streakCount))
     if (Boolean(streakCount)){
-      console.log("tried to return undefine??")
       return streakCount
     }
     else{

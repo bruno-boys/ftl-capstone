@@ -33,7 +33,6 @@ export default function BuddyDecision() {
     const acceptInvitation = async (event) => {
         event.preventDefault()
         const { data, error } = await apiClient.acceptBuddyRequest(url)
-        console.log(data)
         if (error) {setErrors(error.data.error.message)}
         if (data) {
             setMessage("You and your Buddy have been matched!")
@@ -54,10 +53,6 @@ export default function BuddyDecision() {
             localStorage.removeItem("fromLink")
         }
     }
-
-    useEffect(()=> {
-        console.log('error = ', errors)
-    }, [errors])
 
 
     return(

@@ -44,7 +44,6 @@ export default function UserProfile ({ buddies, setBuddies }) {
 
       const handleOnInputChange = (event) => {
 
-        console.log("event name", event.target.name)
         setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
       }
 
@@ -52,7 +51,6 @@ export default function UserProfile ({ buddies, setBuddies }) {
       const handleOnSubmit = async (event) => {
 
         event.preventDefault();
-        console.log("form in handle on submit", form)
         
         const { data, error } = await apiClient.editUser(form)
         location.reload()

@@ -22,13 +22,9 @@ router.get("/", requireAuthenticatedUser, async (req, res, next) => {
 
 router.post("/reminder", requireAuthenticatedUser , async (req, res, next) => {
   try {
-    console.log(req.body.habitId)
-    console.log("req.body", req.body)
     const user = res.locals.user
-    console.log("User for reminder:", user)
     await Reminders.createReminder(user, req.body);
     let reminder = await Reminders.fetchReminderById(user, req.body.habitId);
-    console.log("Reminder + Habit Info:", reminder)
     await emailService.sendReminderEmail({reminder, user})
     res.status(201).json({ status: "Reminder Created!" });
   } catch (error) {
@@ -96,9 +92,7 @@ router.get("/streak", requireAuthenticatedUser, async (req, res,next) => {
   try{
 
     const {habitId, startDate, endDate} = req.query
-    console.log("Query", req.query)
     const streakCount = await Habits.fetchStreakCount(habitId, startDate, endDate)
-    console.log("streak count in get request route", streakCount.current_streak)
     res.status(200).json({streakCount : streakCount.current_streak})
 
   } catch(error){
@@ -110,7 +104,6 @@ router.get("/streak", requireAuthenticatedUser, async (req, res,next) => {
 router.post("/streak", requireAuthenticatedUser, async(req, res, next) => {
   try {
     await Habits.logProgress(req.body);
-    console.log("req.body", req.body)
     res.status(201).json({ status: "Progress Logged!" });
   } catch (error) {
     next(error);
@@ -132,7 +125,6 @@ router.get("/missed/:id", requireAuthenticatedUser, async (req, res, next) => {
   try{
     const habitId = parseInt(req.params.id)
     const missedCount = await Habits.fetchMissedCount(habitId)
-    console.log("missed count returned by model", missedCount)
     if (!missedCount){
       res.status(200).json({missedCount: {missed_count : 0}})
     }
@@ -147,9 +139,7 @@ router.get("/missed/:id", requireAuthenticatedUser, async (req, res, next) => {
 router.get("/completed/:id", requireAuthenticatedUser, async (req, res, next) => {
   try{
     const habitId = parseInt(req.params.id)
-    console.log("habit id used to get the completed count", habitId)
     const completedCount = await Habits.fetchCompletedCount(habitId)
-    console.log("completed count returned by model", completedCount)
     if (!completedCount){
       res.status(200).json({completedCount: {completed_count : 0}})
     }

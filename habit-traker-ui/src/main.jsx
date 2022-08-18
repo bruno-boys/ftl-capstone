@@ -6,12 +6,10 @@ import Header from './partials/Header';
 
 
 function send(habitName, hour, minutes) {
-  console.log('made it to line 48 for notifications!')
   let year = new Date().getFullYear();
   let month = new Date().getMonth();
   let day = new Date().getDate();
   const etaMs = new Date(year, month, day, hour, minutes).getTime() - Date.now();
-  console.log('made it to line 55 for notifications!')
   if (etaMs >= 0) {
     setTimeout(() => createNotification(habitName), etaMs);    
   }

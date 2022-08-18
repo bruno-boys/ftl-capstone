@@ -10,7 +10,7 @@ class SendEmail {
     APPLICATION_NAME,
     EMAIL_FROM_ADDRESS
   ) {
-    console.log("user", user);
+
     const msg = {
       to: user.email,
       from: EMAIL_FROM_ADDRESS,
@@ -45,7 +45,6 @@ class SendEmail {
     let result = time.split(":")
     let hour = result[0]
     let minute = result[1]
-    console.log(`${minute} ${hour} * * *`)
 
     const job = schedule.scheduleJob(`${minute} ${hour} * * *`, function(){
       const msg = {
