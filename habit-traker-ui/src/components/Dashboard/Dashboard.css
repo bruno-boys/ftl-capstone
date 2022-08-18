@@ -130,6 +130,7 @@ abbr[title] {
 
 .daily-habits-container {
 	border-radius: 5px;
+	width: 100%;
 }
 
 .daily-habits .create-habit-btn {
@@ -155,6 +156,7 @@ abbr[title] {
 }
 
 .activity-page .left {
+	display: flex;
 	width: 50%;
 }
 

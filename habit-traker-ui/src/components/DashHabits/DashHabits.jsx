@@ -33,7 +33,6 @@ function DashHabitCard({ habit, formModalOpen, setFormModalOpen, handleClose }) 
 	const [endDate, setEndDate] = useState(new Date(habit.temp_end_date));
 	const [videoModalOpen, setVideoModalOpen] = useState(false);
 	const [reminderModalOpen, setReminderModalOpen] = useState(false);
-	const navigate = useNavigate();
 
 	const [tab, setTab] = useState(1);
 

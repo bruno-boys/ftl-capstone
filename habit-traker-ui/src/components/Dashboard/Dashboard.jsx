@@ -27,6 +27,10 @@ function Dashboard({ send, buddy, setBuddy }) {
 		getQuotes();
 	}, []);
 
+	useEffect(() => {
+		console.log('quotes =',quotes)
+	}, [quotes]);
+
 	const randomNumber = Math.floor(Math.random() * 1643);
 	const [reminderModalOpen, setReminderModalOpen] = useState(false);
 	const [errors, setErrors] = useState();
