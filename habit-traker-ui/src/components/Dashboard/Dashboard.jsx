@@ -20,7 +20,7 @@ function Dashboard({ send, buddy, setBuddy }) {
 
 	useEffect(() => {
 		const getQuotes = async () => {
-			await axios.get(`https://type.fit/api/quotes`).then((resp) => {
+			await axios.get(`https://quotes.rest/qod?language=en`).then((resp) => {
 				setQuotes(resp.data);
 			});
 		};
@@ -196,9 +196,11 @@ function Dashboard({ send, buddy, setBuddy }) {
 											<div className='daily-habits-container'>
 												<div className='dashboard-stats'>
 													<blockquote className='blockquote blockquote--quoted'>
-														<p className='blockquote__text'>{quotes[randomNumber]?.text}</p>
+														<p className='blockquote__text'>
+															"Quality means doing it right when no one is looking."
+														</p>
 														<p className='blockquote__text blockquote__text--author'>
-															{!quotes[randomNumber]?.author ? "Unknown" : quotes[randomNumber]?.author}
+															"Henry Ford"
 														</p>
 													</blockquote>
 												</div>
